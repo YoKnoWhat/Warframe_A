@@ -1,0 +1,1148 @@
+﻿Log file open, 01/05/19 00:10:14
+LogWindows: Failed to load 'aqProf.dll' (GetLastError=126)
+LogWindows: File 'aqProf.dll' does not exist
+LogWindows: Failed to load 'VtuneApi.dll' (GetLastError=126)
+LogWindows: File 'VtuneApi.dll' does not exist
+LogWindows: Failed to load 'VtuneApi32e.dll' (GetLastError=126)
+LogWindows: File 'VtuneApi32e.dll' does not exist
+LogInit: Display: Running engine for game: Warframe_A
+LogPlatformFile: Not using cached read wrapper
+LogTaskGraph: Started task graph with 5 named threads and 35 total threads with 3 sets of task threads.
+LogStats: Stats thread started at 0.393624
+LogD3D11RHI: Loaded GFSDK_Aftermath_Lib.x64.dll
+LogICUInternationalization: Display: ICU TimeZone Detection - Raw Offset: +8:00, Platform Override: ''
+LogPluginManager: Mounting plugin Paper2D
+LogPluginManager: Mounting plugin AISupport
+LogPluginManager: Mounting plugin LightPropagationVolume
+LogPluginManager: Mounting plugin CLionSourceCodeAccess
+LogPluginManager: Mounting plugin CodeLiteSourceCodeAccess
+LogPluginManager: Mounting plugin GitSourceControl
+LogPluginManager: Mounting plugin KDevelopSourceCodeAccess
+LogPluginManager: Mounting plugin NullSourceCodeAccess
+LogPluginManager: Mounting plugin PerforceSourceControl
+LogPluginManager: Mounting plugin SubversionSourceControl
+LogPluginManager: Mounting plugin UObjectPlugin
+LogPluginManager: Mounting plugin VisualStudioCodeSourceCodeAccess
+LogPluginManager: Mounting plugin VisualStudioSourceCodeAccess
+LogPluginManager: Mounting plugin XCodeSourceCodeAccess
+LogPluginManager: Mounting plugin AssetManagerEditor
+LogPluginManager: Mounting plugin CryptoKeys
+LogPluginManager: Mounting plugin DataValidation
+LogPluginManager: Mounting plugin FacialAnimation
+LogPluginManager: Mounting plugin GameplayTagsEditor
+LogPluginManager: Mounting plugin MacGraphicsSwitching
+LogPluginManager: Mounting plugin MeshEditor
+LogPluginManager: Mounting plugin MobileLauncherProfileWizard
+LogPluginManager: Mounting plugin PluginBrowser
+LogPluginManager: Mounting plugin SpeedTreeImporter
+LogPluginManager: Mounting plugin DatasmithContent
+LogPluginManager: Mounting plugin AlembicImporter
+LogPluginManager: Mounting plugin AppleImageUtils
+LogPluginManager: Mounting plugin AppleVision
+LogPluginManager: Mounting plugin BackChannel
+LogPluginManager: Mounting plugin CharacterAI
+LogPluginManager: Mounting plugin GeometryCache
+LogPluginManager: Mounting plugin HTML5Networking
+LogPluginManager: Mounting plugin ProxyLODPlugin
+LogPluginManager: Mounting plugin MagicLeap
+LogPluginManager: Mounting plugin MagicLeapEmulator
+LogPluginManager: Mounting plugin MagicLeapMedia
+LogPluginManager: Mounting plugin AndroidMedia
+LogPluginManager: Mounting plugin AvfMedia
+LogPluginManager: Mounting plugin ImgMedia
+LogPluginManager: Mounting plugin LinearTimecode
+LogPluginManager: Mounting plugin MediaCompositing
+LogPluginManager: Mounting plugin MediaPlayerEditor
+LogPluginManager: Mounting plugin WmfMedia
+LogPluginManager: Mounting plugin TcpMessaging
+LogPluginManager: Mounting plugin UdpMessaging
+LogPluginManager: Mounting plugin ActorSequence
+LogPluginManager: Mounting plugin LevelSequenceEditor
+LogPluginManager: Mounting plugin MatineeToLevelSequence
+LogPluginManager: Mounting plugin NetcodeUnitTest
+LogPluginManager: Mounting plugin NUTUnrealEngine4
+LogPluginManager: Mounting plugin OnlineSubsystemGooglePlay
+LogPluginManager: Mounting plugin OnlineSubsystemIOS
+LogPluginManager: Mounting plugin OnlineSubsystem
+LogPluginManager: Mounting plugin OnlineSubsystemNull
+LogPluginManager: Mounting plugin OnlineSubsystemUtils
+LogPluginManager: Mounting plugin LauncherChunkInstaller
+LogPluginManager: Mounting plugin AndroidDeviceProfileSelector
+LogPluginManager: Mounting plugin AndroidMoviePlayer
+LogPluginManager: Mounting plugin AndroidPermission
+LogPluginManager: Mounting plugin AppleMoviePlayer
+LogPluginManager: Mounting plugin ArchVisCharacter
+LogPluginManager: Mounting plugin AudioCapture
+LogPluginManager: Mounting plugin CableComponent
+LogPluginManager: Mounting plugin CustomMeshComponent
+LogPluginManager: Mounting plugin EditableMesh
+LogPluginManager: Mounting plugin ExampleDeviceProfileSelector
+LogPluginManager: Mounting plugin GoogleCloudMessaging
+LogPluginManager: Mounting plugin ImmediatePhysics
+LogPluginManager: Mounting plugin IOSDeviceProfileSelector
+LogPluginManager: Mounting plugin LinuxDeviceProfileSelector
+LogPluginManager: Mounting plugin LocationServicesBPLibrary
+LogPluginManager: Mounting plugin MobilePatchingUtils
+LogPluginManager: Mounting plugin OculusVR
+LogPluginManager: Plugin shader directory ../../../Engine/Plugins/Runtime/Oculus/OculusVR/Shaders found
+LogPluginManager: Mapping shader source directory ../../../Engine/Plugins/Runtime/Oculus/OculusVR/Shaders to virtual directory /Plugin/OculusVR
+LogPluginManager: Mounting plugin PhysXVehicles
+LogPluginManager: Mounting plugin ProceduralMeshComponent
+LogPluginManager: Mounting plugin RuntimePhysXCooking
+LogPluginManager: Mounting plugin SteamVR
+LogPluginManager: Mounting plugin WindowsMoviePlayer
+LogStreaming: Display: Took  0.072s to configure plugins.
+LogInit: Using libcurl 7.55.1-DEV
+LogInit:  - built for x86_64-pc-win32
+LogInit:  - supports SSL with OpenSSL/1.0.2h
+LogInit:  - supports HTTP deflate (compression) using libz 1.2.8
+LogInit:  - other features:
+LogInit:      CURL_VERSION_SSL
+LogInit:      CURL_VERSION_LIBZ
+LogInit:      CURL_VERSION_IPV6
+LogInit:      CURL_VERSION_ASYNCHDNS
+LogInit:      CURL_VERSION_LARGEFILE
+LogInit:      CURL_VERSION_IDN
+LogInit:  CurlRequestOptions (configurable via config and command line):
+LogInit:  - bVerifyPeer = false  - Libcurl will NOT verify peer certificate
+LogInit:  - bUseHttpProxy = false  - Libcurl will NOT use HTTP proxy
+LogInit:  - bDontReuseConnections = false  - Libcurl will reuse connections
+LogInit:  - CertBundlePath = nullptr  - Libcurl will use whatever was configured at build time.
+LogInit:  - MaxHostConnections = 16  - Libcurl will limit the number of connections to a host
+LogInit:  - LocalHostAddr = Default
+LogInit:  - BufferSize = 65536
+LogInit: WinSock: version 1.1 (2.2), MaxSocks=32767, MaxUdp=65467
+LogInit: Build: UE4-CL-0
+LogInit: Engine Version: 4.21.0-0+UE4
+LogInit: Compatible Engine Version: 4.21.0-0+UE4
+LogInit: Net CL: 0
+LogInit: OS: Windows 10 (), CPU: Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, GPU: NVIDIA GeForce GTX 1060 6GB
+LogInit: Compiled (64-bit): Dec 27 2018 13:45:39
+LogInit: Compiled with Visual C++: 19.16.27025.01
+LogInit: Build Configuration: Development
+LogInit: Branch Name: UE4
+LogInit: Command Line: 
+LogInit: Base Directory: Q:/UnrealEngine-staging-4.20/Engine/Binaries/Win64/
+LogInit: Installed Engine Build: 0
+LogDevObjectVersion: Number of dev versions registered: 20
+LogDevObjectVersion:   Dev-Blueprints (B0D832E4-1F89-4F0D-ACCF-7EB736FD4AA2): 10
+LogDevObjectVersion:   Dev-Build (E1C64328-A22C-4D53-A36C-8E866417BD8C): 0
+LogDevObjectVersion:   Dev-Core (375EC13C-06E4-48FB-B500-84F0262A717E): 2
+LogDevObjectVersion:   Dev-Editor (E4B068ED-F494-42E9-A231-DA0B2E46BB41): 24
+LogDevObjectVersion:   Dev-Framework (CFFC743F-43B0-4480-9391-14DF171D2073): 34
+LogDevObjectVersion:   Dev-Mobile (B02B49B5-BB20-44E9-A304-32B752E40360): 2
+LogDevObjectVersion:   Dev-Networking (A4E4105C-59A1-49B5-A7C5-40C4547EDFEE): 0
+LogDevObjectVersion:   Dev-Online (39C831C9-5AE6-47DC-9A44-9C173E1C8E7C): 0
+LogDevObjectVersion:   Dev-Physics (78F01B33-EBEA-4F98-B9B4-84EACCB95AA2): 0
+LogDevObjectVersion:   Dev-Platform (6631380F-2D4D-43E0-8009-CF276956A95A): 0
+LogDevObjectVersion:   Dev-Rendering (12F88B9F-8875-4AFC-A67C-D90C383ABD29): 26
+LogDevObjectVersion:   Dev-Sequencer (7B5AE74C-D270-4C10-A958-57980B212A5A): 9
+LogDevObjectVersion:   Dev-VR (D7296918-1DD6-4BDD-9DE2-64A83CC13884): 2
+LogDevObjectVersion:   Dev-LoadTimes (C2A15278-BFE7-4AFE-6C17-90FF531DF755): 1
+LogDevObjectVersion:   Private-Geometry (6EACA3D4-40EC-4CC1-B786-8BED09428FC5): 3
+LogDevObjectVersion:   Dev-AnimPhys (29E575DD-E0A3-4627-9D10-D276232CDCEA): 17
+LogDevObjectVersion:   Dev-ReflectionCapture (6B266CEC-1EC7-4B8F-A30B-E4D90942FC07): 1
+LogDevObjectVersion:   Dev-Automation (0DF73D61-A23F-47EA-B727-89E90C41499A): 1
+LogDevObjectVersion:   FortniteMain (601D1886-AC64-4F84-AA16-D3DE0DEAC7D6): 12
+LogDevObjectVersion:   Dev-Enterprise (9DFFBCD6-494F-0158-E221-12823C92A888): 1
+LogStreaming: Display: Took  0.000s to delete old logs.
+LogInit: Presizing for max 8388607 objects, including 0 objects not considered by GC, pre-allocating 0 bytes for permanent pool.
+LogInit: Object subsystem initialized
+[2019.01.04-16.10.14:625][  0]LogInit: Selected Device Profile: [Windows]
+[2019.01.04-16.10.14:625][  0]LogInit: Applying CVar settings loaded from the selected device profile: [Windows]
+[2019.01.04-16.10.14:634][  0]LogHAL: Display: Platform has ~ 16 GB [17088872448 / 17179869184 / 16], which maps to Larger [LargestMinGB=32, LargerMinGB=12, DefaultMinGB=8, SmallerMinGB=6, SmallestMinGB=0)
+[2019.01.04-16.10.14:634][  0]LogInit: Setting Device Profile CVar: [[r.Vulkan.UseRealUBs:1]]
+[2019.01.04-16.10.14:634][  0]LogInit: Going up to parent DeviceProfile []
+[2019.01.04-16.10.14:634][  0]LogInit: Computer: DESKTOP-0U9IS5D
+[2019.01.04-16.10.14:634][  0]LogInit: User: aer
+[2019.01.04-16.10.14:634][  0]LogInit: CPU Page size=4096, Cores=6
+[2019.01.04-16.10.14:634][  0]LogInit: High frequency timer resolution =3.117187 MHz
+[2019.01.04-16.10.14:634][  0]LogMemory: Memory total: Physical=15.9GB (16GB approx)
+[2019.01.04-16.10.14:634][  0]LogMemory: Platform Memory Stats for Windows
+[2019.01.04-16.10.14:634][  0]LogMemory: Process Physical Memory: 100.63 MB used, 100.63 MB peak
+[2019.01.04-16.10.14:634][  0]LogMemory: Process Virtual Memory: 85.84 MB used, 85.84 MB peak
+[2019.01.04-16.10.14:634][  0]LogMemory: Physical Memory: 6165.71 MB used,  10131.50 MB free, 16297.22 MB total
+[2019.01.04-16.10.14:634][  0]LogMemory: Virtual Memory: 4649.77 MB used,  10131.50 MB free, 134217728.00 MB total
+[2019.01.04-16.10.14:657][  0]LogInit: Overriding language with editor language configuration option (en).
+[2019.01.04-16.10.14:657][  0]LogInit: Overriding locale with editor locale configuration option (en).
+[2019.01.04-16.10.14:945][  0]LogStreaming: Display: Took  0.288s to InitEngineTextLocalization.
+[2019.01.04-16.10.14:945][  0]LogInit: Setting process to per monitor DPI aware
+[2019.01.04-16.10.14:968][  0]LogSlate: New Slate User Created.  User Index 0, Is Virtual User: 0
+[2019.01.04-16.10.14:968][  0]LogSlate: Slate User Registered.  User Index 0, Is Virtual User: 0
+[2019.01.04-16.10.15:099][  0]LogHMD: Failed to initialize OpenVR with code 110
+[2019.01.04-16.10.15:099][  0]LogD3D11RHI: D3D11 adapters:
+[2019.01.04-16.10.15:166][  0]LogD3D11RHI:    0. 'NVIDIA GeForce GTX 1060 6GB' (Feature Level 11_0)
+[2019.01.04-16.10.15:166][  0]LogD3D11RHI:       6052/0/8148 MB DedicatedVideo/DedicatedSystem/SharedSystem, Outputs:2, VendorId:0x10de
+[2019.01.04-16.10.15:167][  0]LogD3D11RHI:    1. 'Microsoft Basic Render Driver' (Feature Level 11_0)
+[2019.01.04-16.10.15:167][  0]LogD3D11RHI:       0/0/8148 MB DedicatedVideo/DedicatedSystem/SharedSystem, Outputs:0, VendorId:0x1414
+[2019.01.04-16.10.15:167][  0]LogD3D11RHI: Chosen D3D11 Adapter: 0
+[2019.01.04-16.10.15:175][  0]LogD3D11RHI: Creating new Direct3DDevice
+[2019.01.04-16.10.15:175][  0]LogD3D11RHI:     GPU DeviceId: 0x1c03 (for the marketing name, search the web for "GPU Device Id")
+[2019.01.04-16.10.15:175][  0]LogWindows: EnumDisplayDevices:
+[2019.01.04-16.10.15:175][  0]LogWindows:    0. 'NVIDIA GeForce GTX 1060 6GB' (P:0 D:1)
+[2019.01.04-16.10.15:176][  0]LogWindows:    1. 'NVIDIA GeForce GTX 1060 6GB' (P:1 D:1)
+[2019.01.04-16.10.15:176][  0]LogWindows:    2. 'NVIDIA GeForce GTX 1060 6GB' (P:0 D:0)
+[2019.01.04-16.10.15:176][  0]LogWindows:    3. 'NVIDIA GeForce GTX 1060 6GB' (P:0 D:0)
+[2019.01.04-16.10.15:176][  0]LogWindows: DebugString: FoundDriverCount:4 
+[2019.01.04-16.10.15:176][  0]LogD3D11RHI:     Adapter Name: NVIDIA GeForce GTX 1060 6GB
+[2019.01.04-16.10.15:176][  0]LogD3D11RHI:   Driver Version: 397.31 (internal:24.21.13.9731, unified:397.31)
+[2019.01.04-16.10.15:176][  0]LogD3D11RHI:      Driver Date: 4-22-2018
+[2019.01.04-16.10.15:176][  0]LogRHI: Texture pool is 4236 MB (70% of 6052 MB)
+[2019.01.04-16.10.15:208][  0]LogD3D11RHI: Async texture creation enabled
+[2019.01.04-16.10.15:261][  0]LogD3D11RHI: GPU Timing Frequency: 1000.000000 (Debug: 2 2)
+[2019.01.04-16.10.15:355][  0]LogShaderCompilers: Guid format shader working directory is 17 characters bigger than the processId version (../../../../Work/Warframe_A/Intermediate/Shaders/WorkingDirectory/8588/).
+[2019.01.04-16.10.15:356][  0]LogShaderCompilers: Cleaned the shader compiler working directory 'C:/Users/aer/AppData/Local/Temp/UnrealShaderWorkingDir/1C4C3FCC4FD3795A76B5C3809DA6AA7E/'.
+[2019.01.04-16.10.15:511][  0]LogTemp: Display: Loaded TP AllDesktopTargetPlatform
+[2019.01.04-16.10.15:517][  0]LogTemp: Display: Loaded TP MacClientTargetPlatform
+[2019.01.04-16.10.15:525][  0]LogTemp: Display: Loaded TP MacNoEditorTargetPlatform
+[2019.01.04-16.10.15:532][  0]LogTemp: Display: Loaded TP MacServerTargetPlatform
+[2019.01.04-16.10.15:540][  0]LogTemp: Display: Loaded TP MacTargetPlatform
+[2019.01.04-16.10.15:548][  0]LogTemp: Display: Loaded TP WindowsClientTargetPlatform
+[2019.01.04-16.10.15:555][  0]LogTemp: Display: Loaded TP WindowsNoEditorTargetPlatform
+[2019.01.04-16.10.15:563][  0]LogTemp: Display: Loaded TP WindowsServerTargetPlatform
+[2019.01.04-16.10.15:566][  0]LogTemp: Display: Loaded TP WindowsTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:607][  0]LogTemp: Display: Loaded TP AndroidTargetPlatform
+[2019.01.04-16.10.15:608][  0]LogTemp: Display: Loaded TP HTML5TargetPlatform
+[2019.01.04-16.10.15:657][  0]LogTemp: Display: Loaded TP IOSTargetPlatform
+[2019.01.04-16.10.15:657][  0]LogTemp: Display: Loaded TP IOSTargetPlatform
+[2019.01.04-16.10.15:671][  0]LogTemp: Display: Loaded TP TVOSTargetPlatform
+[2019.01.04-16.10.15:671][  0]LogTemp: Display: Loaded TP TVOSTargetPlatform
+[2019.01.04-16.10.15:675][  0]LogTemp: Display: Loaded TP LuminTargetPlatform
+[2019.01.04-16.10.15:675][  0]LogTargetPlatformManager: Display: Building Assets For Windows
+[2019.01.04-16.10.15:710][  0]LogXGEController: Cannot use XGE Controller as Incredibuild is not installed on this machine.
+[2019.01.04-16.10.15:710][  0]LogShaderCompilers: Cannot use XGE Shader Compiler as Incredibuild is not installed on this machine.
+[2019.01.04-16.10.15:710][  0]LogShaderCompilers: Display: Using Local Shader Compiler.
+[2019.01.04-16.10.16:233][  0]LogDerivedDataCache: Display: Max Cache Size: 512 MB
+[2019.01.04-16.10.16:281][  0]LogDerivedDataCache: Loaded boot cache 0.05s 71MB ../../../../Work/Warframe_A/DerivedDataCache/Boot.ddc.
+[2019.01.04-16.10.16:282][  0]LogDerivedDataCache: Display: Loaded Boot cache: ../../../../Work/Warframe_A/DerivedDataCache/Boot.ddc
+[2019.01.04-16.10.16:282][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  Pak pak cache file ../../../../Work/Warframe_A/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
+[2019.01.04-16.10.16:282][  0]LogDerivedDataCache: Unable to find inner node Pak for hierarchical cache Hierarchy.
+[2019.01.04-16.10.16:282][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  EnginePak pak cache file ../../../Engine/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
+[2019.01.04-16.10.16:282][  0]LogDerivedDataCache: Unable to find inner node EnginePak for hierarchical cache Hierarchy.
+[2019.01.04-16.10.16:294][  0]LogDerivedDataCache: Using Local data cache path ../../../Engine/DerivedDataCache: Writable
+[2019.01.04-16.10.16:294][  0]LogDerivedDataCache: Shared data cache path not found in *engine.ini, will not use an Shared cache.
+[2019.01.04-16.10.16:294][  0]LogDerivedDataCache: Unable to find inner node Shared for hierarchical cache Hierarchy.
+[2019.01.04-16.10.16:309][  0]LogMaterial: Verifying Global Shaders for PCD3D_SM5
+[2019.01.04-16.10.16:310][  0]LogSlate: Using FreeType 2.6.0
+[2019.01.04-16.10.16:310][  0]LogSlate: SlateFontServices - WITH_FREETYPE: 1, WITH_HARFBUZZ: 1
+[2019.01.04-16.10.16:371][  0]LogAssetRegistry: FAssetRegistry took 0.0239 seconds to start up
+[2019.01.04-16.10.16:588][  0]LogInit: Selected Device Profile: [Windows]
+[2019.01.04-16.10.16:693][  0]LogMeshReduction: Using ProxyLODMeshReduction for automatic mesh merging
+[2019.01.04-16.10.16:693][  0]LogMeshReduction: Using QuadricMeshReduction for automatic static mesh reduction
+[2019.01.04-16.10.16:693][  0]LogMeshReduction: No automatic skeletal mesh reduction module available
+[2019.01.04-16.10.16:693][  0]LogMeshReduction: No distributed automatic mesh merging module available
+[2019.01.04-16.10.16:693][  0]LogMeshMerging: No distributed automatic mesh merging module available
+[2019.01.04-16.10.16:707][  0]LogNetVersion: Warframe_A 1.0.0, NetCL: 0, EngineNetVer: 5, GameNetVer: 0 (Checksum: 1079098011)
+[2019.01.04-16.10.17:035][  0]LogPackageLocalizationCache: Processed 11 localized package path(s) for 1 prioritized culture(s) in 0.032697 seconds
+[2019.01.04-16.10.17:040][  0]LogUObjectArray: 38381 objects as part of root set at end of initial load.
+[2019.01.04-16.10.17:040][  0]LogUObjectAllocator: 6683936 out of 0 bytes used by permanent object pool.
+[2019.01.04-16.10.17:040][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_24x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_24x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_24x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_24x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_24x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_24x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_24x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_24x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Mac/Platform_Mac_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_24x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_24x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_24x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_24x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_24x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_24x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_24x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_24x.png
+[2019.01.04-16.10.17:371][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png' error.
+[2019.01.04-16.10.17:371][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Linux/Platform_Linux_128x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_24x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_24x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_24x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_24x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ATC_24x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ATC_24x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_DXT_24x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_DXT_24x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ETC1_24x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ETC1_24x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ETC1_24x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ETC1_24x.png
+[2019.01.04-16.10.17:372][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:372][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ETC2_24x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ETC2_24x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_PVRTC_24x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_PVRTC_24x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ASTC_24x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ASTC_24x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_24x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_24x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_24x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_24x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ATC_24x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ATC_24x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_DXT_24x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_DXT_24x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ETC1_24x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ETC1_24x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ETC1_24x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ETC1_24x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:373][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:373][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:374][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ETC2_24x.png' error.
+[2019.01.04-16.10.17:374][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ETC2_24x.png
+[2019.01.04-16.10.17:374][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:374][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:374][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:374][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:374][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_PVRTC_24x.png' error.
+[2019.01.04-16.10.17:374][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_PVRTC_24x.png
+[2019.01.04-16.10.17:374][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:374][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:374][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:374][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:374][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ASTC_24x.png' error.
+[2019.01.04-16.10.17:374][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_ASTC_24x.png
+[2019.01.04-16.10.17:374][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:374][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:374][  0]LogStreaming: Warning: Failed to read file '../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png' error.
+[2019.01.04-16.10.17:374][  0]LogSlate: Could not find file for Slate resource: ../../../Engine/Content/Editor/Slate/Launcher/Android/Platform_Android_128x.png
+[2019.01.04-16.10.17:658][  0]LogTcpMessaging: Initializing TcpMessaging bridge
+[2019.01.04-16.10.17:670][  0]LogUdpMessaging: Initializing bridge on interface 0.0.0.0:0 to multicast group 230.0.0.1:6666.
+[2019.01.04-16.10.17:785][  0]SourceControl: Source control is disabled
+[2019.01.04-16.10.17:785][  0]SourceControl: Source control is disabled
+[2019.01.04-16.10.17:786][  0]SourceControl: Source control is disabled
+[2019.01.04-16.10.17:787][  0]SourceControl: Source control is disabled
+[2019.01.04-16.10.17:934][  0]LogAndroidPermission: UAndroidPermissionCallbackProxy::GetInstance
+[2019.01.04-16.10.18:000][  0]LogOcInput: OculusInput pre-init called
+[2019.01.04-16.10.18:044][  0]LogEngine: Initializing Engine...
+[2019.01.04-16.10.18:045][  0]LogHMD: Failed to initialize OpenVR with code 110
+[2019.01.04-16.10.18:046][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: ImportINI prefixes -  0.000 s
+[2019.01.04-16.10.18:046][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: Construct from data asset -  0.000 s
+[2019.01.04-16.10.18:046][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: ImportINI -  0.000 s
+[2019.01.04-16.10.18:046][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: GameplayTagTreeChangedEvent.Broadcast -  0.000 s
+[2019.01.04-16.10.18:211][  0]LogInit: Initializing FReadOnlyCVARCache
+[2019.01.04-16.10.18:219][  0]LogAIModule: Creating AISystem for world Untitled
+[2019.01.04-16.10.18:281][  0]LogInit: XAudio2 using '扬声器 (2- Realtek High Definition Audio)' : 2 channels at 48 kHz using 16 bits per sample (channel mask 0x3)
+[2019.01.04-16.10.18:294][  0]LogInit: FAudioDevice initialized.
+[2019.01.04-16.10.18:295][  0]LogNetVersion: Set ProjectVersion to 1.0.0.0. Version Checksum will be recalculated on next use.
+[2019.01.04-16.10.18:442][  0]LogDerivedDataCache: Saved boot cache 0.15s 71MB ../../../../Work/Warframe_A/DerivedDataCache/Boot.ddc.
+[2019.01.04-16.10.18:449][  0]LogInit: Texture streaming: Enabled
+[2019.01.04-16.10.18:461][  0]LogEngineSessionManager: EngineSessionManager initialized
+[2019.01.04-16.10.18:470][  0]LogInit: Transaction tracking system initialized
+[2019.01.04-16.10.18:484][  0]BlueprintLog: New page: Editor Load
+[2019.01.04-16.10.18:527][  0]LocalizationService: Localization service is disabled
+[2019.01.04-16.10.18:723][  0]LogCook: Display: Max memory allowance for cook 16384mb min free memory 0mb
+[2019.01.04-16.10.18:723][  0]LogCook: Display: Mobile HDR setting 1
+[2019.01.04-16.10.18:723][  0]LogGameplayTags: Display: UGameplayTagsManager::DoneAddingNativeTags. DelegateIsBound: 0
+[2019.01.04-16.10.18:723][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: ImportINI prefixes -  0.000 s
+[2019.01.04-16.10.18:723][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: Construct from data asset -  0.000 s
+[2019.01.04-16.10.18:723][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: ImportINI -  0.000 s
+[2019.01.04-16.10.18:723][  0]LogStats: UGameplayTagsManager::ConstructGameplayTagTree: GameplayTagTreeChangedEvent.Broadcast -  0.000 s
+[2019.01.04-16.10.18:797][  0]LogFileCache: Scanning file cache for directory 'Q:/Work/Warframe_A/Content/' took 0.01s
+[2019.01.04-16.10.18:797][  0]SourceControl: Source control is disabled
+[2019.01.04-16.10.18:797][  0]Cmd: MAP LOAD FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Maps/ThirdPersonExampleMap.umap" TEMPLATE=0 SHOWPROGRESS=1 FEATURELEVEL=3
+[2019.01.04-16.10.18:797][  0]LightingResults: New page: Lighting Build
+[2019.01.04-16.10.18:799][  0]MapCheck: New page: Map Check
+[2019.01.04-16.10.18:799][  0]LightingResults: New page: Lighting Build
+[2019.01.04-16.10.19:166][  0]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2019.01.04-16.10.19:173][  0]LogEditorServer: Finished looking for orphan Actors (0.000 secs)
+[2019.01.04-16.10.19:193][  0]Cmd: MAP CHECKDEP NOCLEARLOG
+[2019.01.04-16.10.19:234][  0]MapCheck: Map check complete: 0 Error(s), 0 Warning(s), took 40.697ms to complete.
+[2019.01.04-16.10.19:234][  0]LogFileHelpers: Loading map 'ThirdPersonExampleMap' took 0.437
+[2019.01.04-16.10.19:331][  0]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.10.19:337][  0]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.10.19:343][  0]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.10.19:348][  0]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.10.19:352][  0]LogCollectionManager: Loaded 0 collections in 0.000789 seconds
+[2019.01.04-16.10.19:392][  0]LogFileCache: Scanning file cache for directory 'Q:/Work/Warframe_A/Saved/Collections/' took 0.01s
+[2019.01.04-16.10.19:392][  0]LogFileCache: Scanning file cache for directory 'Q:/Work/Warframe_A/Content/Developers/aer/Collections/' took 0.01s
+[2019.01.04-16.10.19:392][  0]LogFileCache: Scanning file cache for directory 'Q:/Work/Warframe_A/Content/Collections/' took 0.01s
+[2019.01.04-16.10.19:392][  0]LogCollectionManager: Rebuilt the GUID cache for 0 collections in 0.000000 seconds
+[2019.01.04-16.10.19:400][  0]LogContentBrowser: Native class hierarchy populated in 0.0072 seconds. Added 2571 classes and 601 folders.
+[2019.01.04-16.10.19:404][  0]LogContentBrowser: Native class hierarchy updated for 'WidgetCarousel' in 0.0002 seconds. Added 0 classes and 0 folders.
+[2019.01.04-16.10.19:433][  0]LogContentBrowser: Native class hierarchy updated for 'AddContentDialog' in 0.0002 seconds. Added 0 classes and 0 folders.
+[2019.01.04-16.10.19:436][  0]LogContentBrowser: Native class hierarchy updated for 'SceneOutliner' in 0.0002 seconds. Added 1 classes and 2 folders.
+[2019.01.04-16.10.19:447][  0]LogSlate: Took 0.000151 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K)
+[2019.01.04-16.10.19:448][  0]LogSlate: Took 0.000117 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' (160K)
+[2019.01.04-16.10.19:452][  0]LogSlate: Took 0.000136 seconds to synchronously load lazily loaded font '../../../Engine/Content/Editor/Slate/Fonts/FontAwesome.ttf' (139K)
+[2019.01.04-16.10.19:509][  0]LogRenderer: Reallocating scene render targets to support 1208x576 Format 10 NumSamples 1 (Frame:1).
+[2019.01.04-16.10.19:644][  0]LogContentBrowser: Native class hierarchy updated for 'HierarchicalLODOutliner' in 0.0002 seconds. Added 0 classes and 0 folders.
+[2019.01.04-16.10.19:644][  0]LogLoad: (Engine Initialization) Total time: 6.30 seconds
+[2019.01.04-16.10.19:644][  0]LogLoad: (Engine Initialization) Total Blueprint compile time: 0.00 seconds
+[2019.01.04-16.10.19:680][  0]LogContentStreaming: Texture pool size now 3000 MB
+[2019.01.04-16.10.19:698][  0]LogSlate: Took 0.000135 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Light.ttf' (167K)
+[2019.01.04-16.10.19:714][  1]LogAssetRegistry: Asset discovery search completed in 3.3653 seconds
+[2019.01.04-16.10.19:715][  1]LogCollectionManager: Rebuilt the object cache for 0 collections in 0.000004 seconds (found 0 objects)
+[2019.01.04-16.10.19:715][  1]LogCollectionManager: Fixed up redirectors for 0 collections in 0.000037 seconds (updated 0 objects)
+[2019.01.04-16.12.04:168][312]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.12.06:114][531]LogTemp: Repeating last play command: Selected Viewport
+[2019.01.04-16.12.06:170][531]LogBlueprintUserMessages: Early PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.12.06:188][531]LogPlayLevel: PlayLevel: No blueprints needed recompiling
+[2019.01.04-16.12.06:211][531]PIE: New page: PIE session: ThirdPersonExampleMap (Jan 5, 2019, 8:12:06 AM)
+[2019.01.04-16.12.06:232][531]LogPlayLevel: Creating play world package: /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap
+[2019.01.04-16.12.06:295][531]LogPlayLevel: PIE: StaticDuplicateObject took: (0.062915s)
+[2019.01.04-16.12.06:296][531]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2019.01.04-16.12.06:296][531]LogPlayLevel: PIE: World Init took: (0.000629s)
+[2019.01.04-16.12.06:296][531]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap to /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap (0.063720s)
+[2019.01.04-16.12.06:343][531]LogInit: XAudio2 using '扬声器 (2- Realtek High Definition Audio)' : 2 channels at 48 kHz using 16 bits per sample (channel mask 0x3)
+[2019.01.04-16.12.06:354][531]LogInit: FAudioDevice initialized.
+[2019.01.04-16.12.06:591][531]LogLoad: Game class is 'ThirdPersonGameMode_C'
+[2019.01.04-16.12.06:622][531]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2019.01.05-00.12.06
+[2019.01.04-16.12.06:854][531]LogWorld: Bringing up level for play took: 0.246602
+[2019.01.04-16.12.06:946][531]LogContentBrowser: Native class hierarchy updated for 'MovieSceneCapture' in 0.0002 seconds. Added 10 classes and 0 folders.
+[2019.01.04-16.12.07:056][531]PIE: Play in editor start time for /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap 0.259
+[2019.01.04-16.12.07:056][531]LogBlueprintUserMessages: Late PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.12.24:161][529]LogBlueprintUserMessages: Early EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.12.24:194][529]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.12.24:232][529]LogPlayLevel: Display: Shutting down PIE online subsystems
+[2019.01.04-16.12.24:233][529]LogBlueprintUserMessages: Late EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.12.24:270][529]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.12.24:294][530]LogPlayLevel: Display: Destroying online subsystem :Context_1
+[2019.01.04-16.12.26:122][749]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.12.26:205][759]LogTemp: Repeating last play command: Selected Viewport
+[2019.01.04-16.12.26:222][759]LogBlueprintUserMessages: Early PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.12.26:222][759]LogPlayLevel: PlayLevel: No blueprints needed recompiling
+[2019.01.04-16.12.26:222][759]PIE: New page: PIE session: ThirdPersonExampleMap (Jan 5, 2019, 8:12:26 AM)
+[2019.01.04-16.12.26:222][759]LogPlayLevel: Creating play world package: /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap
+[2019.01.04-16.12.26:231][759]LogPlayLevel: PIE: StaticDuplicateObject took: (0.009195s)
+[2019.01.04-16.12.26:232][759]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2019.01.04-16.12.26:232][759]LogPlayLevel: PIE: World Init took: (0.000546s)
+[2019.01.04-16.12.26:232][759]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap to /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap (0.009847s)
+[2019.01.04-16.12.26:262][759]LogInit: XAudio2 using '扬声器 (2- Realtek High Definition Audio)' : 2 channels at 48 kHz using 16 bits per sample (channel mask 0x3)
+[2019.01.04-16.12.26:272][759]LogInit: FAudioDevice initialized.
+[2019.01.04-16.12.26:319][759]LogLoad: Game class is 'ThirdPersonGameMode_C'
+[2019.01.04-16.12.26:321][759]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2019.01.05-00.12.26
+[2019.01.04-16.12.26:321][759]LogWorld: Bringing up level for play took: 0.001288
+[2019.01.04-16.12.26:335][759]PIE: Play in editor start time for /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap -0.462
+[2019.01.04-16.12.26:335][759]LogBlueprintUserMessages: Late PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.12.32:626][512]LogBlueprintUserMessages: Early EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.12.32:626][512]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.12.32:658][512]LogPlayLevel: Display: Shutting down PIE online subsystems
+[2019.01.04-16.12.32:658][512]LogBlueprintUserMessages: Late EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.12.32:680][512]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.12.32:727][517]LogPlayLevel: Display: Destroying online subsystem :Context_2
+[2019.01.04-16.12.33:846][651]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.12.47:006][224]LogSlate: Took 0.000161 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Light.ttf' (167K)
+[2019.01.04-16.12.47:012][224]LogAssetEditorManager: Opening Asset editor for Blueprint /Game/ThirdPersonBP/Blueprints/TempTenno.TempTenno
+[2019.01.04-16.12.47:409][224]LogContentBrowser: Native class hierarchy updated for 'BlueprintGraph' in 0.0004 seconds. Added 116 classes and 0 folders.
+[2019.01.04-16.12.48:258][224]LogSlate: Took 0.000143 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-BoldCondensed.ttf' (158K)
+[2019.01.04-16.12.48:464][225]LogSlate: Took 0.000156 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Italic.ttf' (157K)
+[2019.01.04-16.12.56:613][ 16]LogAssetEditorManager: Opening Asset editor for SkeletalMesh /Game/AnimStarterPack/UE4_Mannequin/Mesh/SK_Mannequin.SK_Mannequin
+[2019.01.04-16.12.56:619][ 16]LogContentBrowser: Native class hierarchy updated for 'SkeletonEditor' in 0.0002 seconds. Added 1 classes and 2 folders.
+[2019.01.04-16.12.56:715][ 16]LogActorComponent: RegisterComponentWithWorld: (/Engine/Transient.World_7:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) Already registered. Aborting.
+[2019.01.04-16.12.56:719][ 16]LogContentBrowser: Native class hierarchy updated for 'PinnedCommandList' in 0.0002 seconds. Added 1 classes and 0 folders.
+[2019.01.04-16.12.56:757][ 16]LogSkeletalMesh: USkeletalMeshComponent::InitArticulated : Bodies already created (/Engine/Transient.World_7:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) - call TermArticulated first.
+[2019.01.04-16.12.57:134][ 16]LogContentBrowser: Native class hierarchy updated for 'ClothingSystemEditorInterface' in 0.0002 seconds. Added 1 classes and 0 folders.
+[2019.01.04-16.12.57:169][ 17]LogRenderer: Reallocating scene render targets to support 1208x888 Format 10 NumSamples 1 (Frame:1).
+[2019.01.04-16.12.59:573][255]LogAssetEditorManager: Opening Asset editor for Skeleton /Game/AnimStarterPack/UE4_Mannequin/Mesh/UE4_Mannequin_Skeleton.UE4_Mannequin_Skeleton
+[2019.01.04-16.12.59:580][255]LogActorComponent: RegisterComponentWithWorld: (/Engine/Transient.World_8:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) Already registered. Aborting.
+[2019.01.04-16.12.59:642][255]LogSkeletalMesh: USkeletalMeshComponent::InitArticulated : Bodies already created (/Engine/Transient.World_8:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) - call TermArticulated first.
+[2019.01.04-16.14.36:406][276]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.16.03:010][753]Cmd: TRANSACTION UNDO
+[2019.01.04-16.16.03:021][753]LogEditorTransaction: Undo Rotate Socket
+[2019.01.04-16.16.03:201][753]LogActorComponent: RegisterComponentWithWorld: (/Engine/Transient.World_7:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) Already registered. Aborting.
+[2019.01.04-16.16.03:228][753]LogActorComponent: RegisterComponentWithWorld: (/Engine/Transient.World_8:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) Already registered. Aborting.
+[2019.01.04-16.16.19:005][430]LogSlate: FSceneViewport::OnFocusLost() reason 2
+[2019.01.04-16.16.20:500][592]LogSlate: FSceneViewport::OnFocusLost() reason 2
+[2019.01.04-16.16.31:961][523]LogSlate: FSceneViewport::OnFocusLost() reason 2
+[2019.01.04-16.17.21:395][184]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.17.26:752][660]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.17.31:737][137]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.17.43:715][384]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.17.54:011][459]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.18.04:363][472]LogSlate: FSceneViewport::OnFocusLost() reason 2
+[2019.01.04-16.19.13:458][671]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.20.21:087][  7]LogSlate: FSceneViewport::OnFocusLost() reason 2
+[2019.01.04-16.20.29:343][777]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.21.43:994][253]LogFileHelpers: Editor autosave (incl. sublevels) for '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap' took 0.026
+[2019.01.04-16.21.43:995][253]OBJ SavePackage: Generating thumbnails for [0] asset(s) in package [/Game/AnimStarterPack/UE4_Mannequin/Mesh/UE4_Mannequin_Skeleton] ([1] browsable assets)...
+[2019.01.04-16.21.43:995][253]OBJ SavePackage: Finished generating thumbnails for package [/Game/AnimStarterPack/UE4_Mannequin/Mesh/UE4_Mannequin_Skeleton]
+[2019.01.04-16.21.44:029][253]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/UE4_Mannequin_Skeleton_Auto13DE61E4B4AE1098AF142D380CF382F33.tmp' to '../../../../Work/Warframe_A/Saved/Autosaves/Game/AnimStarterPack/UE4_Mannequin/Mesh/UE4_Mannequin_Skeleton_Auto1.uasset'
+[2019.01.04-16.21.44:029][253]LogFileHelpers: Auto-saving content packages took 0.035
+[2019.01.04-16.21.58:636][297]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.23.22:379][621]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.24.21:718][370]LogAssetEditorManager: Opening Asset editor for Blueprint /Game/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base.Weapon_Base
+[2019.01.04-16.24.58:506][508]LogTemp: Repeating last play command: Selected Viewport
+[2019.01.04-16.24.58:527][508]LogBlueprintUserMessages: Early PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.24.58:527][508]BlueprintLog: New page: Pre-Play auto-recompile
+[2019.01.04-16.24.58:547][508]LogPlayLevel: [PlayLevel] Compiling TempTenno before play...
+[2019.01.04-16.24.58:687][508]LogPlayLevel: PlayLevel: Blueprint regeneration took 159 ms (1 blueprints)
+[2019.01.04-16.24.58:687][508]PIE: New page: PIE session: ThirdPersonExampleMap (Jan 5, 2019, 8:24:58 AM)
+[2019.01.04-16.24.58:687][508]LogPlayLevel: Creating play world package: /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap
+[2019.01.04-16.24.58:697][508]LogPlayLevel: PIE: StaticDuplicateObject took: (0.009484s)
+[2019.01.04-16.24.58:697][508]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2019.01.04-16.24.58:698][508]LogPlayLevel: PIE: World Init took: (0.000634s)
+[2019.01.04-16.24.58:698][508]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap to /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap (0.010228s)
+[2019.01.04-16.24.58:734][508]LogInit: XAudio2 using '扬声器 (2- Realtek High Definition Audio)' : 2 channels at 48 kHz using 16 bits per sample (channel mask 0x3)
+[2019.01.04-16.24.58:744][508]LogInit: FAudioDevice initialized.
+[2019.01.04-16.24.58:774][508]LogLoad: Game class is 'ThirdPersonGameMode_C'
+[2019.01.04-16.24.58:775][508]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2019.01.05-00.24.58
+[2019.01.04-16.24.58:776][508]LogWorld: Bringing up level for play took: 0.001378
+[2019.01.04-16.24.58:815][508]PIE: Play in editor start time for /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap 0.018
+[2019.01.04-16.24.58:815][508]LogBlueprintUserMessages: Late PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.25.23:027][403]LogBlueprintUserMessages: Early EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.25.23:028][403]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.25.23:059][403]LogPlayLevel: Display: Shutting down PIE online subsystems
+[2019.01.04-16.25.23:059][403]LogBlueprintUserMessages: Late EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.25.23:086][403]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.25.23:129][407]LogPlayLevel: Display: Destroying online subsystem :Context_16
+[2019.01.04-16.25.24:226][538]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.25.26:494][801]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.25.33:680][657]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.25.33:763][667]BlueprintLog: New page: Compile Weapon_Base
+[2019.01.04-16.25.34:235][701]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base" FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base.uasset" SILENT=true
+[2019.01.04-16.25.34:276][701]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/Weapon_Base6E77DE55481037B2269A36AA4F25D92C.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base.uasset'
+[2019.01.04-16.25.37:010][868]LogTemp: Repeating last play command: Selected Viewport
+[2019.01.04-16.25.37:033][868]LogBlueprintUserMessages: Early PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.25.37:033][868]LogPlayLevel: PlayLevel: No blueprints needed recompiling
+[2019.01.04-16.25.37:033][868]PIE: New page: PIE session: ThirdPersonExampleMap (Jan 5, 2019, 8:25:37 AM)
+[2019.01.04-16.25.37:033][868]LogPlayLevel: Creating play world package: /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap
+[2019.01.04-16.25.37:042][868]LogPlayLevel: PIE: StaticDuplicateObject took: (0.008900s)
+[2019.01.04-16.25.37:042][868]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2019.01.04-16.25.37:043][868]LogPlayLevel: PIE: World Init took: (0.000644s)
+[2019.01.04-16.25.37:043][868]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap to /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap (0.009663s)
+[2019.01.04-16.25.37:078][868]LogInit: XAudio2 using '扬声器 (2- Realtek High Definition Audio)' : 2 channels at 48 kHz using 16 bits per sample (channel mask 0x3)
+[2019.01.04-16.25.37:088][868]LogInit: FAudioDevice initialized.
+[2019.01.04-16.25.37:118][868]LogLoad: Game class is 'ThirdPersonGameMode_C'
+[2019.01.04-16.25.37:120][868]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2019.01.05-00.25.37
+[2019.01.04-16.25.37:120][868]LogWorld: Bringing up level for play took: 0.001300
+[2019.01.04-16.25.37:134][868]PIE: Play in editor start time for /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap 0.338
+[2019.01.04-16.25.37:135][868]LogBlueprintUserMessages: Late PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.25.39:765][182]LogBlueprintUserMessages: Early EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.25.39:765][182]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.25.39:796][182]LogPlayLevel: Display: Shutting down PIE online subsystems
+[2019.01.04-16.25.39:797][182]LogBlueprintUserMessages: Late EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.25.39:825][182]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.25.39:865][186]LogPlayLevel: Display: Destroying online subsystem :Context_17
+[2019.01.04-16.25.42:163][421]Cmd: TRANSACTION UNDO
+[2019.01.04-16.25.42:163][421]LogEditorTransaction: Undo Modify Component(s)
+[2019.01.04-16.25.42:312][421]LogActorComponent: RegisterComponentWithWorld: (/Engine/Transient.World_7:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) Already registered. Aborting.
+[2019.01.04-16.25.42:313][421]LogActorComponent: RegisterComponentWithWorld: (/Engine/Transient.World_8:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) Already registered. Aborting.
+[2019.01.04-16.25.44:002][613]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.25.44:074][620]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base" FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base.uasset" SILENT=true
+[2019.01.04-16.25.44:087][620]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/Weapon_Base0815CDA643B14AB34D9454922CF9ABB5.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base.uasset'
+[2019.01.04-16.25.44:773][701]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.25.45:229][756]BlueprintLog: New page: Compile Weapon_Base
+[2019.01.04-16.27.10:835][762]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.31.29:245][854]LogSlate: Window 'Pick Parent Class' being destroyed
+[2019.01.04-16.31.36:243][683]LogAssetEditorManager: Opening Asset editor for Blueprint /Game/ThirdPersonBP/Blueprints/Projectile_Base.Projectile_Base
+[2019.01.04-16.31.49:505][151]LogStaticMesh: Building static mesh Shape_WideCapsule...
+[2019.01.04-16.31.49:533][151]LogStaticMesh: Built static mesh [0.04s] /Game/StarterContent/Shapes/Shape_WideCapsule.Shape_WideCapsule
+[2019.01.04-16.31.49:565][151]LogMaterial: Display: Missing cached shader map for material M_Basic_Wall, compiling. 
+[2019.01.04-16.31.49:821][151]LogShaderCompilers: Display: Shaders left to compile 31
+[2019.01.04-16.31.49:821][151]LogShaderCompilers: Display: Shaders left to compile 21
+[2019.01.04-16.31.49:821][151]LogShaderCompilers: Display: Shaders left to compile 11
+[2019.01.04-16.31.49:821][151]LogShaderCompilers: Display: Shaders left to compile 1
+[2019.01.04-16.31.54:752][656]LogSlate: FSceneViewport::OnFocusLost() reason 2
+[2019.01.04-16.31.57:893][971]LogStaticMesh: Building static mesh Shape_NarrowCapsule...
+[2019.01.04-16.31.57:901][971]LogSlate: FSceneViewport::OnFocusLost() reason 2
+[2019.01.04-16.31.57:914][971]LogStaticMesh: Built static mesh [0.02s] /Game/StarterContent/Shapes/Shape_NarrowCapsule.Shape_NarrowCapsule
+[2019.01.04-16.34.26:664][ 85]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/ThirdPersonExampleMap_Auto200F5631D4B17E2316028FBBF926229F8.tmp' to '../../../../Work/Warframe_A/Saved/Autosaves/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap_Auto2.umap'
+[2019.01.04-16.34.26:681][ 85]LogFileHelpers: Editor autosave (incl. sublevels) for '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap' took 0.255
+[2019.01.04-16.34.26:681][ 85]LogFileHelpers: Editor autosave (incl. sublevels) for all levels took 0.255
+[2019.01.04-16.34.26:682][ 85]OBJ SavePackage: Generating thumbnails for [1] asset(s) in package [/Game/ThirdPersonBP/Blueprints/TempTenno] ([1] browsable assets)...
+[2019.01.04-16.34.26:691][ 85]OBJ SavePackage:     Rendered thumbnail for [Blueprint /Game/ThirdPersonBP/Blueprints/TempTenno.TempTenno]
+[2019.01.04-16.34.26:691][ 85]OBJ SavePackage: Finished generating thumbnails for package [/Game/ThirdPersonBP/Blueprints/TempTenno]
+[2019.01.04-16.34.26:691][ 85]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/TempTenno" FILE="../../../../Work/Warframe_A/Saved/Autosaves/Game/ThirdPersonBP/Blueprints/TempTenno_Auto2.uasset" SILENT=false AUTOSAVING=true
+[2019.01.04-16.34.26:734][ 85]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/TempTenno_Auto22554F0274C86EF643080A9940669D973.tmp' to '../../../../Work/Warframe_A/Saved/Autosaves/Game/ThirdPersonBP/Blueprints/TempTenno_Auto2.uasset'
+[2019.01.04-16.34.26:765][ 85]OBJ SavePackage: Generating thumbnails for [1] asset(s) in package [/Game/ThirdPersonBP/Blueprints/Projectile_Base] ([1] browsable assets)...
+[2019.01.04-16.34.26:774][ 85]OBJ SavePackage:     Rendered thumbnail for [Blueprint /Game/ThirdPersonBP/Blueprints/Projectile_Base.Projectile_Base]
+[2019.01.04-16.34.26:774][ 85]OBJ SavePackage: Finished generating thumbnails for package [/Game/ThirdPersonBP/Blueprints/Projectile_Base]
+[2019.01.04-16.34.26:789][ 85]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/Projectile_Base_Auto254D68BBA4E84B27BCEFB8D9855D3965C.tmp' to '../../../../Work/Warframe_A/Saved/Autosaves/Game/ThirdPersonBP/Blueprints/Projectile_Base_Auto2.uasset'
+[2019.01.04-16.34.26:789][ 85]LogFileHelpers: Auto-saving content packages took 0.108
+[2019.01.04-16.44.16:645][799]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.44.33:102][419]LogAssetEditorManager: Opening Asset editor for SkeletalMesh /Game/ThirdPersonBP/Blueprints/Weapon/AK47/AK.AK
+[2019.01.04-16.44.33:106][419]LogActorComponent: RegisterComponentWithWorld: (/Engine/Transient.World_15:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) Already registered. Aborting.
+[2019.01.04-16.44.33:131][419]LogSkeletalMesh: USkeletalMeshComponent::InitArticulated : Bodies already created (/Engine/Transient.World_15:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) - call TermArticulated first.
+[2019.01.04-16.44.34:619][543]LogAssetEditorManager: Opening Asset editor for Skeleton /Game/ThirdPersonBP/Blueprints/Weapon/AK47/AK_Skeleton.AK_Skeleton
+[2019.01.04-16.44.34:641][543]LogActorComponent: RegisterComponentWithWorld: (/Engine/Transient.World_16:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) Already registered. Aborting.
+[2019.01.04-16.44.34:665][543]LogSkeletalMesh: USkeletalMeshComponent::InitArticulated : Bodies already created (/Engine/Transient.World_16:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) - call TermArticulated first.
+[2019.01.04-16.44.52:019][386]Cmd: TRANSACTION UNDO
+[2019.01.04-16.44.52:019][386]LogEditorTransaction: Undo Translate Bone
+[2019.01.04-16.44.52:314][386]LogActorComponent: RegisterComponentWithWorld: (/Engine/Transient.World_7:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) Already registered. Aborting.
+[2019.01.04-16.44.52:315][386]LogActorComponent: RegisterComponentWithWorld: (/Engine/Transient.World_8:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) Already registered. Aborting.
+[2019.01.04-16.44.52:318][386]LogActorComponent: RegisterComponentWithWorld: (/Engine/Transient.World_15:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) Already registered. Aborting.
+[2019.01.04-16.44.52:319][386]LogActorComponent: RegisterComponentWithWorld: (/Engine/Transient.World_16:PersistentLevel.AnimationEditorPreviewActor_0.DebugSkelMeshComponent_0) Already registered. Aborting.
+[2019.01.04-16.44.52:844][419]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.45.20:586][374]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.45.20:649][380]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/Weapon/AK47/AK_Skeleton" FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/AK_Skeleton.uasset" SILENT=true
+[2019.01.04-16.45.20:662][380]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/AK_Skeleton2664EF414C1A8ECDF2F5A8A7C97DCFCB.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/AK_Skeleton.uasset'
+[2019.01.04-16.45.22:900][639]BlueprintLog: New page: Compile Projectile_Base
+[2019.01.04-16.45.23:278][663]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/Projectile_Base" FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Projectile_Base.uasset" SILENT=true
+[2019.01.04-16.45.23:294][663]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/Projectile_BaseD70143454D44A661E5571694D1CED403.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Projectile_Base.uasset'
+[2019.01.04-16.45.56:124][441]LogAssetEditorManager: Opening Asset editor for Blueprint /Game/ThirdPersonBP/Blueprints/TennoController.TennoController
+[2019.01.04-16.46.11:778][231]LogSlate: Took 0.000203 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-BoldCondensedItalic.ttf' (160K)
+[2019.01.04-16.46.40:248][524]BlueprintLog: New page: Compile Weapon_Base
+[2019.01.04-16.46.40:659][554]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base" FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base.uasset" SILENT=true
+[2019.01.04-16.46.40:684][554]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/Weapon_Base622F4FFA4C08F07E9377D7B89BEE3C4B.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base.uasset'
+[2019.01.04-16.46.43:185][841]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/Projectile_Base" FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Projectile_Base.uasset" SILENT=true
+[2019.01.04-16.46.43:206][841]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/Projectile_Base99B1E1604BFE225DE1F787BA1DAA8704.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Projectile_Base.uasset'
+[2019.01.04-16.46.43:489][873]BlueprintLog: New page: Compile Projectile_Base
+[2019.01.04-16.47.25:878][835]LogSlate: Prevented a slow task dialog from being summoned while a context menu was open
+[2019.01.04-16.48.03:860][300]BlueprintLog: New page: Compile Weapon_Base
+[2019.01.04-16.48.04:271][329]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base" FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base.uasset" SILENT=true
+[2019.01.04-16.48.04:291][329]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/Weapon_Base63412CE14797A05D97FA6D905419EA8E.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/Weapon_Base.uasset'
+[2019.01.04-16.48.57:344][459]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/TempTenno" FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/TempTenno.uasset" SILENT=true
+[2019.01.04-16.48.57:390][459]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/TempTennoC8214C7A48743D3FFC18C7A6B5ED0BC2.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/TempTenno.uasset'
+[2019.01.04-16.48.57:620][485]BlueprintLog: New page: Compile TempTenno
+[2019.01.04-16.49.00:616][777]LogTemp: Repeating last play command: Selected Viewport
+[2019.01.04-16.49.00:645][777]LogBlueprintUserMessages: Early PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.49.00:645][777]LogPlayLevel: PlayLevel: No blueprints needed recompiling
+[2019.01.04-16.49.00:645][777]PIE: New page: PIE session: ThirdPersonExampleMap (Jan 5, 2019, 8:49:00 AM)
+[2019.01.04-16.49.00:645][777]LogPlayLevel: Creating play world package: /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap
+[2019.01.04-16.49.00:655][777]LogPlayLevel: PIE: StaticDuplicateObject took: (0.009385s)
+[2019.01.04-16.49.00:655][777]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2019.01.04-16.49.00:656][777]LogPlayLevel: PIE: World Init took: (0.000673s)
+[2019.01.04-16.49.00:656][777]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap to /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap (0.010173s)
+[2019.01.04-16.49.00:719][777]LogInit: XAudio2 using '扬声器 (2- Realtek High Definition Audio)' : 2 channels at 48 kHz using 16 bits per sample (channel mask 0x3)
+[2019.01.04-16.49.00:730][777]LogInit: FAudioDevice initialized.
+[2019.01.04-16.49.00:767][777]LogLoad: Game class is 'ThirdPersonGameMode_C'
+[2019.01.04-16.49.00:774][777]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2019.01.05-00.49.00
+[2019.01.04-16.49.00:775][777]LogWorld: Bringing up level for play took: 0.004133
+[2019.01.04-16.49.00:796][777]PIE: Play in editor start time for /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap -0
+[2019.01.04-16.49.00:796][777]LogBlueprintUserMessages: Late PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.49.08:667][719]LogBlueprintUserMessages: Early EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.49.08:667][719]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.49.08:703][719]LogPlayLevel: Display: Shutting down PIE online subsystems
+[2019.01.04-16.49.08:704][719]LogBlueprintUserMessages: Late EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.49.08:735][719]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.49.08:768][721]LogPlayLevel: Display: Destroying online subsystem :Context_23
+[2019.01.04-16.49.10:026][863]LogSlate: FSceneViewport::OnFocusLost() reason 2
+[2019.01.04-16.49.20:008][923]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.49.31:793][198]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.49.31:881][207]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/Weapon/AK47/AK_Skeleton" FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/AK_Skeleton.uasset" SILENT=true
+[2019.01.04-16.49.31:889][207]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/AK_SkeletonFFA831B842A969FB78C236AA55499ACD.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/AK_Skeleton.uasset'
+[2019.01.04-16.49.34:198][387]LogTemp: Repeating last play command: Selected Viewport
+[2019.01.04-16.49.34:220][387]LogBlueprintUserMessages: Early PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.49.34:220][387]LogPlayLevel: PlayLevel: No blueprints needed recompiling
+[2019.01.04-16.49.34:220][387]PIE: New page: PIE session: ThirdPersonExampleMap (Jan 5, 2019, 8:49:34 AM)
+[2019.01.04-16.49.34:220][387]LogPlayLevel: Creating play world package: /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap
+[2019.01.04-16.49.34:231][387]LogPlayLevel: PIE: StaticDuplicateObject took: (0.010790s)
+[2019.01.04-16.49.34:231][387]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2019.01.04-16.49.34:232][387]LogPlayLevel: PIE: World Init took: (0.000572s)
+[2019.01.04-16.49.34:232][387]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap to /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap (0.011485s)
+[2019.01.04-16.49.34:271][387]LogInit: XAudio2 using '扬声器 (2- Realtek High Definition Audio)' : 2 channels at 48 kHz using 16 bits per sample (channel mask 0x3)
+[2019.01.04-16.49.34:281][387]LogInit: FAudioDevice initialized.
+[2019.01.04-16.49.34:313][387]LogLoad: Game class is 'ThirdPersonGameMode_C'
+[2019.01.04-16.49.34:320][387]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2019.01.05-00.49.34
+[2019.01.04-16.49.34:321][387]LogWorld: Bringing up level for play took: 0.005705
+[2019.01.04-16.49.34:336][387]PIE: Play in editor start time for /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap -0.46
+[2019.01.04-16.49.34:336][387]LogBlueprintUserMessages: Late PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.49.36:817][672]LogBlueprintUserMessages: Early EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.49.36:818][672]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.49.36:855][672]LogPlayLevel: Display: Shutting down PIE online subsystems
+[2019.01.04-16.49.36:855][672]LogBlueprintUserMessages: Late EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.49.36:881][672]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.49.36:920][675]LogPlayLevel: Display: Destroying online subsystem :Context_24
+[2019.01.04-16.49.37:952][751]LogSlate: FSceneViewport::OnFocusLost() reason 2
+[2019.01.04-16.49.48:160][820]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.49.48:249][829]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/Weapon/AK47/AK_Skeleton" FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/AK_Skeleton.uasset" SILENT=true
+[2019.01.04-16.49.48:257][829]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/AK_Skeleton6CB7BE9B41BF332EA5C51BA44DA30FC2.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Weapon/AK47/AK_Skeleton.uasset'
+[2019.01.04-16.49.50:021][949]LogTemp: Repeating last play command: Selected Viewport
+[2019.01.04-16.49.50:043][949]LogBlueprintUserMessages: Early PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.49.50:043][949]LogPlayLevel: PlayLevel: No blueprints needed recompiling
+[2019.01.04-16.49.50:044][949]PIE: New page: PIE session: ThirdPersonExampleMap (Jan 5, 2019, 8:49:50 AM)
+[2019.01.04-16.49.50:044][949]LogPlayLevel: Creating play world package: /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap
+[2019.01.04-16.49.50:054][949]LogPlayLevel: PIE: StaticDuplicateObject took: (0.010500s)
+[2019.01.04-16.49.50:055][949]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2019.01.04-16.49.50:055][949]LogPlayLevel: PIE: World Init took: (0.000591s)
+[2019.01.04-16.49.50:055][949]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap to /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap (0.011199s)
+[2019.01.04-16.49.50:093][949]LogInit: XAudio2 using '扬声器 (2- Realtek High Definition Audio)' : 2 channels at 48 kHz using 16 bits per sample (channel mask 0x3)
+[2019.01.04-16.49.50:103][949]LogInit: FAudioDevice initialized.
+[2019.01.04-16.49.50:135][949]LogLoad: Game class is 'ThirdPersonGameMode_C'
+[2019.01.04-16.49.50:137][949]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2019.01.05-00.49.50
+[2019.01.04-16.49.50:137][949]LogWorld: Bringing up level for play took: 0.001318
+[2019.01.04-16.49.50:151][949]PIE: Play in editor start time for /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap -0.645
+[2019.01.04-16.49.50:151][949]LogBlueprintUserMessages: Late PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.49.54:486][467]LogBlueprintUserMessages: Early EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.49.54:486][467]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.49.54:526][467]LogPlayLevel: Display: Shutting down PIE online subsystems
+[2019.01.04-16.49.54:527][467]LogBlueprintUserMessages: Late EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.49.54:573][467]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.49.54:588][468]LogPlayLevel: Display: Destroying online subsystem :Context_25
+[2019.01.04-16.49.56:436][640]LogSlate: FSceneViewport::OnFocusLost() reason 2
+[2019.01.04-16.50.06:854][768]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.50.06:960][778]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/Projectile_Base" FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Projectile_Base.uasset" SILENT=true
+[2019.01.04-16.50.06:977][778]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/Projectile_Base92C13BB940EF7D3789CB0CAB2856C6BD.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Projectile_Base.uasset'
+[2019.01.04-16.50.07:301][815]BlueprintLog: New page: Compile Projectile_Base
+[2019.01.04-16.50.10:873][176]LogTemp: Repeating last play command: Selected Viewport
+[2019.01.04-16.50.10:897][176]LogBlueprintUserMessages: Early PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.50.10:897][176]LogPlayLevel: PlayLevel: No blueprints needed recompiling
+[2019.01.04-16.50.10:897][176]PIE: New page: PIE session: ThirdPersonExampleMap (Jan 5, 2019, 8:50:10 AM)
+[2019.01.04-16.50.10:897][176]LogPlayLevel: Creating play world package: /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap
+[2019.01.04-16.50.10:906][176]LogPlayLevel: PIE: StaticDuplicateObject took: (0.008616s)
+[2019.01.04-16.50.10:906][176]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2019.01.04-16.50.10:906][176]LogPlayLevel: PIE: World Init took: (0.000634s)
+[2019.01.04-16.50.10:907][176]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap to /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap (0.009371s)
+[2019.01.04-16.50.10:974][176]LogInit: XAudio2 using '扬声器 (2- Realtek High Definition Audio)' : 2 channels at 48 kHz using 16 bits per sample (channel mask 0x3)
+[2019.01.04-16.50.10:984][176]LogInit: FAudioDevice initialized.
+[2019.01.04-16.50.11:025][176]LogLoad: Game class is 'ThirdPersonGameMode_C'
+[2019.01.04-16.50.11:033][176]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2019.01.05-00.50.11
+[2019.01.04-16.50.11:033][176]LogWorld: Bringing up level for play took: 0.005619
+[2019.01.04-16.50.11:048][176]PIE: Play in editor start time for /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap 0.252
+[2019.01.04-16.50.11:049][176]LogBlueprintUserMessages: Late PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.50.27:744][173]LogBlueprintUserMessages: Early EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.50.27:744][173]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.50.27:783][173]LogPlayLevel: Display: Shutting down PIE online subsystems
+[2019.01.04-16.50.27:783][173]LogBlueprintUserMessages: Late EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.50.27:814][173]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.50.27:847][176]LogPlayLevel: Display: Destroying online subsystem :Context_26
+[2019.01.04-16.50.30:051][394]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.50.40:777][628]BlueprintLog: New page: Compile Projectile_Base
+[2019.01.04-16.50.41:343][677]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/Blueprints/Projectile_Base" FILE="../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Projectile_Base.uasset" SILENT=true
+[2019.01.04-16.50.41:360][677]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/Projectile_BaseFA55819F473EFBCF6B51A2B98100558D.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Blueprints/Projectile_Base.uasset'
+[2019.01.04-16.50.42:979][792]LogTemp: Repeating last play command: Selected Viewport
+[2019.01.04-16.50.43:001][792]LogBlueprintUserMessages: Early PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.50.43:002][792]LogPlayLevel: PlayLevel: No blueprints needed recompiling
+[2019.01.04-16.50.43:002][792]PIE: New page: PIE session: ThirdPersonExampleMap (Jan 5, 2019, 8:50:43 AM)
+[2019.01.04-16.50.43:002][792]LogPlayLevel: Creating play world package: /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap
+[2019.01.04-16.50.43:012][792]LogPlayLevel: PIE: StaticDuplicateObject took: (0.009714s)
+[2019.01.04-16.50.43:012][792]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2019.01.04-16.50.43:012][792]LogPlayLevel: PIE: World Init took: (0.000576s)
+[2019.01.04-16.50.43:012][792]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap to /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap (0.010416s)
+[2019.01.04-16.50.43:056][792]LogInit: XAudio2 using '扬声器 (2- Realtek High Definition Audio)' : 2 channels at 48 kHz using 16 bits per sample (channel mask 0x3)
+[2019.01.04-16.50.43:066][792]LogInit: FAudioDevice initialized.
+[2019.01.04-16.50.43:093][792]LogLoad: Game class is 'ThirdPersonGameMode_C'
+[2019.01.04-16.50.43:095][792]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2019.01.05-00.50.43
+[2019.01.04-16.50.43:095][792]LogWorld: Bringing up level for play took: 0.001311
+[2019.01.04-16.50.43:109][792]PIE: Play in editor start time for /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap 0.313
+[2019.01.04-16.50.43:109][792]LogBlueprintUserMessages: Late PlayInEditor Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.50.59:893][804]LogBlueprintUserMessages: Early EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.50.59:893][804]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.50.59:936][804]LogPlayLevel: Display: Shutting down PIE online subsystems
+[2019.01.04-16.50.59:936][804]LogBlueprintUserMessages: Late EndPlayMap Detection: Level '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel' has LevelScriptBlueprint '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap' with GeneratedClass '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap_C' with ClassGeneratedBy '/Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap:PersistentLevel.ThirdPersonExampleMap'
+[2019.01.04-16.50.59:970][804]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2019.01.04-16.50.59:995][806]LogPlayLevel: Display: Destroying online subsystem :Context_27
+[2019.01.04-16.51.07:231][393]LogSlate: FSceneViewport::OnFocusLost() reason 0
+[2019.01.04-16.51.07:294][400]LogSlate: Window 'TennoController' being destroyed
+[2019.01.04-16.51.07:297][400]LogSlate: Window 'TennoController' being destroyed
+[2019.01.04-16.51.07:660][400]LogActorComponent: UnregisterComponent: (/Engine/Transient.EditorFloorComp) Not registered. Aborting.
+[2019.01.04-16.51.07:720][400]LogActorComponent: UnregisterComponent: (/Engine/Transient.EditorFloorComp) Not registered. Aborting.
+[2019.01.04-16.51.08:009][400]LogActorComponent: UnregisterComponent: (/Engine/Transient.EditorFloorComp) Not registered. Aborting.
+[2019.01.04-16.51.09:534][444]LogSlate: Window 'Save Content' being destroyed
+[2019.01.04-16.51.09:563][444]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/UE4_Mannequin_Skeleton45FDC9DE4ABF30BF7F45AB8AE07106B1.tmp' to '../../../../Work/Warframe_A/Content/AnimStarterPack/UE4_Mannequin/Mesh/UE4_Mannequin_Skeleton.uasset'
+[2019.01.04-16.51.09:789][444]LogSavePackage: Moving '../../../../Work/Warframe_A/Saved/ThirdPersonExampleMap954DAF4B49347F2FFC2A80A3CD1AE512.tmp' to '../../../../Work/Warframe_A/Content/ThirdPersonBP/Maps/ThirdPersonExampleMap.umap'
+[2019.01.04-16.51.09:824][444]LogFileHelpers: Saving map 'ThirdPersonExampleMap' took 0.245
+[2019.01.04-16.51.10:761][544]LogSlate: Window 'Warframe_A - Unreal Editor' being destroyed
+[2019.01.04-16.51.10:763][544]LogWindowsTextInputMethodSystem: Display: IME system now activated using TSF (微软拼音).
+[2019.01.04-16.51.10:925][545]Cmd: QUIT_EDITOR
+[2019.01.04-16.51.11:755][545]LogExit: Preparing to exit.
+[2019.01.04-16.51.12:971][545]LogExit: Editor shut down
+[2019.01.04-16.51.12:971][545]LogExit: Transaction tracking system shut down
+[2019.01.04-16.51.13:371][545]LogExit: Object subsystem successfully closed.
+[2019.01.04-16.51.13:393][545]LogShaderCompilers: Display: Shaders left to compile 0
+[2019.01.04-16.51.13:395][545]LogD3D11RHI: Shutdown
+[2019.01.04-16.51.13:395][545]LogD3D11RHI: CleanupD3DDevice
+[2019.01.04-16.51.13:397][545]LogD3D11RHI: ~FD3D11DynamicRHI
+[2019.01.04-16.51.13:405][545]LogModuleManager: Shutting down and abandoning module HierarchicalLODUtilities (614)
+[2019.01.04-16.51.13:405][545]LogModuleManager: Shutting down and abandoning module MeshBuilder (612)
+[2019.01.04-16.51.13:405][545]LogModuleManager: Shutting down and abandoning module ClothingSystemEditorInterface (610)
+[2019.01.04-16.51.13:405][545]LogModuleManager: Shutting down and abandoning module PinnedCommandList (608)
+[2019.01.04-16.51.13:405][545]LogModuleManager: Shutting down and abandoning module SkeletonEditor (606)
+[2019.01.04-16.51.13:405][545]LogModuleManager: Shutting down and abandoning module BlueprintGraph (604)
+[2019.01.04-16.51.13:405][545]LogModuleManager: Shutting down and abandoning module MovieSceneCapture (602)
+[2019.01.04-16.51.13:405][545]LogModuleManager: Shutting down and abandoning module Voice (600)
+[2019.01.04-16.51.13:408][545]LogModuleManager: Shutting down and abandoning module HierarchicalLODOutliner (598)
+[2019.01.04-16.51.13:408][545]LogModuleManager: Shutting down and abandoning module SceneOutliner (596)
+[2019.01.04-16.51.13:408][545]LogModuleManager: Shutting down and abandoning module AddContentDialog (594)
+[2019.01.04-16.51.13:408][545]LogModuleManager: Shutting down and abandoning module WidgetCarousel (593)
+[2019.01.04-16.51.13:408][545]LogModuleManager: Shutting down and abandoning module EditorWidgets (590)
+[2019.01.04-16.51.13:408][545]LogModuleManager: Shutting down and abandoning module CollectionManager (588)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module StatsViewer (586)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module FoliageEdit (584)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module LandscapeEditor (582)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module MeshPaintMode (580)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module SceneDepthPickerMode (578)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module ActorPickerMode (576)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module GeometryMode (574)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module TextureAlignMode (572)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module BspMode (570)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module PIEPreviewDeviceProfileSelector (568)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module SequenceRecorderSections (566)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module AutomationWorker (564)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module AudioCaptureEditor (562)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module SequenceRecorder (561)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module MatineeToLevelSequence (558)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module LevelSequenceEditor (556)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module PlacementMode (555)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module MaterialEditor (554)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module WmfMediaFactory (550)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module WmfMediaEditor (548)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module MediaPlayerEditor (546)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module OpenExrWrapper (544)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module ImgMediaFactory (542)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module ImgMediaEditor (540)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module AvfMediaFactory (538)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module AvfMediaEditor (536)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module AndroidMediaFactory (534)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module AndroidMediaEditor (532)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module MagicLeapCameraPreviewFactory (530)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module MagicLeapMediaFactory (528)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module MagicLeapMediaEditor (526)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module CharacterAI (524)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module SmartSnapping (522)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module SessionServices (520)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module ViewportSnapping (518)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module ViewportInteraction (516)
+[2019.01.04-16.51.13:409][545]LogModuleManager: Shutting down and abandoning module ClothPainter (514)
+[2019.01.04-16.51.13:410][545]LogModuleManager: Shutting down and abandoning module SkeletalMeshEditor (513)
+[2019.01.04-16.51.13:410][545]LogModuleManager: Shutting down and abandoning module LogVisualizer (510)
+[2019.01.04-16.51.13:410][545]LogModuleManager: Shutting down and abandoning module IntroTutorials (508)
+[2019.01.04-16.51.13:410][545]LogModuleManager: Shutting down and abandoning module GameProjectGeneration (507)
+[2019.01.04-16.51.13:410][545]LogModuleManager: Shutting down and abandoning module LuminPlatformEditor (504)
+[2019.01.04-16.51.13:410][545]LogModuleManager: Shutting down and abandoning module IOSPlatformEditor (502)
+[2019.01.04-16.51.13:410][545]LogModuleManager: Shutting down and abandoning module HTML5PlatformEditor (500)
+[2019.01.04-16.51.13:410][545]LogModuleManager: Shutting down and abandoning module AndroidPlatformEditor (498)
+[2019.01.04-16.51.13:410][545]LogModuleManager: Shutting down and abandoning module AndroidDeviceDetection (497)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module WindowsPlatformEditor (494)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module LuminRuntimeSettings (492)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module IOSRuntimeSettings (490)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module AndroidRuntimeSettings (488)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module InputBindingEditor (486)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module MergeActors (484)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module LocalizationDashboard (482)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module LocalizationService (481)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module HardwareTargeting (478)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module DeviceProfileEditor (476)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module UndoHistory (474)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module XmlParser (472)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module Blutility (470)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module ProjectSettingsViewer (468)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module ProjectTargetPlatformEditor (467)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module EditorSettingsViewer (464)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module SettingsEditor (462)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module ProjectLauncher (460)
+[2019.01.04-16.51.13:960][545]LogModuleManager: Shutting down and abandoning module SessionFrontend (458)
+[2019.01.04-16.51.13:961][545]LogModuleManager: Shutting down and abandoning module ProfilerClient (456)
+[2019.01.04-16.51.13:961][545]LogModuleManager: Shutting down and abandoning module DeviceManager (454)
+[2019.01.04-16.51.13:961][545]LogModuleManager: Shutting down and abandoning module TargetDeviceServices (453)
+[2019.01.04-16.51.14:015][545]LogModuleManager: Shutting down and abandoning module AutomationController (450)
+[2019.01.04-16.51.14:015][545]LogModuleManager: Shutting down and abandoning module AutomationWindow (448)
+[2019.01.04-16.51.14:015][545]LogModuleManager: Shutting down and abandoning module Layers (446)
+[2019.01.04-16.51.14:015][545]LogModuleManager: Shutting down and abandoning module ComponentVisualizers (444)
+[2019.01.04-16.51.14:015][545]LogModuleManager: Shutting down and abandoning module DetailCustomizations (442)
+[2019.01.04-16.51.14:015][545]LogModuleManager: Shutting down and abandoning module PackagesDialog (440)
+[2019.01.04-16.51.14:015][545]LogModuleManager: Shutting down and abandoning module Persona (438)
+[2019.01.04-16.51.14:015][545]LogModuleManager: Shutting down and abandoning module AdvancedPreviewScene (437)
+[2019.01.04-16.51.14:015][545]LogModuleManager: Shutting down and abandoning module AnimGraph (435)
+[2019.01.04-16.51.14:015][545]LogModuleManager: Shutting down and abandoning module Kismet (432)
+[2019.01.04-16.51.14:019][545]LogModuleManager: Shutting down and abandoning module GraphEditor (430)
+[2019.01.04-16.51.14:019][545]LogModuleManager: Shutting down and abandoning module ClassViewer (428)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module Toolbox (426)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module DesktopPlatform (425)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module ModuleUI (422)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module MovieSceneTools (420)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module OutputLog (418)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module GammaUI (416)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module Documentation (414)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module MovieSceneTracks (412)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module MovieScene (410)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module StreamingPauseRendering (408)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module LauncherPlatform (406)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module AnalyticsET (404)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module PortalServices (402)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module PortalRpc (400)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module MessagingRpc (398)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module AIModule (396)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module GameplayDebugger (395)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module AITestSuite (393)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module NavigationSystem (391)
+[2019.01.04-16.51.14:020][545]LogModuleManager: Shutting down and abandoning module ProfilerService (388)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module TaskGraph (386)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module SteamVRController (384)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module ProceduralMeshComponentEditor (382)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module ProceduralMeshComponent (380)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module OculusInput (378)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module MobilePatchingUtils (376)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module EditableMesh (374)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module CustomMeshComponent (372)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module CableComponent (370)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module AudioCapture (368)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module ArchVisCharacter (366)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module AndroidPermission (364)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module NUTUnrealEngine4 (362)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module NetcodeUnitTest (360)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module MediaCompositingEditor (358)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module MediaCompositing (356)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module LinearTimecode (354)
+[2019.01.04-16.51.14:245][545]LogModuleManager: Shutting down and abandoning module ImgMedia (352)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module HTML5Networking (350)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module GeometryCacheTracks (348)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module GeometryCacheSequencer (346)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module BackChannel (344)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module AppleVision (342)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module AppleImageUtils (340)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module AlembicImporter (338)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module AlembicLibrary (337)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module GeometryCache (336)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module GeometryCacheEd (335)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module DatasmithContentEditor (330)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module DatasmithContent (328)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module SpeedTreeImporter (326)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module PluginBrowser (324)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module MobileLauncherProfileWizard (322)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module PolygonModeling (320)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module MeshEditor (318)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module CryptoKeysOpenSSL (316)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module CryptoKeys (314)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module VisualStudioSourceCodeAccess (312)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module VisualStudioCodeSourceCodeAccess (310)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module UObjectPlugin (308)
+[2019.01.04-16.51.14:248][545]LogModuleManager: Shutting down and abandoning module SubversionSourceControl (306)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module PerforceSourceControl (304)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module GitSourceControl (302)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module SourceControl (301)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module CLionSourceCodeAccess (298)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module LightPropagationVolumeEditor (296)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module PaperTiledImporter (294)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module PaperSpriteSheetImporter (292)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module Paper2DEditor (290)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module MeshPaint (289)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module RuntimePhysXCooking (286)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module PhysXVehiclesEditor (284)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module PhysXVehicles (282)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module OculusEditor (280)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module LocationServicesBPLibrary (278)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module ImmediatePhysicsEditor (276)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module ImmediatePhysics (274)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module ActorSequence (272)
+[2019.01.04-16.51.14:249][545]LogModuleManager: Shutting down and abandoning module UdpMessaging (270)
+[2019.01.04-16.51.14:350][545]LogModuleManager: Shutting down and abandoning module TcpMessaging (268)
+[2019.01.04-16.51.14:451][545]LogModuleManager: Shutting down and abandoning module MagicLeapAudio (266)
+[2019.01.04-16.51.14:451][545]LogModuleManager: Shutting down and abandoning module GameplayTagsEditor (264)
+[2019.01.04-16.51.14:451][545]LogModuleManager: Shutting down and abandoning module FacialAnimationEditor (262)
+[2019.01.04-16.51.14:451][545]LogModuleManager: Shutting down and abandoning module FacialAnimation (260)
+[2019.01.04-16.51.14:451][545]LogModuleManager: Shutting down and abandoning module DataValidation (258)
+[2019.01.04-16.51.14:451][545]LogModuleManager: Shutting down and abandoning module AssetManagerEditor (256)
+[2019.01.04-16.51.14:451][545]LogModuleManager: Shutting down and abandoning module LevelEditor (255)
+[2019.01.04-16.51.14:451][545]LogModuleManager: Shutting down and abandoning module PixelInspectorModule (254)
+[2019.01.04-16.51.14:451][545]LogModuleManager: Shutting down and abandoning module CommonMenuExtensions (252)
+[2019.01.04-16.51.14:451][545]LogModuleManager: Shutting down and abandoning module MainFrame (250)
+[2019.01.04-16.51.14:451][545]LogModuleManager: Shutting down and abandoning module HotReload (249)
+[2019.01.04-16.51.14:452][545]LogModuleManager: Shutting down and abandoning module ContentBrowser (245)
+[2019.01.04-16.51.14:452][545]LogModuleManager: Shutting down and abandoning module TreeMap (243)
+[2019.01.04-16.51.14:452][545]LogModuleManager: Shutting down and abandoning module LightPropagationVolumeRuntime (240)
+[2019.01.04-16.51.14:452][545]LogModuleManager: Shutting down and abandoning module AISupportModule (238)
+[2019.01.04-16.51.14:452][545]LogModuleManager: Shutting down and abandoning module Paper2D (236)
+[2019.01.04-16.51.14:452][545]LogModuleManager: Shutting down and abandoning module WindowsMoviePlayer (234)
+[2019.01.04-16.51.14:452][545]LogModuleManager: Shutting down and abandoning module WmfMedia (232)
+[2019.01.04-16.51.14:453][545]LogModuleManager: Shutting down and abandoning module Media (231)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module PacketHandler (228)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module ClothingSystemEditor (226)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module ClothingSystemRuntime (224)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module MediaAssets (222)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module Overlay (220)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module OverlayEditor (219)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module VREditor (216)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module StringTableEditor (214)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module GameplayTasksEditor (212)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module BehaviorTreeEditor (210)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module FunctionalTesting (208)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module CollisionAnalyzer (206)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module WorkspaceMenuStructure (205)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module UMG (202)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module UMGEditor (201)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module Sequencer (200)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module MessageLog (197)
+[2019.01.04-16.51.14:459][545]LogModuleManager: Shutting down and abandoning module SlateReflector (192)
+[2019.01.04-16.51.14:460][545]LogModuleManager: Shutting down and abandoning module Slate (190)
+[2019.01.04-16.51.14:460][545]LogModuleManager: Shutting down and abandoning module EditorStyle (188)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module MRMesh (186)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module SourceCodeAccess (184)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module HeadMountedDisplay (182)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module XAudio2 (180)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module Networking (178)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module Core (176)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module LevelSequence (174)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module KismetCompiler (172)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module MeshUtilities (170)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module MeshMergeUtilities (169)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module MeshReductionInterface (168)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module ProxyLODMeshReduction (167)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module QuadricMeshReduction (165)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module MaterialBaking (161)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module DirectoryWatcher (157)
+[2019.01.04-16.51.14:461][545]LogModuleManager: Shutting down and abandoning module DerivedDataCache (154)
+[2019.01.04-16.51.14:541][545]LogDerivedDataCache: Shutdown
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module XGEController (152)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module TargetPlatform (150)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module VulkanShaderFormat (149)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module ShaderFormatVectorVM (147)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module ShaderFormatOpenGL (145)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module ShaderFormatD3D (143)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module MetalShaderFormat (141)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module TextureFormatUncompressed (139)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module TextureFormatPVR (137)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module TextureFormatDXT (135)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module TextureFormatIntelISPCTexComp (133)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module TextureFormatASTC (131)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module ImageWrapper (130)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module TextureFormatAndroid (127)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module AudioFormatOpus (125)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module AudioFormatOgg (123)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module AudioFormatADPCM (121)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module LuminTargetPlatform (119)
+[2019.01.04-16.51.14:541][545]LogModuleManager: Shutting down and abandoning module TVOSTargetPlatform (117)
+[2019.01.04-16.51.14:542][545]LogModuleManager: Shutting down and abandoning module Messaging (115)
+[2019.01.04-16.51.14:542][545]LogModuleManager: Shutting down and abandoning module IOSTargetPlatform (113)
+[2019.01.04-16.51.14:543][545]LogModuleManager: Shutting down and abandoning module HTML5TargetPlatform (111)
+[2019.01.04-16.51.14:543][545]LogModuleManager: Shutting down and abandoning module AndroidTargetPlatform (109)
+[2019.01.04-16.51.14:546][545]LogModuleManager: Shutting down and abandoning module WindowsTargetPlatform (107)
+[2019.01.04-16.51.14:546][545]LogModuleManager: Shutting down and abandoning module WindowsServerTargetPlatform (105)
+[2019.01.04-16.51.14:546][545]LogModuleManager: Shutting down and abandoning module WindowsNoEditorTargetPlatform (103)
+[2019.01.04-16.51.14:546][545]LogModuleManager: Shutting down and abandoning module WindowsClientTargetPlatform (101)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module MacTargetPlatform (99)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module MacServerTargetPlatform (97)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module MacNoEditorTargetPlatform (95)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module MacClientTargetPlatform (93)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module AllDesktopTargetPlatform (91)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module InputCore (88)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module Settings (86)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module PhysXCooking (84)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module SteamVR (82)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module OculusHMD (80)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module ExampleDeviceProfileSelector (78)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module LauncherChunkInstaller (76)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module OnlineBlueprintSupport (74)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module OnlineSubsystem (70)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module XMPP (65)
+[2019.01.04-16.51.14:547][545]LogModuleManager: Shutting down and abandoning module WebSockets (64)
+[2019.01.04-16.51.14:582][545]LogModuleManager: Shutting down and abandoning module HTTP (61)
+[2019.01.04-16.51.14:582][545]LogHttp: Display: Http module shutting down, but needs to wait on 1 outstanding Http requests:
+[2019.01.04-16.51.14:582][545]LogHttp: Display: 	verb=[POST] url=[https://datarouter.ol.epicgames.com/datarouter/api/v1/public/data?SessionID=%7B9E663678-4382-F585-5625-75ABAE33A287%7D&AppID=UEEditor.UnrealEngine.Release&AppVersion=4.21.0-0%2BUE4&UserID=22552d854de029f0f453489b22b4cd1c%7Cc1c1b958b6834fb59da0f24d689103e4%7Ca651d6f3-6947-40e2-9894-e5c9686ca21f&AppEnvironment=datacollector-source&UploadType=eteventstream] status=Processing
+[2019.01.04-16.51.14:604][545]LogModuleManager: Shutting down and abandoning module SSL (60)
+[2019.01.04-16.51.14:605][545]LogModuleManager: Shutting down and abandoning module MagicLeapEmulator (56)
+[2019.01.04-16.51.14:605][545]LogModuleManager: Shutting down and abandoning module MagicLeapPrivileges (54)
+[2019.01.04-16.51.14:605][545]LogModuleManager: Shutting down and abandoning module MagicLeapIdentity (52)
+[2019.01.04-16.51.14:605][545]LogModuleManager: Shutting down and abandoning module MagicLeapHelperVulkan (50)
+[2019.01.04-16.51.14:605][545]LogModuleManager: Shutting down and abandoning module MagicLeapHelperOpenGL (48)
+[2019.01.04-16.51.14:605][545]LogModuleManager: Shutting down and abandoning module MagicLeapSecureStorage (46)
+[2019.01.04-16.51.14:605][545]LogModuleManager: Shutting down and abandoning module MagicLeapGestures (44)
+[2019.01.04-16.51.14:605][545]LogModuleManager: Shutting down and abandoning module MagicLeapEyeTracker (42)
+[2019.01.04-16.51.14:605][545]LogModuleManager: Shutting down and abandoning module MagicLeapController (40)
+[2019.01.04-16.51.14:605][545]LogSlate: Slate User Destroyed.  User Index 0, Is Virtual User: 0
+[2019.01.04-16.51.14:605][545]LogModuleManager: Shutting down and abandoning module MagicLeap (38)
+[2019.01.04-16.51.14:605][545]LogModuleManager: Shutting down and abandoning module AnimationModifiers (36)
+[2019.01.04-16.51.14:605][545]LogModuleManager: Shutting down and abandoning module PropertyEditor (35)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module AudioEditor (32)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module TextureCompressor (30)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module ShaderCore (28)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module Landscape (26)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module SlateRHIRenderer (24)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module OpenGLDrv (22)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module D3D11RHI (20)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module AnimGraphRuntime (18)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module Renderer (16)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module Engine (14)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module CoreUObject (12)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module NetworkFile (10)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module CookedIterativeFile (8)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module StreamingFile (6)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module SandboxFile (4)
+[2019.01.04-16.51.14:606][545]LogModuleManager: Shutting down and abandoning module PakFile (2)
+[2019.01.04-16.51.14:613][545]LogExit: Exiting.
+[2019.01.04-16.51.14:633][545]Log file closed, 01/05/19 00:51:14
