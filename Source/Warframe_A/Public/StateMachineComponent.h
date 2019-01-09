@@ -7,11 +7,38 @@
 #include "StateMachineComponent.generated.h"
 
 
-struct FMyState
+UCLASS(BlueprintType, Blueprintable)
+class WARFRAME_A_API UStateObject : public UObject
 {
-	TBaseDelegate<const FMyState*, AActor*> OnUpdate;
-	TBaseDelegate<void, AActor*, const FName &> OnEnter;
-	TBaseDelegate<void, AActor*, const FName &> OnExit;
+	GENERATED_BODY()
+
+public:
+	UStateObject()
+	{
+		Name = FName("None");
+	}
+
+	UFUNCTION(BlueprintCallable)
+	void Init(const FName &Name_)
+	{
+		Name = Name_;
+	}
+
+	// virtual FName OnUpdate_Native(AActor *Actor)
+	// {
+	// 	return this->OnUpdate(Actor);
+	// }
+	UFUNCTION(BlueprintNativeEvent)
+	FName OnUpdate(AActor *Actor);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnEnter(AActor *Actor, const FName &StateFromName);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnExit(AActor *Actor);
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	FName Name;
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -20,8 +47,10 @@ class WARFRAME_A_API UStateMachineComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
-	UStateMachineComponent();
+	// // Sets default values for this component's properties
+	// UStateMachineComponent();
+
+	UStateMachineComponent(const FObjectInitializer& ObjectInitializer);
 
 protected:
 	// Called when the game starts
@@ -32,16 +61,17 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 	UFUNCTION(BlueprintCallable)
-	FMyState *AddState(const FName &StateName);
+	void AddState(UStateObject *StateObject);
 
 	UFUNCTION(BlueprintCallable)
 	void SetState(const FName &StateName);
 
 	UFUNCTION(BlueprintCallable)
-	FMyState *GetState(const FName &StateName);
+	UStateObject *GetState(const FName &StateName);
 	
 protected:
-	const FMyState *CurrentState;
+	UStateObject *CurrentState;
 
-	TMap<FName, FMyState> CachedStates;
+	UPROPERTY()
+	TMap<FName, UStateObject*> CachedStates;
 };

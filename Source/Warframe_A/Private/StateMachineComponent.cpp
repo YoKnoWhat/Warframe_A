@@ -3,26 +3,41 @@
 #include "StateMachineComponent.h"
 
 
-// Sets default values for this component's properties
-UStateMachineComponent::UStateMachineComponent()
+FName UStateObject::OnUpdate_Implementation(AActor *Actor)
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	CachedStates.Add(FName(""), FMyState());
-
-	CurrentState = this->GetState(FName(""));
+	return Name;
 }
 
+void UStateObject::OnEnter_Implementation(AActor *Actor, const FName &StateFromName)
+{}
+
+void UStateObject::OnExit_Implementation(AActor *Actor)
+{}
+
+
+// // Sets default values for this component's properties
+// UStateMachineComponent::UStateMachineComponent()
+// {
+// 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+// 	// off to improve performance if you don't need them.
+// 	PrimaryComponentTick.bCanEverTick = true;
+// }
+
+UStateMachineComponent::UStateMachineComponent(const FObjectInitializer& ObjectInitializer)
+{
+	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+ 	// off to improve performance if you don't need them.
+ 	PrimaryComponentTick.bCanEverTick = true;
+}
 
 // Called when the game starts
 void UStateMachineComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	CurrentState = NewObject<UStateObject>(this, "DefaultStateObject");
+
+	this->AddState(CurrentState);
 }
 
 
@@ -31,62 +46,42 @@ void UStateMachineComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (CurrentState->OnUpdate.IsBound())
-	{
-		const FMyState *NewState = CurrentState->OnUpdate.Execute(this->GetOwner());
+	FName NewStateName = CurrentState->OnUpdate(this->GetOwner());
 
-		if (NewState != CurrentState)
-		{
-			CurrentState->OnExit.ExecuteIfBound();
-			CurrentState = NewState;
-			NewState->OnEnter.ExecuteIfBound();
-		}
-	}
+	this->SetState(NewStateName);
 }
 
-FMyState *UStateMachineComponent::AddState(const FName &StateName)
+void UStateMachineComponent::AddState(UStateObject *StateObject)
 {
-	checkSlow(StateName != FName(""));
-
-	return &CachedStates.Add(StateName, FMyState());
+	CachedStates.Add(StateObject->Name, StateObject);
 }
 
 void UStateMachineComponent::SetState(const FName &StateName)
 {
-	const FMyState *NewState = this->GetState(StateName);
-
-	if (NewState != nullptr)
+	if (StateName != CurrentState->Name)
 	{
-		CurrentState = NewState;
+		UStateObject *NewState = this->GetState(StateName);
 
-		CurrentState->OnEnter.ExecuteIfBound();
+		if (NewState != nullptr)
+		{
+			CurrentState->OnExit(this->GetOwner());
+			NewState->OnEnter(this->GetOwner(), CurrentState->Name);
+
+			CurrentState = NewState;
+		}
 	}
 }
 
-FMyState *UStateMachineComponent::GetState(const FName &StateName)
+UStateObject *UStateMachineComponent::GetState(const FName &StateName)
 {
-	return CachedStates.Find(StateName);
+	UStateObject** Result = CachedStates.Find(StateName);
+
+	if (Result == nullptr)
+	{
+		return nullptr;
+	}
+	else
+	{
+		return *Result;
+	}
 }
-
-
-const FMyState* OnUpdate_Ironsight(AActor *Actor)
-{}
-
-void MyFunc()
-{
-	UStateMachineComponent sm;
-
-	
-	TBaseDelegate<const FMyState*, AActor*> OnUpdate_Ironsight_Delegate;
-	OnUpdate_Ironsight_Delegate.BindStatic(OnUpdate_Ironsight);
-
-	FMyState *NewState;
-	
-	NewState = sm.AddState("Ironsight");
-	NewState.
-	sm.AddState("Sprint");
-	sm.AddState("Crouch");
-	sm.AddState("Slide");
-
-}
-
