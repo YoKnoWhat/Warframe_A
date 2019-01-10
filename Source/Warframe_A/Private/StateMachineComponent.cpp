@@ -3,12 +3,12 @@
 #include "StateMachineComponent.h"
 
 
-FName UStateObject::OnUpdate_Implementation(AActor *Actor)
+UStateObject *UStateObject::OnUpdate_Implementation(AActor *Actor, float DeltaTime)
 {
-	return Name;
+	return this;
 }
 
-void UStateObject::OnEnter_Implementation(AActor *Actor, const FName &StateFromName)
+void UStateObject::OnEnter_Implementation(AActor *Actor, int32 StateID)
 {}
 
 void UStateObject::OnExit_Implementation(AActor *Actor)
@@ -46,35 +46,46 @@ void UStateMachineComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	FName NewStateName = CurrentState->OnUpdate(this->GetOwner());
+	UStateObject *NewState = CurrentState->OnUpdate(this->GetOwner(), DeltaTime);
 
-	this->SetState(NewStateName);
+	this->SetState(NewState);
 }
 
 void UStateMachineComponent::AddState(UStateObject *StateObject)
 {
-	CachedStates.Add(StateObject->Name, StateObject);
+	CachedStates.Add(StateObject->ID, StateObject);
 }
 
-void UStateMachineComponent::SetState(const FName &StateName)
+void UStateMachineComponent::SetState(int32 StateID)
 {
-	if (StateName != CurrentState->Name)
+	if (StateID != CurrentState->ID)
 	{
-		UStateObject *NewState = this->GetState(StateName);
+		UStateObject *NewState = this->GetState(StateID);
 
 		if (NewState != nullptr)
 		{
 			CurrentState->OnExit(this->GetOwner());
-			NewState->OnEnter(this->GetOwner(), CurrentState->Name);
+			NewState->OnEnter(this->GetOwner(), CurrentState->ID);
 
 			CurrentState = NewState;
 		}
 	}
 }
 
-UStateObject *UStateMachineComponent::GetState(const FName &StateName)
+void UStateMachineComponent::SetState(UStateObject *NewState)
 {
-	UStateObject** Result = CachedStates.Find(StateName);
+	if (NewState != nullptr && NewState != CurrentState)
+	{
+		CurrentState->OnExit(this->GetOwner());
+		NewState->OnEnter(this->GetOwner(), CurrentState->ID);
+
+		CurrentState = NewState;
+	}
+}
+
+UStateObject *UStateMachineComponent::GetState(int32 StateID)
+{
+	UStateObject** Result = CachedStates.Find(StateID);
 
 	if (Result == nullptr)
 	{

@@ -15,13 +15,13 @@ class WARFRAME_A_API UStateObject : public UObject
 public:
 	UStateObject()
 	{
-		Name = FName("None");
+		ID = -1;
 	}
 
 	UFUNCTION(BlueprintCallable)
-	void Init(const FName &Name_)
+	void Init(int32 ID_)
 	{
-		Name = Name_;
+		ID = ID_;
 	}
 
 	// virtual FName OnUpdate_Native(AActor *Actor)
@@ -29,16 +29,16 @@ public:
 	// 	return this->OnUpdate(Actor);
 	// }
 	UFUNCTION(BlueprintNativeEvent)
-	FName OnUpdate(AActor *Actor);
+	UStateObject *OnUpdate(AActor *Actor, float DeltaTime);
 
 	UFUNCTION(BlueprintNativeEvent)
-	void OnEnter(AActor *Actor, const FName &StateFromName);
+	void OnEnter(AActor *Actor, int32 StateFromID);
 
 	UFUNCTION(BlueprintNativeEvent)
 	void OnExit(AActor *Actor);
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-	FName Name;
+	int32 ID;
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -64,14 +64,16 @@ public:
 	void AddState(UStateObject *StateObject);
 
 	UFUNCTION(BlueprintCallable)
-	void SetState(const FName &StateName);
+	void SetState(int32 StateID);
+
+	void SetState(UStateObject *NewState);
 
 	UFUNCTION(BlueprintCallable)
-	UStateObject *GetState(const FName &StateName);
+	UStateObject *GetState(int32 StateID);
 	
 protected:
 	UStateObject *CurrentState;
 
 	UPROPERTY()
-	TMap<FName, UStateObject*> CachedStates;
+	TMap<int32, UStateObject*> CachedStates;
 };
