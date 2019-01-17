@@ -3,16 +3,21 @@
 #include "StateMachineComponent.h"
 
 
-UStateObject *UStateObject::OnUpdate_Implementation(AActor *Actor, float DeltaTime)
+int32 UStateObject::OnUpdate_Implementation(float DeltaTime)
 {
-	return this;
+	return -1;
 }
 
 void UStateObject::OnEnter_Implementation(AActor *Actor, int32 StateID)
 {}
 
-void UStateObject::OnExit_Implementation(AActor *Actor)
+void UStateObject::OnExit_Implementation()
 {}
+
+int32 UStateObject::OnCustomEvent_Implementation(int32 EventID)
+{
+	return -1;
+}
 
 
 // // Sets default values for this component's properties
@@ -46,9 +51,17 @@ void UStateMachineComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	UStateObject *NewState = CurrentState->OnUpdate(this->GetOwner(), DeltaTime);
+	int32 NewStateID;
+	bool hasStateTransited;
 
-	this->SetState(NewState);
+	do
+	{
+		NewStateID = CurrentState->OnUpdate(DeltaTime);
+
+		hasStateTransited = this->SetState(NewStateID);
+
+		DeltaTime = 0.0f;
+	} while (hasStateTransited);
 }
 
 void UStateMachineComponent::AddState(UStateObject *StateObject)
@@ -56,23 +69,26 @@ void UStateMachineComponent::AddState(UStateObject *StateObject)
 	CachedStates.Add(StateObject->ID, StateObject);
 }
 
-void UStateMachineComponent::SetState(int32 StateID)
+bool UStateMachineComponent::SetState(int32 StateID)
 {
-	if (StateID != CurrentState->ID)
+	if (StateID >= 0 && StateID != CurrentState->ID)
 	{
 		UStateObject *NewState = this->GetState(StateID);
 
 		if (NewState != nullptr)
 		{
-			CurrentState->OnExit(this->GetOwner());
+			CurrentState->OnExit();
 			NewState->OnEnter(this->GetOwner(), CurrentState->ID);
 
 			CurrentState = NewState;
+
+			return true;
 		}
 	}
+	return false;
 }
 
-void UStateMachineComponent::SetState(UStateObject *NewState)
+/*void UStateMachineComponent::SetState(UStateObject *NewState)
 {
 	if (NewState != nullptr && NewState != CurrentState)
 	{
@@ -81,7 +97,7 @@ void UStateMachineComponent::SetState(UStateObject *NewState)
 
 		CurrentState = NewState;
 	}
-}
+}*/
 
 UStateObject *UStateMachineComponent::GetState(int32 StateID)
 {
@@ -95,4 +111,16 @@ UStateObject *UStateMachineComponent::GetState(int32 StateID)
 	{
 		return *Result;
 	}
+}
+
+UStateObject *UStateMachineComponent::GetCurrentState()
+{
+	return CurrentState;
+}
+
+void UStateMachineComponent::TriggerEvent(int32 EventID)
+{
+	int32 NewStateID = CurrentState->OnCustomEvent(EventID);
+
+	this->SetState(NewStateID);
 }

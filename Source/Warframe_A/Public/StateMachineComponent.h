@@ -29,13 +29,16 @@ public:
 	// 	return this->OnUpdate(Actor);
 	// }
 	UFUNCTION(BlueprintNativeEvent)
-	UStateObject *OnUpdate(AActor *Actor, float DeltaTime);
+	int32 OnUpdate(float DeltaTime);
 
 	UFUNCTION(BlueprintNativeEvent)
 	void OnEnter(AActor *Actor, int32 StateFromID);
 
 	UFUNCTION(BlueprintNativeEvent)
-	void OnExit(AActor *Actor);
+	void OnExit();
+
+	UFUNCTION(BlueprintNativeEvent)
+	int32 OnCustomEvent(int32 EventID);
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	int32 ID;
@@ -63,13 +66,22 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddState(UStateObject *StateObject);
 
+	/**
+	 * Set new state with validity check.
+	 */
 	UFUNCTION(BlueprintCallable)
-	void SetState(int32 StateID);
+	bool SetState(int32 StateID);
 
-	void SetState(UStateObject *NewState);
+	// void SetState(UStateObject *NewState);
 
 	UFUNCTION(BlueprintCallable)
 	UStateObject *GetState(int32 StateID);
+
+	UFUNCTION(BlueprintCallable)
+	UStateObject *GetCurrentState();
+
+	UFUNCTION(BlueprintCallable)
+	void TriggerEvent(int32 EventID);
 	
 protected:
 	UStateObject *CurrentState;
