@@ -1,29 +1,25 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "WarframeCharacter.h"
-#include "Runtime/Json/Public/Serialization/JsonReader.h"
+#include "WarframeGameInstance.h"
+#include "CharacterWidgetComponent.h"
 
 
 // Sets default values
-AWarframeCharacter::AWarframeCharacter() :
-	NoDamageTakenDuration(0.0f),
-	ShieldRegenerationPerSecond(50.0f),
-	Armor(100.0f),
-	MaxHealth(660.0f),
-	MaxShield(450.0f),
-	CurrentHealth(660.0f),
-	CurrentShield(450.0f)
+AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializer) :
+	Super(ObjectInitializer)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	CharacterWidget = ObjectInitializer.CreateDefaultSubobject<UCharacterWidgetComponent>(this, FName("CharacterWidget"));
+	CharacterWidget->SetupAttachment(this->RootComponent);
 }
 
 // Called when the game starts or when spawned
 void AWarframeCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -51,33 +47,35 @@ void AWarframeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 }
 
-void AWarframeCharacter::InitProperties(int32 CharacterID, uint32 Level)
+void AWarframeCharacter::InitPropertiesBP(int32 CharacterID, int32 Level)
 {
+	this->InitProperties(static_cast<ECharacterID>(CharacterID), static_cast<uint32>(Level));
 }
 
-float AWarframeCharacter::GetArmor()
+void AWarframeCharacter::InitProperties(ECharacterID CharacterID, uint32 Level)
 {
-	return Armor;
-}
+	this->Level = Level;
 
-float AWarframeCharacter::GetMaxHealth()
-{
-	return MaxHealth;
-}
+	UWarframeGameInstance *GameInstance = Cast<UWarframeGameInstance>(this->GetGameInstance());
 
-float AWarframeCharacter::GetMaxShield()
-{
-	return MaxShield;
-}
+	this->Name = GameInstance->GetCharacterName(CharacterID);
 
-float AWarframeCharacter::GetCurrentHealth()
-{
-	return CurrentHealth;
-}
+	const FCharacterProperties *CharacterProp = GameInstance->GetCharacterProp(CharacterID);
+	
+	if (CharacterProp != nullptr)
+	{
+		this->HealthType = CharacterProp->HealthType;
+		this->MaxHealth = this->CurrentHealth = CharacterProp->Health;
 
-float AWarframeCharacter::GetCurrentShield()
-{
-	return CurrentShield;
+		this->ShieldType = CharacterProp->ShieldType;
+		this->MaxShield = this->CurrentShield = CharacterProp->Shield;
+
+		this->ArmorType = CharacterProp->ArmorType;
+		this->Armor = CharacterProp->Armor;
+
+		this->DamageReduction = CharacterProp->DamageReduction;
+		this->Affinity = CharacterProp->Affinity;
+	}
 }
 
 AWeaponBase *AWarframeCharacter::GetWeapon(EWeaponType WeaponType)

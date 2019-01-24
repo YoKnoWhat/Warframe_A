@@ -2,9 +2,8 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "WarframeCommon.h"
 #include "GameFramework/Character.h"
-#include "WeaponBase.h"
 #include "WarframeCharacter.generated.h"
 
 
@@ -17,96 +16,6 @@ enum class EDamageType : uint8
 	Heat,
 };
 
-enum class EHealthType : uint32
-{
-	ClonedFlesh,
-	Machinery,
-	Flesh,
-	Robotic,
-	Infested,
-	InfestedFlesh,
-	Fossilized,
-	InfestedSinew,
-	Object,
-};
-
-enum class EShieldType : uint32
-{
-	Shield,
-	ProtoShield,
-};
-
-enum class EArmorType : uint32
-{
-	FerriteArmor,
-	AlloyArmor,
-};
-
-enum class EEnemyID : uint32
-{
-	// Light Grineer units
-	Butcher,
-	Flameblade,
-	Guardsman,
-	Powerfist,
-	Scorpion,
-	ShieldLancer,
-
-	// Medium Grineer units
-	Ballista,
-	EliteLancer,
-	Eviscerator,
-	Hellion,
-	Lancer,
-	Scorch,
-	Seeker,
-	Trooper,
-
-	// Heavy Grineer units
-	Bailiff,
-	Bombard,
-	Commander,
-	DrahkMaster,
-	HeavyGunner,
-	HyekkaMaster,
-	// Manic,
-	Napalm,
-	Nox,
-
-	// ...
-
-	// Corpus crewmen
-	Crewman,
-	DetronCrewman,
-	SniperCrewman,
-	EliteCrewman,
-	Tech,
-	ProdCrewman,
-	NullifierCrewman,
-	Comba,
-	Scrambus,
-
-	// Corpus walkers
-	Moa,
-	ShockwaveMoa,
-	RailgunMoa,
-	FusionMoa,
-	AntiMoa,
-	IsolatorBursa,
-	DroverBursa,
-	DenialBursa,
-
-	// Corpus ospreys
-	LeechOsprey,
-	MineOsprey,
-	OxiumOsprey,
-	ShieldOsprey,
-	SappingOsprey,
-	AttackDrone,
-	ScavengerDrone,
-
-	// ...
-};
 
 UCLASS()
 class WARFRAME_A_API AWarframeCharacter : public ACharacter
@@ -114,8 +23,7 @@ class WARFRAME_A_API AWarframeCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
-	AWarframeCharacter();
+	AWarframeCharacter(const FObjectInitializer &ObjectInitializer);
 
 protected:
 	// Called when the game starts or when spawned
@@ -129,22 +37,69 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void InitProperties(int32 CharacterID, uint32 Level);
+	void InitPropertiesBP(int32 CharacterID, int32 Level);
+
+	virtual void InitProperties(ECharacterID CharacterID, uint32 Level);
 
 	UFUNCTION(BlueprintCallable)
-		float GetArmor();
+	FORCEINLINE int32 GetLevel()
+	{
+		return this->Level;
+	}
 
 	UFUNCTION(BlueprintCallable)
-		float GetMaxHealth();
+	FORCEINLINE FName GetName()
+	{
+		return this->Name;
+	}
 
 	UFUNCTION(BlueprintCallable)
-		float GetMaxShield();
+	FORCEINLINE EHealthType GetHealthType()
+	{
+		return this->HealthType;
+	}
 
 	UFUNCTION(BlueprintCallable)
-		float GetCurrentHealth();
+	FORCEINLINE float GetMaxHealth()
+	{
+		return this->MaxHealth;
+	}
 
 	UFUNCTION(BlueprintCallable)
-		float GetCurrentShield();
+	FORCEINLINE float GetCurrentHealth()
+	{
+		return this->CurrentHealth;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE EShieldType GetShieldType()
+	{
+		return this->ShieldType;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE float GetMaxShield()
+	{
+		return this->MaxShield;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE float GetCurrentShield()
+	{
+		return this->CurrentShield;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE EArmorType GetArmorType()
+	{
+		return this->ArmorType;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE float GetArmor()
+	{
+		return this->Armor;
+	}
 
 	UFUNCTION(BlueprintCallable)
 	AWeaponBase *GetWeapon(EWeaponType WeaponType);
@@ -155,11 +110,25 @@ public:
 	float MyTakeDamage(float Damage, EDamageType DamageType);
 
 protected:
-	float Armor;
+	UPROPERTY(VisibleAnywhere)
+	UCharacterWidgetComponent *CharacterWidget;
+
+	uint32 Level;
+	FName Name;
+
+	EHealthType HealthType;
 	float MaxHealth;
-	float MaxShield;
 	float CurrentHealth;
+
+	EShieldType ShieldType;
+	float MaxShield;
 	float CurrentShield;
+
+	EArmorType ArmorType;
+	float Armor;
+
+	float DamageReduction;
+	float Affinity;
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	AWeaponBase *EquippedWeapon;

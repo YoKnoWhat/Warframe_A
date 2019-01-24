@@ -2,32 +2,10 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "WarframeCommon.h"
 #include "GameFramework/Actor.h"
 #include "WeaponBase.generated.h"
 
-
-UENUM(BlueprintType)
-enum class EWeaponType : uint8
-{
-	PrimaryRifle,
-	PrimaryShotgun,
-	SniperRifle,
-	Bow,
-};
-
-UENUM(BlueprintType)
-enum class EWeaponTriggerType : uint8
-{
-	Auto,
-	SemiAuto,
-	Burst,
-	Hybrid,
-	Continuous,
-	Charge,
-	Launcher,
-	Speargun,
-};
 
 UCLASS()
 class WARFRAME_A_API AWeaponBase : public AActor
