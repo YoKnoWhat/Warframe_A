@@ -93,7 +93,7 @@ const FName UWarframeGameInstance::GetCharacterName(ECharacterID CharacterID)con
 		"MineOsprey",
 		"OxiumOsprey",
 		"ShieldOsprey",
-		"SappingOsprey",
+		// "SappingOsprey",
 		"AttackDrone",
 		"ScavengerDrone",
 

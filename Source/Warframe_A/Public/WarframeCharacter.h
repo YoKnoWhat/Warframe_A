@@ -42,61 +42,61 @@ public:
 	virtual void InitProperties(ECharacterID CharacterID, uint32 Level);
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE int32 GetLevel()
+	FORCEINLINE int32 GetLevel()const
 	{
 		return this->Level;
 	}
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE FName GetName()
+	FORCEINLINE FName GetName()const
 	{
 		return this->Name;
 	}
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE EHealthType GetHealthType()
+	FORCEINLINE EHealthType GetHealthType()const
 	{
 		return this->HealthType;
 	}
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE float GetMaxHealth()
+	FORCEINLINE float GetMaxHealth()const
 	{
 		return this->MaxHealth;
 	}
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE float GetCurrentHealth()
+	FORCEINLINE float GetCurrentHealth()const
 	{
 		return this->CurrentHealth;
 	}
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE EShieldType GetShieldType()
+	FORCEINLINE EShieldType GetShieldType()const
 	{
 		return this->ShieldType;
 	}
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE float GetMaxShield()
+	FORCEINLINE float GetMaxShield()const
 	{
 		return this->MaxShield;
 	}
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE float GetCurrentShield()
+	FORCEINLINE float GetCurrentShield()const
 	{
 		return this->CurrentShield;
 	}
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE EArmorType GetArmorType()
+	FORCEINLINE EArmorType GetArmorType()const
 	{
 		return this->ArmorType;
 	}
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE float GetArmor()
+	FORCEINLINE float GetArmor()const
 	{
 		return this->Armor;
 	}

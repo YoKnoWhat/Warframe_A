@@ -99,7 +99,7 @@ enum class ECharacterID : uint8
 	MineOsprey,
 	OxiumOsprey,
 	ShieldOsprey,
-	SappingOsprey,
+	// SappingOsprey,
 	AttackDrone,
 	ScavengerDrone,
 
@@ -209,7 +209,7 @@ static const char *ECharacterIDNames[] = {
 	"MineOsprey",
 	"OxiumOsprey",
 	"ShieldOsprey",
-	"SappingOsprey",
+	// "SappingOsprey",
 	"AttackDrone",
 	"ScavengerDrone",
 

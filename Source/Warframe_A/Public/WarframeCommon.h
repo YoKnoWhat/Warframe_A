@@ -91,7 +91,7 @@ enum class ECharacterID : uint32
 	MineOsprey,
 	OxiumOsprey,
 	ShieldOsprey,
-	SappingOsprey,
+	// SappingOsprey,
 	AttackDrone,
 	ScavengerDrone,
 
