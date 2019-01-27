@@ -7,7 +7,19 @@
 
 // Sets default values
 AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializer) :
-	Super(ObjectInitializer)
+	Super(ObjectInitializer),
+	Level(1),
+	Name("Unknown"),
+	HealthType(EHealthType::Flesh),
+	MaxHealth(100.0f),
+	CurrentHealth(100.0f),
+	ShieldType(EShieldType::Shield),
+	MaxShield(100.0f),
+	CurrentShield(100.0f),
+	ArmorType(EArmorType::FerriteArmor),
+	Armor(50.0f),
+	DamageReduction(10.0f),
+	Affinity(50.0f)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -38,7 +50,6 @@ void AWarframeCharacter::Tick(float DeltaTime)
 	{
 		ShieldRechargeTimer += DeltaTime;
 	}
-	UE_LOG(LogTemp, Warning, TEXT("%f"), ShieldRechargeTimer);
 }
 
 // Called to bind functionality to input
