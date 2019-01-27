@@ -27,17 +27,18 @@ void AWarframeCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (NoDamageTakenDuration > 3.0f)
+	if (ShieldRechargeTimer > 3.0f * ShieldRechargeDelayMultiplier)
 	{
 		if (CurrentShield != MaxShield)
 		{
-			CurrentShield = FMath::Min(CurrentShield + ShieldRegenerationPerSecond * DeltaTime, MaxShield);
+			CurrentShield = FMath::Min(CurrentShield + (15.0f + 0.05f * MaxShield) * ShieldRechargeSpeedMultiplier * DeltaTime, MaxShield);
 		}
 	}
 	else
 	{
-		NoDamageTakenDuration += DeltaTime;
+		ShieldRechargeTimer += DeltaTime;
 	}
+	UE_LOG(LogTemp, Warning, TEXT("%f"), ShieldRechargeTimer);
 }
 
 // Called to bind functionality to input
@@ -65,16 +66,16 @@ void AWarframeCharacter::InitProperties(ECharacterID CharacterID, uint32 Level)
 	if (CharacterProp != nullptr)
 	{
 		this->HealthType = CharacterProp->HealthType;
-		this->MaxHealth = this->CurrentHealth = CharacterProp->Health;
+		this->MaxHealth = this->CurrentHealth = this->PropertyLevelScaling(CharacterProp->Health, CharacterProp->BaseLevel, 2.0f, 0.015f, Level);
 
 		this->ShieldType = CharacterProp->ShieldType;
-		this->MaxShield = this->CurrentShield = CharacterProp->Shield;
+		this->MaxShield = this->CurrentShield = this->PropertyLevelScaling(CharacterProp->Shield, CharacterProp->BaseLevel, 2.0f, 0.0075f, Level);
 
 		this->ArmorType = CharacterProp->ArmorType;
-		this->Armor = CharacterProp->Armor;
+		this->Armor = this->PropertyLevelScaling(CharacterProp->Armor, CharacterProp->BaseLevel, 1.75f, 0.005f, Level);
 
 		this->DamageReduction = CharacterProp->DamageReduction;
-		this->Affinity = CharacterProp->Affinity;
+		this->Affinity = this->PropertyLevelScaling(CharacterProp->Affinity, CharacterProp->BaseLevel, 0.5f, 0.1425f, Level);
 	}
 }
 
@@ -88,7 +89,7 @@ AWeaponBase *AWarframeCharacter::GetCurrentWeapon()
 	return EquippedWeapon;
 }
 
-float AWarframeCharacter::MyTakeDamage(float Damage, EDamageType DamageType)
+float AWarframeCharacter::ApplyDamage(float Damage, EDamageType DamageType)
 {
 	CurrentShield -= Damage;
 
@@ -98,7 +99,12 @@ float AWarframeCharacter::MyTakeDamage(float Damage, EDamageType DamageType)
 		CurrentShield = 0.0f;
 	}
 
-	NoDamageTakenDuration = 0.0f;
+	ShieldRechargeTimer = 0.0f;
 
 	return Damage;
+}
+
+float AWarframeCharacter::PropertyLevelScaling(float BaseValue, float BaseLevel, float Exponent, float Coefficient, float CurrentLevel)
+{
+	return BaseValue * (1.0f + FMath::Pow(CurrentLevel - BaseLevel, Exponent) * Coefficient);
 }

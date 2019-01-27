@@ -100,7 +100,7 @@ enum class ECharacterID : uint32
 
 struct FCharacterProperties
 {
-	uint32		HaseLevel;
+	uint32		BaseLevel;
 	EHealthType	HealthType;
 	uint32		Health;
 	EShieldType	ShieldType;

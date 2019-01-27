@@ -89,6 +89,9 @@ public:
 		return RemainingMagazine;
 	}
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFired();
+
 private:
 	void DoFire();
 

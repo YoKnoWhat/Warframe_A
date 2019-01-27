@@ -107,7 +107,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	AWeaponBase *GetCurrentWeapon();
 
-	float MyTakeDamage(float Damage, EDamageType DamageType);
+	UFUNCTION(BlueprintCallable)
+	float ApplyDamage(float Damage, EDamageType DamageType);
+
+protected:
+	float PropertyLevelScaling(float BaseValue, float BaseLevel, float Exponent, float Coefficient, float CurrentLevel);
 
 protected:
 	UPROPERTY(VisibleAnywhere)
@@ -133,6 +137,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	AWeaponBase *EquippedWeapon;
 
-	float NoDamageTakenDuration;
-	float ShieldRegenerationPerSecond;
+	float ShieldRechargeDelayMultiplier = 1.0f;
+	float ShieldRechargeSpeedMultiplier = 1.0f;
+	float ShieldRechargeTimer;
 };

@@ -112,6 +112,9 @@ bool AWeaponBase::DoFire_Auto()
 	else
 	{
 		RemainingMagazine -= 1;
+
+		this->OnFired();
+
 		return false;
 	}
 }
@@ -121,6 +124,8 @@ bool AWeaponBase::DoFire_SemiAuto()
 	if (RemainingMagazine != 0)
 	{
 		RemainingMagazine -= 1;
+
+		this->OnFired();
 	}
 
 	return true;
@@ -143,4 +148,6 @@ void AWeaponBase::DoReload()
 	RemainingMagazine += MagazineToReload;
 
 	RemainingAmmo -= MagazineToReload;
+
+	bIsReloading = false;
 }
