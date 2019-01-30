@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "GameFramework/Actor.h"
 #include "StateObject.generated.h"
 
 /**
@@ -13,16 +13,9 @@ class WARFRAME_A_API UStateObject : public UObject
 	GENERATED_BODY()
 
 public:
-	UStateObject()
-	{
-		ID = -1;
-	}
-
-	UFUNCTION(BlueprintCallable)
-		void Init(int32 ID_)
-	{
-		ID = ID_;
-	}
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	int32 GetID()const;
+	virtual int32 GetID_Implementation()const;
 
 	// virtual FName OnUpdate_Native(AActor *Actor)
 	// {
@@ -33,8 +26,8 @@ public:
 	virtual int32 OnUpdate_Implementation(float DeltaTime);
 
 	UFUNCTION(BlueprintNativeEvent)
-	void OnEnter(UObject *Owner, int32 StateFromID);
-	virtual void OnEnter_Implementation(UObject *Owner, int32 StateFromID);
+	void OnEnter(AActor *Owner, int32 StateFromID);
+	virtual void OnEnter_Implementation(AActor *Owner, int32 StateFromID);
 
 	UFUNCTION(BlueprintNativeEvent)
 	void OnExit();
@@ -43,12 +36,4 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	int32 OnCustomEvent(int32 EventID);
 	virtual int32 OnCustomEvent_Implementation(int32 EventID);
-
-	void TickSubFSMs(float DeltaTime);
-
-public:
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-	int32 ID;
-
-	TArray<TBaseDelegate<bool, float>> SubFSMTickDelegates;
 };
