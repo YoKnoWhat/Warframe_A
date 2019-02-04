@@ -17,7 +17,7 @@ enum class ETennoMovementMode : uint8
 /**
  * TennoMovementComponent handles movement logic for our tenno warriors.
  */
-UCLASS()
+UCLASS( Blueprintable, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent) )
 class WARFRAME_A_API UTennoMovementComponent : public UCharacterMovementComponent
 {
 	GENERATED_BODY()

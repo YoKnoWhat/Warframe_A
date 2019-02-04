@@ -40,3 +40,7 @@ void ATennoCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
+void ATennoCharacter::InitProperties(ECharacterID CharacterID, uint32 Level)
+{
+	Super::InitProperties(CharacterID, Level);
+}

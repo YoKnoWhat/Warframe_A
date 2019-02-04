@@ -2,19 +2,15 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "WarframeCharacter.h"
 #include "TennoCharacter.generated.h"
 
 UCLASS(BlueprintType)
-class WARFRAME_A_API ATennoCharacter : public ACharacter
+class WARFRAME_A_API ATennoCharacter : public AWarframeCharacter
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
-	// ATennoCharacter();
-
 	ATennoCharacter(const FObjectInitializer& ObjectInitializer);
 
 protected:
@@ -28,4 +24,5 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual void InitProperties(ECharacterID CharacterID, uint32 Level)override;
 };
