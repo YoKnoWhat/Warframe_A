@@ -21,12 +21,18 @@ UCLASS( Blueprintable, ClassGroup = (Custom), meta = (BlueprintSpawnableComponen
 class WARFRAME_A_API UTennoMovementComponent : public UCharacterMovementComponent
 {
 	GENERATED_BODY()
-	
+
 public:
 	virtual void PhysCustom(float DeltaTime, int32 Iterations)override;
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-		float MyAccel;
+	float StandToSlideTime;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	float StandToSlideDeltaSpeed;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	float StandToSlideDuration;
 	
 protected:
 	void PhysCustomSliding(float DeltaTime, int32 Iterations);
