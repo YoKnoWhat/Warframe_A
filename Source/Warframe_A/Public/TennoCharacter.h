@@ -25,4 +25,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void InitProperties(ECharacterID CharacterID, uint32 Level)override;
+
+
+
+protected:
 };

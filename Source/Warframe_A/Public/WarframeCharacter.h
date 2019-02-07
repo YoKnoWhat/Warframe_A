@@ -110,6 +110,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float ApplyDamage(float Damage, EDamageType DamageType);
 
+	// Multiplier getters.
+	FORCEINLINE float GetMovementSpeedMultiplier()
+	{
+		return this->MovementSpeedMultiplier;
+	}
+
 protected:
 	float PropertyLevelScaling(float BaseValue, float BaseLevel, float Exponent, float Coefficient, float CurrentLevel);
 
@@ -139,5 +145,6 @@ protected:
 
 	float ShieldRechargeDelayMultiplier = 1.0f;
 	float ShieldRechargeSpeedMultiplier = 1.0f;
-	float ShieldRechargeTimer;
+	float ShieldRechargeTimer = 0.0f;
+	float MovementSpeedMultiplier = 1.0f;
 };

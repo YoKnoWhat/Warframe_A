@@ -36,7 +36,9 @@ void UTennoMovementComponent::PhysCustomSliding(float DeltaTime, int32 Iteration
 	}
 	else
 	{
-		this->Acceleration = Cast<APawn>(this->GetOwner())->GetBaseAimRotation().Vector() * StandToSlideDeltaSpeed / StandToSlideTime;
+		ATennoCharacter* Owner = Cast<ATennoCharacter>(this->GetOwner());
+
+		this->Acceleration = Owner->GetBaseAimRotation().Vector() * 300.0f / 0.25f * Owner->GetMovementSpeedMultiplier();
 	}
 
 	this->PhysWalking(DeltaTime, Iterations);
