@@ -1,0 +1,13 @@
+{
+    "SrcFilePath": "C:/Users/aer/Desktop/EnemyTable.csv",
+    "DstFilePath": "C:/Users/aer/Desktop/EnemyTable.dt",
+    "OutputCustomType":
+    [],
+    "ColumnType":
+    [
+        "CharacterID",
+        "Faction",
+        "WeaponID",
+        "WeaponID"
+    ]
+}

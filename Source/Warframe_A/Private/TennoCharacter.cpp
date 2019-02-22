@@ -2,6 +2,8 @@
 
 #include "TennoCharacter.h"
 #include "TennoMovementComponent.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
+#include "Runtime/Engine/Classes/Camera/CameraComponent.h"
 
 
 // Sets default values
@@ -31,6 +33,7 @@ void ATennoCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	this->TryFindTarget();
 }
 
 // Called to bind functionality to input
@@ -40,7 +43,26 @@ void ATennoCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
-void ATennoCharacter::InitProperties(ECharacterID CharacterID, uint32 Level)
+void ATennoCharacter::Init(ECharacterID CharacterID, uint32 Level)
 {
-	Super::InitProperties(CharacterID, Level);
+	Super::Init(CharacterID, Level);
+}
+
+void ATennoCharacter::TryFindTarget()
+{
+	UCameraComponent *CameraComponent = Cast<UCameraComponent>(this->GetComponentByClass(UCameraComponent::StaticClass()));
+
+	FCollisionQueryParams RV_TraceParams;
+	RV_TraceParams.bTraceComplex = true;
+	RV_TraceParams.AddIgnoredActor(this);
+
+	if (GetWorld()->LineTraceSingleByChannel(
+		this->CurrentTarget,
+		CameraComponent->GetComponentLocation(),
+		CameraComponent->GetComponentLocation() + CameraComponent->GetForwardVector() * 10000.0f,
+		ECC_Pawn,
+		RV_TraceParams) == false)
+	{
+		this->CurrentTarget.ImpactPoint = this->CurrentTarget.TraceEnd;
+	}
 }

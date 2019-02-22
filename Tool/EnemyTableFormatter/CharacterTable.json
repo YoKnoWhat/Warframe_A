@@ -1,0 +1,20 @@
+{
+    "SrcFilePath": "C:/Users/aer/Desktop/CharacterTable.csv",
+    "DstFilePath": "C:/Users/aer/Desktop/CharacterTable.dt",
+    "OutputCustomType":
+    [
+        "CharacterID"
+    ],
+    "ColumnType":
+    [
+        "CharacterID",
+        "uint32",
+        "HealthType",
+        "uint32",
+        "ShieldType",
+        "uint32",
+        "ArmorType",
+        "uint32",
+        "float"
+    ]
+}

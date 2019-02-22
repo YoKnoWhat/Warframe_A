@@ -72,3 +72,8 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+Tool/EnemyTableFormatter/x64/*
+Tool/EnemyTableFormatter/EnemyTableFormatter/x64/*
+Tool/EnemyTableFormatter/EnemyTableFormatter/Win32/*
+!Tool/EnemyTableFormatter/EnemyTableFormatter.sln

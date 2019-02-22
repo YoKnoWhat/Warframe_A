@@ -1,0 +1,22 @@
+{
+    "SrcFilePath": "C:/Users/aer/Desktop/WarframeTable.csv",
+    "DstFilePath": "C:/Users/aer/Desktop/WarframeTable.dt",
+    "OutputCustomType":
+    [],
+    "ColumnType":
+    [
+        "CharacterID",
+        "uint32",
+        "float",
+        "Polarity",
+        "Polarity",
+        "Polarity",
+        "Polarity",
+        "Polarity",
+        "Polarity",
+        "Polarity",
+        "Polarity",
+        "Polarity",
+        "Polarity"
+    ]
+}

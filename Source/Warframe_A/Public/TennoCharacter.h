@@ -24,9 +24,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	virtual void InitProperties(ECharacterID CharacterID, uint32 Level)override;
-
-
+	virtual void Init(ECharacterID CharacterID, uint32 Level)override;
 
 protected:
+	void TryFindTarget();
 };

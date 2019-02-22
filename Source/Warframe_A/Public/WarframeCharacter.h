@@ -4,18 +4,38 @@
 
 #include "WarframeCommon.h"
 #include "GameFramework/Character.h"
+#include "Runtime/Core/Public/Delegates/Delegate.h"
+#include "Runtime/Core/Public/Containers/Queue.h"
 #include "WarframeCharacter.generated.h"
 
 
-UENUM(BlueprintType)
-enum class EDamageType : uint8
+struct FStatusEffectData
 {
-	Impact,
-	Puncture,
-	Slash,
-	Heat,
-};
+	EDamageType Type;
+	AActor *DamageCauser;
+	FVector HitLocation;
 
+	// Damage per tick.
+	float Damage;
+
+	// Remained count of ticks.
+	uint32 TickCount;
+
+	// Time that this status effect should tick.
+	float TickTime;
+
+	// For AWarframeCharacter::StatusEffectSet() only.
+	friend inline bool operator==(const FStatusEffectData& LHS, const FStatusEffectData& RHS)
+	{
+		return LHS.Type == RHS.Type;
+	}
+
+	// For AWarframeCharacter::StatusEffectSet() only.
+	friend inline uint32 GetTypeHash(const FStatusEffectData& Other)
+	{
+		return GetTypeHash(CastToUnderlyingType(Other.Type));
+	}
+};
 
 UCLASS()
 class WARFRAME_A_API AWarframeCharacter : public ACharacter
@@ -39,8 +59,19 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void InitPropertiesBP(int32 CharacterID, int32 Level);
 
-	virtual void InitProperties(ECharacterID CharacterID, uint32 Level);
+	virtual void Init(ECharacterID CharacterID, uint32 Level);
 
+	const FHitResult &GetTarget()const;
+
+	UFUNCTION(BlueprintCallable)
+	void ApplyDamageBP(AActor *DamageCauser, EDamageType Status, EDamageType DamageType, float Damage);
+
+	void ApplyDamage(AActor *DamageCauser, const FVector &HitLocation, EDamageType DamageType, float Damage);
+
+	// No Raw damage applied assumed.
+	void ApplyDamage(AActor *DamageCauser, const FVector &HitLocation, ARoundBase *Round, float DamageScalar);
+
+	// Property getters.
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE int32 GetLevel()const
 	{
@@ -107,9 +138,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	AWeaponBase *GetCurrentWeapon();
 
-	UFUNCTION(BlueprintCallable)
-	float ApplyDamage(float Damage, EDamageType DamageType);
-
 	// Multiplier getters.
 	FORCEINLINE float GetMovementSpeedMultiplier()
 	{
@@ -119,32 +147,92 @@ public:
 protected:
 	float PropertyLevelScaling(float BaseValue, float BaseLevel, float Exponent, float Coefficient, float CurrentLevel);
 
+	void ApplyStatusEffect(AActor *DamageCauser, const FVector &HitLocation, EDamageType Status, float BaseDamage, float BaseDamagePhys);
+
+	// Status effect tick functions.
+	void SlashStatusTick(const FStatusEffectData &Data);
+
+	void ImpactStatusTick(const FStatusEffectData &Data);
+
+	void PunctureStatusTick(const FStatusEffectData &Data);
+
+	void HeatStatusTick(const FStatusEffectData &Data);
+
+	void ColdStatusTick(const FStatusEffectData &Data);
+
+	void ElectricityStatusTick(const FStatusEffectData &Data);
+
+	void ToxinStatusTick(const FStatusEffectData &Data);
+
+	void BlastStatusTick(const FStatusEffectData &Data);
+
+	void RadiationStatusTick(const FStatusEffectData &Data);
+
+	void GasStatusTick(const FStatusEffectData &Data);
+
+	void MagneticStatusTick(const FStatusEffectData &Data);
+
+	void ViralStatusTick(const FStatusEffectData &Data);
+
+	void CorrosiveStatusTick(const FStatusEffectData &Data);
+
+	void VoidStatusTick(const FStatusEffectData &Data);
+
+	void NoneStatusTick(const FStatusEffectData &Data);
+
+	float GetHealthDamageModifier(EDamageType DamageType)const;
+
+	float GetShieldDamageModifier(EDamageType DamageType)const;
+
+	float GetArmorDamageModifier(EDamageType DamageType)const;
+
+public:
+	DECLARE_MULTICAST_DELEGATE_TwoParams(FCharacterOnDiedDelegate, AActor* /*Causer*/, AWarframeCharacter* /*DeadCharacter*/);
+	FCharacterOnDiedDelegate OnDied;
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	UCharacterWidgetComponent *CharacterWidget;
 
 	uint32 Level;
 	FName Name;
-
 	EHealthType HealthType;
 	float MaxHealth;
 	float CurrentHealth;
-
 	EShieldType ShieldType;
 	float MaxShield;
 	float CurrentShield;
-
 	EArmorType ArmorType;
 	float Armor;
-
-	float DamageReduction;
 	float Affinity;
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	AWeaponBase *EquippedWeapon;
 
+	UPROPERTY()
+	FHitResult CurrentTarget;
+
+	float InternalTime;
+	TQueue<FStatusEffectData> StatusEffectQueue; // Slash, Heat, Toxin, Gas.
+	TSet<FStatusEffectData> StatusEffectSet; // Impact, Puncture, Cold, Electricity, Blast, Radiation, Magnetic, Viral, Corrosive, Void.
+	FStatusEffectData *SlashStatusData;
+	FStatusEffectData *ImpactStatusData;
+	FStatusEffectData *PunctureStatusData;
+	FStatusEffectData *HeatStatusData;
+	FStatusEffectData *ColdStatusData;
+	FStatusEffectData *ElectricityStatusData;
+	FStatusEffectData *ToxinStatusData;
+	FStatusEffectData *BlastStatusData;
+	FStatusEffectData *RadiationStatusData;
+	FStatusEffectData *GasStatusData;
+	FStatusEffectData *MagneticStatusData;
+	FStatusEffectData *ViralStatusData;
+	FStatusEffectData *CorrosiveStatusData;
+	FStatusEffectData *VoidStatusData;
+
 	float ShieldRechargeDelayMultiplier = 1.0f;
 	float ShieldRechargeSpeedMultiplier = 1.0f;
 	float ShieldRechargeTimer = 0.0f;
 	float MovementSpeedMultiplier = 1.0f;
+	float HeatModeMultiplier = 1.0f;
 };

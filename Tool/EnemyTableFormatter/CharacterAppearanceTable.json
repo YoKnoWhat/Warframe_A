@@ -1,0 +1,23 @@
+{
+    "SrcFilePath": "C:/Users/aer/Desktop/CharacterAppearanceTable.csv",
+    "DstFilePath": "C:/Users/aer/Desktop/CharacterAppearanceTable.dt",
+    "OutputCustomType":
+    [
+        "Mesh",
+        "AnimClass"
+    ],
+    "ColumnType":
+    [
+        "CharacterID",
+        "Mesh",
+        "AnimClass",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float"
+    ]
+}

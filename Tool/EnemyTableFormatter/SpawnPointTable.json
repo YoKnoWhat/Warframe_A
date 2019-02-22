@@ -1,0 +1,24 @@
+{
+    "SrcFilePath": "C:/Users/aer/Desktop/SpawnPointTable.csv",
+    "DstFilePath": "C:/Users/aer/Desktop/SpawnPointTable.dt",
+    "OutputCustomType":
+    [],
+    "ColumnType":
+    [
+        "int32",
+        "int32",
+        "int32",
+        "CharacterID",
+        "uint32",
+        "uint32",
+        "CharacterID",
+        "uint32",
+        "uint32",
+        "CharacterID",
+        "uint32",
+        "uint32",
+        "CharacterID",
+        "uint32",
+        "uint32"
+    ]
+}

@@ -1,0 +1,42 @@
+{
+    "SrcFilePath": "C:/Users/aer/Desktop/WeaponTable.csv",
+    "DstFilePath": "C:/Users/aer/Desktop/WeaponTable.dt",
+    "OutputCustomType":
+    [
+        "WeaponID"        
+    ],
+    "ColumnType":
+    [
+        "WeaponID",
+        "AmmoType",
+        "uint32",
+        "uint32",
+        "float",
+        "float",
+        "uint32",
+        "float",
+        "float",
+        "uint32",
+        "uint32",
+        "float",
+        "float",
+        "Noise",
+        "uint32",
+        "float",
+        "float",
+        "Trigger",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float"
+    ]
+}
