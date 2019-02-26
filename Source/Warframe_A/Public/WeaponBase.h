@@ -26,7 +26,6 @@ struct FWeaponFireMode
 	TArray<FDamagePair> DamageArray;
 
 	float BaseDamage;
-	float BaseDamagePhys;
 	float TotalProportionalDamage;
 	TArray<float> StatusChanceIntervalArray;
 	uint32 CriticalTier;
@@ -210,15 +209,39 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE float GetBaseDamagePhys()const
-	{
-		return FireModeArray[CurrentFireMode].BaseDamagePhys;
-	}
-
-	UFUNCTION(BlueprintCallable)
 	FORCEINLINE float GetTotalProportionalDamage()const
 	{
 		return FireModeArray[CurrentFireMode].TotalProportionalDamage;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE float GetBleedMultiplier()const
+	{
+		return BleedMultiplier;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE float GetHeatModMultiplier()const
+	{
+		return HeatModMultiplier;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE float GetColdModMultiplier()const
+	{
+		return ColdModMultiplier;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE float GetElectricityModMultiplier()const
+	{
+		return ElectricityModMultiplier;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE float GetToxinModMultiplier()const
+	{
+		return ToxinModMultiplier;
 	}
 
 	UFUNCTION(BlueprintCallable)
@@ -255,6 +278,12 @@ protected:
 	EAmmoType AmmoType;
 	uint32 MagazineCapacity;
 	uint32 AmmoMaximum;
+
+	float BleedMultiplier;
+	float HeatModMultiplier;
+	float ColdModMultiplier;
+	float ElectricityModMultiplier;
+	float ToxinModMultiplier;
 
 	uint32 MagazineLeft;
 	uint32 AmmoLeft;

@@ -35,8 +35,11 @@ enum class EArmorType : uint8
 UENUM(BlueprintType)
 enum class EDamageType : uint8
 {
+	Begin = 0,
+	None = Begin,
+
 	// Physical damage.
-	Slash = 0,
+	Slash,
 	Impact,
 	Puncture,
 
@@ -59,8 +62,7 @@ enum class EDamageType : uint8
 	Void,
 	Tau,
 
-	// Placeholder
-	None,
+	End = Tau,
 };
 
 enum class EFactionType : uint8

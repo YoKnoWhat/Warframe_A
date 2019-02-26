@@ -44,4 +44,12 @@ protected:
 	FVector HitLocation;
 	FVector2D ControlPointOffset0;
 	FVector2D ControlPointOffset1;
+
+	// Temporary configurable variables.
+	UPROPERTY(EditAnywhere)
+		float MinRandomDist = 100.0f;
+	UPROPERTY(EditAnywhere)
+		float MaxRandomDist = 1000.0f;
+	UPROPERTY(EditAnywhere)
+		float MaxRandomY = 300.0f;
 };

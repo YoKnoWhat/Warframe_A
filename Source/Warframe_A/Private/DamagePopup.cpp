@@ -148,10 +148,21 @@ void UDamagePopup::Show(const FVector &HitLocation, EDamageType Status, float Da
 	this->DamageText->SetFont(NewFont);
 
 	float RandomRadian = FMath::FRandRange(-45.0f/180.0f, 45.0f/180.0f);
+	float NewMaxRandomY;
+	float NewMaxRandomY1;
+	{
+		float k = /*(50.0f - 500.0f)*/-450.0f / (MaxRandomDist * MaxRandomDist - MinRandomDist * MinRandomDist);
+		float k1 = /*(0.0f - 150.0f)*/-150.0f / (MaxRandomDist * MaxRandomDist - MinRandomDist * MinRandomDist);
+
+		NewMaxRandomY = (CachedHUD->GetOwningPlayerPawn()->GetActorLocation() - HitLocation).SizeSquared() * k - k * MinRandomDist * MinRandomDist + 500.0f;
+		NewMaxRandomY1 = (CachedHUD->GetOwningPlayerPawn()->GetActorLocation() - HitLocation).SizeSquared() * k1 - k1 * MinRandomDist * MinRandomDist + 150.0f;
+		NewMaxRandomY = FMath::Clamp(NewMaxRandomY, 50.0f, 500.0f);
+		NewMaxRandomY1 = FMath::Clamp(NewMaxRandomY1, 0.0f, 150.0f);
+	}
 
 	// Rotate (0.0, 1.0) by $RandomRadian.
-	this->ControlPointOffset0 = FVector2D(FMath::Sin(RandomRadian), -FMath::Cos(RandomRadian)) * FMath::FRandRange(50.0f, 300.0f);
-	this->ControlPointOffset1 = FVector2D(ControlPointOffset0.X * 2.0f, 150.0f);
+	this->ControlPointOffset0 = FVector2D(FMath::Sin(RandomRadian), -FMath::Cos(RandomRadian)) * FMath::FRandRange(50.0f, NewMaxRandomY);
+	this->ControlPointOffset1 = FVector2D(ControlPointOffset0.X * 2.0f, FMath::FRandRange(0.0f, NewMaxRandomY1));
 
 	UGameViewportClient* ViewportClient = CachedHUD->GetWorld()->GetGameViewport();
 	FVector2D ViewportSize;

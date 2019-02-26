@@ -37,14 +37,34 @@ public:
 		return BaseDamage;
 	}
 
-	FORCEINLINE float GetBaseDamagePhys()const
-	{
-		return BaseDamagePhys;
-	}
-
 	FORCEINLINE const TArray<FDamagePair> &GetDamageArray()const
 	{
 		return DamageArray;
+	}
+
+	FORCEINLINE float GetBleedMultiplier()const
+	{
+		return BleedMultiplier;
+	}
+
+	FORCEINLINE float GetHeatModMultiplier()const
+	{
+		return HeatModMultiplier;
+	}
+
+	FORCEINLINE float GetColdModMultiplier()const
+	{
+		return ColdModMultiplier;
+	}
+
+	FORCEINLINE float GetElectricityModMultiplier()const
+	{
+		return ElectricityModMultiplier;
+	}
+
+	FORCEINLINE float GetToxinModMultiplier()const
+	{
+		return ToxinModMultiplier;
 	}
 
 	FORCEINLINE uint32 GetCriticalTier()const
@@ -57,6 +77,11 @@ public:
 		return StatusEffect;
 	}
 
+	FORCEINLINE float GetDamageScalar()const
+	{
+		return DamageScalar;
+	}
+
 protected:
 	// Basic attributes inherited from shooter.
 	float CriticalMultiplier;
@@ -64,13 +89,19 @@ protected:
 	float FalloffEnd;
 	float FalloffDamage;
 	float PunchThrough;
-	float BaseDamage; // Physical and elemental damage.
-	float BaseDamagePhys;
+	float BaseDamage;
 	TArray<FDamagePair> DamageArray;
+	float BleedMultiplier;
+	float HeatModMultiplier;
+	float ColdModMultiplier;
+	float ElectricityModMultiplier;
+	float ToxinModMultiplier;
 
 	// Extra attributes computed in Init().
 	uint32 CriticalTier;
 	EDamageType StatusEffect;
+	float DamageScalar; // Damage scalar due to critical hit and falloff.
+	float StatusDamageMultiplier; // Status damage multiplier.
 
 	UPROPERTY(BlueprintReadOnly)
 	FVector LastLocation;

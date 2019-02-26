@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TennoCharacter.h"
+#include "CharacterWidget.h"
+#include "CharacterWidgetComponent.h"
 #include "TennoMovementComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Classes/Camera/CameraComponent.h"
@@ -56,13 +58,29 @@ void ATennoCharacter::TryFindTarget()
 	RV_TraceParams.bTraceComplex = true;
 	RV_TraceParams.AddIgnoredActor(this);
 
+	AWarframeCharacter* PrevTarget = Cast<AWarframeCharacter>(this->SelectedTarget.Actor.Get());
+
 	if (GetWorld()->LineTraceSingleByChannel(
-		this->CurrentTarget,
+		this->SelectedTarget,
 		CameraComponent->GetComponentLocation(),
 		CameraComponent->GetComponentLocation() + CameraComponent->GetForwardVector() * 10000.0f,
 		ECC_Pawn,
 		RV_TraceParams) == false)
 	{
-		this->CurrentTarget.ImpactPoint = this->CurrentTarget.TraceEnd;
+		this->SelectedTarget.ImpactPoint = this->SelectedTarget.TraceEnd;
+	}
+
+	AWarframeCharacter* NewTarget = Cast<AWarframeCharacter>(this->SelectedTarget.Actor.Get());
+
+	if (PrevTarget != NewTarget)
+	{
+		if (PrevTarget != nullptr)
+		{
+			PrevTarget->OnUnselected();
+		}
+		if (NewTarget != nullptr)
+		{
+			NewTarget->OnSelected();
+		}
 	}
 }

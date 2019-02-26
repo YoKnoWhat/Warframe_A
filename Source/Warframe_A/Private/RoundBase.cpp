@@ -44,10 +44,12 @@ void ARoundBase::Init(AWeaponBase* Weapon)
 	this->FalloffDamage = Weapon->GetFalloffDamage();
 	this->PunchThrough = Weapon->GetPunchThrough();
 	this->BaseDamage = Weapon->GetBaseDamage();
-	this->BaseDamagePhys = Weapon->GetBaseDamagePhys();
 	this->DamageArray = Weapon->GetDamageArray();
-
-	// Compute extra attributes.
+	this->BleedMultiplier = Weapon->GetBleedMultiplier();
+	this->HeatModMultiplier = Weapon->GetHeatModMultiplier();
+	this->ColdModMultiplier = Weapon->GetColdModMultiplier();
+	this->ElectricityModMultiplier = Weapon->GetElectricityModMultiplier();
+	this->ToxinModMultiplier = Weapon->GetToxinModMultiplier();
 
 	// Critical hit roll.
 	this->CriticalTier = Weapon->GetCriticalTier();
@@ -60,6 +62,27 @@ void ARoundBase::Init(AWeaponBase* Weapon)
 	if (FMath::FRandRange(0.0f, 1.0f) < Weapon->GetStatusChance())
 	{
 		this->StatusEffect = Weapon->GetStatusEffect(FMath::FRandRange(0.0f, 1.0f));
+		switch (StatusEffect)
+		{
+		case EDamageType::Slash:
+			this->StatusDamageMultiplier = this->BleedMultiplier;
+			break;
+		case EDamageType::Heat:
+			this->StatusDamageMultiplier = this->HeatModMultiplier;
+			break;
+		case EDamageType::Electricity:
+			this->StatusDamageMultiplier = this->ElectricityModMultiplier;
+			break;
+		case EDamageType::Toxin:
+			this->StatusDamageMultiplier = this->ToxinModMultiplier;
+			break;
+		case EDamageType::Gas:
+			this->StatusDamageMultiplier = this->ToxinModMultiplier;
+			break;
+		default:
+			this->StatusDamageMultiplier = 1.0f;
+			break;
+		}
 	}
 	else
 	{
@@ -77,44 +100,36 @@ void ARoundBase::OnHit(AActor *Target, FVector HitLocation)
 
 	if (WarframeCharacter != nullptr)
 	{
-		float DamageScalar = 1.0f;
+		this->DamageScalar = 1.0f;
 
 		// Apply falloff scalar.
 		if (FalloffEnd > 0.0f)
 		{
 			float FalloffScalar = (FalloffEnd - FliedDistance) / (FalloffEnd - FalloffStart);
 
-			DamageScalar *= FMath::Clamp(FalloffScalar, this->FalloffDamage, 1.0f);
+			this->DamageScalar *= FMath::Clamp(FalloffScalar, this->FalloffDamage, 1.0f);
 		}
 
-		//// Apply punch through scalar.
+		//// todo: Apply punch through scalar.
 		//if (PunchThrough > 1.0f)
 		//{
 		//	PunchThrough -= 1.0f;
 		//}
 		//else // if (PunchThrough <= 1.0f)
 		//{
-		//	DamageScalar *= PunchThrough;
+		//	this->DamageScalar *= PunchThrough;
 		//	PunchThrough = 0.0f;
 		//}
 
 		// Apply cirtical hit scalar.
 		DamageScalar *= (1.0 + CriticalTier * (CriticalMultiplier - 1.0f));
 
-		AActor* DamageCauser;
-		if (this->GetOwner() != nullptr)
-		{
-			DamageCauser = this->GetOwner()->GetOwner();
-		}
-		else
-		{
-			DamageCauser = nullptr;
-		}
+		WarframeCharacter->ApplyDamage(Instigator, HitLocation, StatusEffect, DamageArray, DamageScalar, CriticalTier);
 
-		WarframeCharacter->ApplyDamage(DamageCauser, HitLocation, this, DamageScalar);
+		WarframeCharacter->ApplyStatusEffect(Instigator, HitLocation, StatusEffect, BaseDamage, StatusDamageMultiplier);
 	}
 	else
 	{
-		// PunchThrough
+		// todo: PunchThrough
 	}
 }

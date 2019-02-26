@@ -37,17 +37,23 @@ void AWarframeGameMode::ReadInSpawnPointArray()
 		FCharacterSpawnInfo CharacterSpawnInfo;
 		int32 tempInt32;
 
-		FVector Location;
-		TArray<FCharacterSpawnInfo> SpawnInfoArray;
+		struct FSpawnInfoExt
+		{
+			FVector Location;
+			TArray<FCharacterSpawnInfo> CharacterSpawnInfoArray;
+		};
+		TArray<FSpawnInfoExt> SpawnInfoArray;
 
 		while (Begin != End)
 		{
+			FSpawnInfoExt &SpawnInfo = SpawnInfoArray[SpawnInfoArray.Add(FSpawnInfoExt())];
+
 			Warframe::ReadIn(tempInt32, Begin);
-			Location.X = static_cast<float>(tempInt32);
+			SpawnInfo.Location.X = static_cast<float>(tempInt32);
 			Warframe::ReadIn(tempInt32, Begin);
-			Location.Y = static_cast<float>(tempInt32);
+			SpawnInfo.Location.Y = static_cast<float>(tempInt32);
 			Warframe::ReadIn(tempInt32, Begin);
-			Location.Z = static_cast<float>(tempInt32);
+			SpawnInfo.Location.Z = static_cast<float>(tempInt32);
 
 			for (uint32 i = 0; i < 4; ++i)
 			{
@@ -57,16 +63,16 @@ void AWarframeGameMode::ReadInSpawnPointArray()
 
 				if (CharacterSpawnInfo.CharacterID != ECharacterID::None)
 				{
-					SpawnInfoArray.Add(CharacterSpawnInfo);
+					SpawnInfo.CharacterSpawnInfoArray.Add(CharacterSpawnInfo);
 				}
 			}
 		}
 
-		if (SpawnInfoArray.Num() != 0)
+		for (int32 i = 0; i < SpawnInfoArray.Num(); ++i)
 		{
 			USpawnPoint* NewSpawnPoint = NewObject<USpawnPoint>(this);
 
-			NewSpawnPoint->Init(Location, SpawnInfoArray);
+			NewSpawnPoint->Init(SpawnInfoArray[i].Location, SpawnInfoArray[i].CharacterSpawnInfoArray);
 
 			this->SpawnPointArray.Add(NewSpawnPoint);
 		}

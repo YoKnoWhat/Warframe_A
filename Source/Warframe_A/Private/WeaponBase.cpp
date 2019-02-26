@@ -6,8 +6,8 @@
 #include "RoundBase.h"
 #include "Runtime/Engine/Classes/Kismet/KismetSystemLibrary.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
-#include "Runtime/Engine/Public/TimerManager.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Public/TimerManager.h"
 
 
 // Sets default values
@@ -92,21 +92,18 @@ void AWeaponBase::Init(EWeaponID WeaponID, uint32 Level)
 		{
 			FireMode.DamageArray.Add({ EDamageType::Slash, ModeInfo.Slash });
 			FireMode.BaseDamage += ModeInfo.Slash;
-			FireMode.BaseDamagePhys += ModeInfo.Slash;
 			FireMode.TotalProportionalDamage += ModeInfo.Slash * 4.0f;
 		}
 		if (ModeInfo.Impact != 0.0f)
 		{
 			FireMode.DamageArray.Add({ EDamageType::Impact, ModeInfo.Impact });
 			FireMode.BaseDamage += ModeInfo.Impact;
-			FireMode.BaseDamagePhys += ModeInfo.Impact;
 			FireMode.TotalProportionalDamage += ModeInfo.Impact * 4.0f;
 		}
 		if (ModeInfo.Puncture != 0.0f)
 		{
 			FireMode.DamageArray.Add({ EDamageType::Puncture, ModeInfo.Puncture });
 			FireMode.BaseDamage += ModeInfo.Puncture;
-			FireMode.BaseDamagePhys += ModeInfo.Puncture;
 			FireMode.TotalProportionalDamage += ModeInfo.Puncture * 4.0f;
 		}
 		if (ModeInfo.Heat != 0.0f)
@@ -170,7 +167,12 @@ void AWeaponBase::Init(EWeaponID WeaponID, uint32 Level)
 			FireMode.TotalProportionalDamage += ModeInfo.Corrosive;
 		}
 
-		// Apply mods.
+		// Apply mods (Specific note for base damage mod like Serration).
+		this->BleedMultiplier = 1.0f;
+		this->HeatModMultiplier = 1.0f;
+		this->ColdModMultiplier = 1.0f;
+		this->ElectricityModMultiplier = 1.0f;
+		this->ToxinModMultiplier = 1.0f;
 
 		FireMode.CriticalTier = static_cast<uint32>(FMath::TruncToInt(FireMode.CriticalChance));
 		FireMode.CriticalChance -= static_cast<float>(FireMode.CriticalTier);
@@ -228,7 +230,7 @@ void AWeaponBase::BeginFire()
 
 	Delegate.BindUObject(this, &AWeaponBase::Fire);
 
-	this->GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, Delegate, 1.0f / GetFireRate(), true);
+	this->GetGameInstance()->GetTimerManager().SetTimer(FireTimerHandle, Delegate, 1.0f / GetFireRate(), true);
 
 	// Do fire immediately.
 	this->Fire();
@@ -236,7 +238,7 @@ void AWeaponBase::BeginFire()
 
 void AWeaponBase::StopFire()
 {
-	this->GetWorld()->GetTimerManager().ClearTimer(FireTimerHandle);
+	this->GetGameInstance()->GetTimerManager().ClearTimer(FireTimerHandle);
 }
 
 void AWeaponBase::BeginReload()
@@ -248,7 +250,7 @@ void AWeaponBase::BeginReload()
 		FTimerDelegate Delegate;
 		Delegate.BindUObject(this, &AWeaponBase::Reload);
 
-		this->GetWorld()->GetTimerManager().SetTimer(ReloadTimerHandle, Delegate, GetReloadTime(), false);
+		this->GetGameInstance()->GetTimerManager().SetTimer(ReloadTimerHandle, Delegate, GetReloadTime(), false);
 	}
 }
 
@@ -256,7 +258,7 @@ void AWeaponBase::StopReload()
 {
 	bIsReloading = false;
 
-	this->GetWorld()->GetTimerManager().ClearTimer(ReloadTimerHandle);
+	this->GetGameInstance()->GetTimerManager().ClearTimer(ReloadTimerHandle);
 }
 
 bool AWeaponBase::IsReloading()const
@@ -332,6 +334,10 @@ bool AWeaponBase::Fire_Charge()
 
 void AWeaponBase::DoFire()
 {
+	// todo: multishot on continuous weapon.
+
+	// todo: accuracy & recoil
+
 	uint32 TotalPellets;
 	{
 		float TotalPelletsFractional = this->GetPelletCount() * this->MultishotChance;
@@ -350,8 +356,9 @@ void AWeaponBase::DoFire()
 
 	for (uint32 i = 0; i < TotalPellets; ++i)
 	{
-		ARoundBase *NewRound = this->OnRoundFired(OwningCharacter->GetTarget());
+		ARoundBase *NewRound = this->OnRoundFired(OwningCharacter->GetSelectedTarget());
 	
+		NewRound->Instigator = Cast<AWarframeCharacter>(this->GetOwner());
 		NewRound->Init(this);
 	}
 }

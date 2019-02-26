@@ -272,7 +272,7 @@
             "Type": "uint32",
             "Definition":
             [
-                "AnimBlueprint'/Game/ThirdPersonBP/Blueprints/Characters/ABP_Mannequin.ABP_Mannequin_C'"
+                "AnimBlueprint'/Game/Characters/ABP_Mannequin.ABP_Mannequin_C'"
             ]
         }
     ]

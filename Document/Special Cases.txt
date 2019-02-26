@@ -1,0 +1,8 @@
+>> Warframes
+[Inaros] Health growing staring at rank 1 and rank 2.
+[Nidus] Growing Armor. Health growing staring at rank 1 and rank 2.
+
+>> Weapons
+[Corinth] Secondary fire mode, impact then blast.
+{TriggerType::Held} Multishot no extra beams, but there will be a chance to double or triple the damage.
+[Zakti] 自带的第一段冲击状态触发加上一定概率后可能会有一次攻击两个状态的情况。

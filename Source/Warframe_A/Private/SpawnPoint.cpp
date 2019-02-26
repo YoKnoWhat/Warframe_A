@@ -36,29 +36,40 @@ void USpawnPoint::SpawnIfAllKilled()
 
 	for (auto &SpawnInfo : this->SpawnInfoArray)
 	{
-		AWarframeCharacter *NewCharacter = this->GetWorld()->SpawnActor<AWarframeCharacter>(this->Location, FRotator(), FActorSpawnParameters());
+		// todo: Use template to spawn character
+
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = GameMode;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+		for (uint32 SpawnIndex = 0; SpawnIndex < SpawnInfo.Number; ++SpawnIndex)
 		{
-			const FCharacterAppearance* CharacterAppearance = GameInstance->GetCharacterAppearance(static_cast<ECharacterID>(SpawnInfo.CharacterID));
+			AWarframeCharacter *NewCharacter = this->GetWorld()->SpawnActor<AWarframeCharacter>(this->Location, FRotator(), SpawnParams);
+			if (NewCharacter != nullptr)
+			{
+				const FCharacterAppearance* CharacterAppearance = GameInstance->GetCharacterAppearance(static_cast<ECharacterID>(SpawnInfo.CharacterID));
 
-			USkeletalMeshComponent *SkeletalMeshComponent = Cast<USkeletalMeshComponent>(NewCharacter->GetComponentByClass(USkeletalMeshComponent::StaticClass()));
-			SkeletalMeshComponent->SetSkeletalMesh(LoadObject<USkeletalMesh>(nullptr, *CharacterAppearance->Mesh.ToString()));
-			SkeletalMeshComponent->SetRelativeLocation(CharacterAppearance->RelativeLocation);
-			SkeletalMeshComponent->SetRelativeRotation(CharacterAppearance->RelativeRotation);
-			SkeletalMeshComponent->SetAnimInstanceClass(LoadClass<UAnimInstance>(nullptr, *CharacterAppearance->AnimClass.ToString()));
+				USkeletalMeshComponent *SkeletalMeshComponent = Cast<USkeletalMeshComponent>(NewCharacter->GetComponentByClass(USkeletalMeshComponent::StaticClass()));
+				SkeletalMeshComponent->SetSkeletalMesh(LoadObject<USkeletalMesh>(nullptr, *CharacterAppearance->Mesh.ToString()));
+				SkeletalMeshComponent->SetRelativeLocation(CharacterAppearance->RelativeLocation);
+				SkeletalMeshComponent->SetRelativeRotation(CharacterAppearance->RelativeRotation);
+				SkeletalMeshComponent->SetAnimInstanceClass(LoadClass<UAnimInstance>(nullptr, *CharacterAppearance->AnimClass.ToString()));
 
-			UCapsuleComponent* CapsuleComponent = NewCharacter->GetCapsuleComponent();
-			CapsuleComponent->SetCapsuleHalfHeight(CharacterAppearance->HalfHeight);
-			CapsuleComponent->SetCapsuleRadius(CharacterAppearance->Radius);
+				UCapsuleComponent* CapsuleComponent = NewCharacter->GetCapsuleComponent();
+				CapsuleComponent->SetCapsuleHalfHeight(CharacterAppearance->HalfHeight);
+				CapsuleComponent->SetCapsuleRadius(CharacterAppearance->Radius);
+
+				NewCharacter->Init(static_cast<ECharacterID>(SpawnInfo.CharacterID), SpawnInfo.Level);
+
+				// Bind event to ACharacter::OnDestroyed().
+				NewCharacter->OnDied.AddUObject(this, &USpawnPoint::OnCharacterDied);
+				NewCharacter->OnDied.AddUObject(GameMode, &AWarframeGameMode::OnCharacterDied);
+
+				GameMode->OnCharacterSpawned(NewCharacter);
+
+				this->SpawnedCharacters.Add(NewCharacter);
+			}
 		}
-		NewCharacter->Init(static_cast<ECharacterID>(SpawnInfo.CharacterID), SpawnInfo.Level);
-
-		// Bind event to ACharacter::OnDestroyed().
-		NewCharacter->OnDied.AddUObject(this, &USpawnPoint::OnCharacterDied);
-		NewCharacter->OnDied.AddUObject(GameMode, &AWarframeGameMode::OnCharacterDied);
-
-		GameMode->OnCharacterSpawned(NewCharacter);
-
-		this->SpawnedCharacters.Add(NewCharacter);
 	}
 }
 
