@@ -1,0 +1,24 @@
+{
+    "ResourceRefs": [
+        {"Type": "UCharacterHeaderPanel", "Ref": "UI_CharacterHeaderPanel=WidgetBlueprint'/Game/UI/UI_CharacterHeaderPanel.UI_CharacterHeaderPanel_C'"},
+
+        {"Type": "UTexture2D", "Ref": "T_Slash_Small=Texture2D'/Game/UI/Textures/Status/T_Slash_Small.T_Slash_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Impact_Small=Texture2D'/Game/UI/Textures/Status/T_Impact_Small.T_Impact_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Puncture_Small=Texture2D'/Game/UI/Textures/Status/T_Puncture_Small.T_Puncture_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Heat_Small=Texture2D'/Game/UI/Textures/Status/T_Heat_Small.T_Heat_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Cold_Small=Texture2D'/Game/UI/Textures/Status/T_Cold_Small.T_Cold_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Electricity_Small=Texture2D'/Game/UI/Textures/Status/T_Electricity_Small.T_Electricity_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Toxin_Small=Texture2D'/Game/UI/Textures/Status/T_Toxin_Small.T_Toxin_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Blast_Small=Texture2D'/Game/UI/Textures/Status/T_Blast_Small.T_Blast_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Radiation_Small=Texture2D'/Game/UI/Textures/Status/T_Radiation_Small.T_Radiation_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Gas_Small=Texture2D'/Game/UI/Textures/Status/T_Gas_Small.T_Gas_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Magnetic_Small=Texture2D'/Game/UI/Textures/Status/T_Magnetic_Small.T_Magnetic_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Viral_Small=Texture2D'/Game/UI/Textures/Status/T_Viral_Small.T_Viral_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Corrosive_Small=Texture2D'/Game/UI/Textures/Status/T_Corrosive_Small.T_Corrosive_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Raw_Small=Texture2D'/Game/UI/Textures/Status/T_Raw_Small.T_Raw_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Void_Small=Texture2D'/Game/UI/Textures/Status/T_Void_Small.T_Void_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_Tau_Small=Texture2D'/Game/UI/Textures/Status/T_Tau_Small.T_Tau_Small'"},
+        {"Type": "UTexture2D", "Ref": "T_HeaderBarDropMask=Texture2D'/Game/UI/Textures/HeaderPanel/T_HeaderBarDropMask.T_HeaderBarDropMask'"},
+        {"Type": "UTexture2D", "Ref": "T_LevelBackground=Texture2D'/Game/UI/Textures/HeaderPanel/T_LevelBackground.T_LevelBackground'"}
+    ]
+}

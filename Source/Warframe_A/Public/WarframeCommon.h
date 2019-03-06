@@ -444,6 +444,7 @@ enum class EWeaponType : uint8
 	Bow,
 };
 
+struct FWarframeConfigSingleton;
 
 class ARoundBase;
 class AWeaponBase;
