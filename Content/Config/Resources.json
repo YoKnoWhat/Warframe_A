@@ -19,6 +19,11 @@
         {"Type": "UTexture2D", "Ref": "T_Void_Small=Texture2D'/Game/UI/Textures/Status/T_Void_Small.T_Void_Small'"},
         {"Type": "UTexture2D", "Ref": "T_Tau_Small=Texture2D'/Game/UI/Textures/Status/T_Tau_Small.T_Tau_Small'"},
         {"Type": "UTexture2D", "Ref": "T_HeaderBarDropMask=Texture2D'/Game/UI/Textures/HeaderPanel/T_HeaderBarDropMask.T_HeaderBarDropMask'"},
-        {"Type": "UTexture2D", "Ref": "T_LevelBackground=Texture2D'/Game/UI/Textures/HeaderPanel/T_LevelBackground.T_LevelBackground'"}
+        {"Type": "UTexture2D", "Ref": "T_HeaderBarMask=Texture2D'/Game/UI/Textures/HeaderPanel/T_HeaderBarMask.T_HeaderBarMask'"},
+        {"Type": "UTexture2D", "Ref": "T_HeaderBarCover=Texture2D'/Game/UI/Textures/HeaderPanel/T_HeaderBarCover.T_HeaderBarCover'"},
+        {"Type": "UTexture2D", "Ref": "T_HeaderBarDropMask=Texture2D'/Game/UI/Textures/HeaderPanel/T_HeaderBarDropMask.T_HeaderBarDropMask'"},
+        {"Type": "UTexture2D", "Ref": "T_LevelBackground=Texture2D'/Game/UI/Textures/HeaderPanel/T_LevelBackground.T_LevelBackground'"},
+
+        {"Type": "UMaterial", "Ref": "M_HeaderBarFill=Material'/Game/UI/Materials/M_HealthBarFill.M_HealthBarFill'"}
     ]
 }

@@ -22,11 +22,13 @@ class WARFRAME_A_API UCharacterHeaderPanel : public UCharacterWidget
 public:
 	UCharacterHeaderPanel(const FObjectInitializer& ObjectInitializer);
 
-	virtual void BeginDestroy()override;
+	virtual void NativeConstruct()override;
+
+	virtual void NativeDestruct()override;
+
+	virtual bool Initialize()override;
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime)override;
-
-	virtual void Init()override;
 
 	virtual void OnSelected()override;
 
@@ -47,24 +49,43 @@ protected:
 	void UpdateStatusImages();
 
 protected:
+	UPROPERTY(Meta=(BindWidget))
 	UProgressBar*	HeaderBar;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			HealthDrop;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			ShieldDrop;
+	UPROPERTY(Meta = (BindWidget))
 	UTextBlock*		Name;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Slash;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Impact;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Puncture;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Heat;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Cold;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Electricity;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Toxin;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Blast;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Radiation;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Gas;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Magnetic;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Viral;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Corrosive;
+	UPROPERTY(Meta = (BindWidget))
 	UImage*			Void;
+	UPROPERTY(Meta = (BindWidget))
 	UTextBlock*		Level;
 
 	// At most 3 widgets are visible at the same time.
