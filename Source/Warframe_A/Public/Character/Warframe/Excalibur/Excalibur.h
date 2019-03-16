@@ -11,6 +11,8 @@ class AExcalibur : public AWarframe
 	GENERATED_BODY()
 
 public:
+	AExcalibur(const FObjectInitializer& ObjectInitializer);
+
 	virtual void BeginPlay()override;
 
 	virtual void Tick(float DeltaTime)override;

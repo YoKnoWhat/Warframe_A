@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Runtime/Engine/Classes/GameFramework/Actor.h"
+#include "WarframeCommon.h"
 #include "PickableObject.generated.h"
 
 
@@ -15,6 +16,8 @@ public:
 
 	virtual void Tick(float DeltaTime)override;
 
+	virtual void Init(EPickableObjectID ID);
+
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE UStaticMeshComponent* GetStaticMesh()
 	{
@@ -23,8 +26,7 @@ public:
 
 protected:
 	UStaticMeshComponent* StaticMesh;
+	class USphereComponent* SphereCollision;
 
 	FLinearColor BeamColor;
-
-
 };

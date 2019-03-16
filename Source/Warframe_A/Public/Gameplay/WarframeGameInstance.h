@@ -7,6 +7,69 @@
 #include "WarframeGameInstance.generated.h"
 
 
+struct FCharacterInfo
+{
+	FName		Name;
+	uint32		BaseLevel;
+	uint32		Health;
+	uint32		Shield;
+	uint32		Armor;
+	float		Affinity;
+	// Struct alignment.
+	EHealthType	HealthType;
+	EShieldType	ShieldType;
+	EArmorType	ArmorType;
+};
+
+struct FCharacterAppearance
+{
+	FName		Mesh;
+	FName		AnimClass;
+	FVector		RelativeLocation;
+	FRotator	RelativeRotation;
+	float		HalfHeight;
+	float		Radius;
+};
+
+struct FEnemyInfo
+{
+	EFactionType	Faction;
+	EWeaponID		Weapon1;
+	EWeaponID		Weapon2;
+};
+
+struct FWarframeInfo
+{
+	uint32		Energy;
+	float		SprintSpeed;
+	EPolarityID AuraPolarity;
+	EPolarityID ExilusPolarity;
+	EPolarityID Polarity1;
+	EPolarityID Polarity2;
+	EPolarityID Polarity3;
+	EPolarityID Polarity4;
+	EPolarityID Polarity5;
+	EPolarityID Polarity6;
+	EPolarityID Polarity7;
+	EPolarityID Polarity8;
+};
+
+struct FWeaponInfo
+{
+	FName Name;
+	uint32 Magazine;
+	uint32 Ammo;
+	TArray<FWeaponModeInfo> ModeInfoArray;
+	// Struct alignment.
+	EAmmoType AmmoType;
+};
+
+struct FPickableObjectInfo
+{
+	FLinearColor	BeamColor;
+	FName			Mesh;
+};
+
 /**
  * 
  */
@@ -32,6 +95,8 @@ public:
 
 	const FWeaponInfo* GetWeaponInfo(EWeaponID WeaponID)const;
 
+	const FPickableObjectInfo* GetPickableObjectInfo(EPickableObjectID PickableObjectID)const;
+
 protected:
 	void ReadInCharacterTable(const char* Begin, const char* End);
 
@@ -43,6 +108,8 @@ protected:
 
 	void ReadInWeaponTable(const char* Begin, const char* End);
 
+	void ReadInPickableObjectTable(const char* Begin, const char* End);
+
 protected:
 	TArray<FCharacterInfo> CharacterInfoArray;
 
@@ -53,4 +120,6 @@ protected:
 	TArray<FWarframeInfo> WarframeInfoArray;
 
 	TArray<FWeaponInfo> WeaponInfoArray;
+
+	TArray<FPickableObjectInfo> PickableObjectInfoArray;
 };

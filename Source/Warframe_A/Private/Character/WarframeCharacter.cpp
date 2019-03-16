@@ -27,6 +27,8 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 	CharacterWidgetComponent->SetupAttachment(this->RootComponent);
 
 	StateMachineComponent = ObjectInitializer.CreateDefaultSubobject<UStateMachineComponent>(this, FName("StateMachine"));
+
+	Weapons.SetNum(3);
 }
 
 // Called when the game starts or when spawned
@@ -34,13 +36,22 @@ void AWarframeCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CharacterWidgetComponent->SetRelativeLocation(FVector(0.0f, 0.0f, GetCapsuleComponent()->GetScaledCapsuleHalfHeight()));
+	CurrentWeaponSlotIndex = 0;
 
+	CharacterWidgetComponent->SetRelativeLocation(FVector(0.0f, 0.0f, GetCapsuleComponent()->GetScaledCapsuleHalfHeight()));
+	
 	LatestStatusEffectData.SetNum(CastToUnderlyingType(EDamageType::End) - CastToUnderlyingType(EDamageType::Begin) + 1);
 }
 
 void AWarframeCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	Super::EndPlay(EndPlayReason);
+
+	for (AWeaponBase*& Weapon : Weapons)
+	{
+		Weapon = nullptr;
+	}
+
 	FStatusEffectData* Data;
 
 	while (StatusEffectQueue.IsEmpty() == false)
@@ -53,7 +64,7 @@ void AWarframeCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 		Data = *Iter;
 		StatusEffectDataPool.Put(Data);
 	}
-	// StatusEffectSet.Empty();
+	StatusEffectSet.Empty();
 }
 
 // Called every frame
@@ -220,13 +231,14 @@ void AWarframeCharacter::DropItem()
 
 		for (auto& Item : OrbDropList)
 		{
-			if (Item.Chance < Chance)
+			if (Chance < Item.Chance)
 			{
 				FActorSpawnParameters SpawnParams;
 				SpawnParams.Owner = this->GetWorld()->GetAuthGameMode();
 				SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-				this->GetWorld()->SpawnActor<APickableObject>(this->GetActorLocation(), FRotator(), SpawnParams);
+				APickableObject* PickableObjcet = this->GetWorld()->SpawnActor<APickableObject>(this->GetActorLocation(), FRotator::ZeroRotator, SpawnParams);
+				PickableObjcet->Init(Item.ID);
 				break;
 			}
 		}
@@ -237,13 +249,14 @@ void AWarframeCharacter::DropItem()
 
 		for (auto& Item : CommonItemDropList)
 		{
-			if (Item.Chance < Chance)
+			if (Chance < Item.Chance)
 			{
 				FActorSpawnParameters SpawnParams;
 				SpawnParams.Owner = this->GetWorld()->GetAuthGameMode();
 				SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-				this->GetWorld()->SpawnActor<APickableObject>(this->GetActorLocation(), FRotator(), SpawnParams);
+				APickableObject* PickableObjcet = this->GetWorld()->SpawnActor<APickableObject>(this->GetActorLocation(), FRotator::ZeroRotator, SpawnParams);
+				PickableObjcet->Init(Item.ID);
 				break;
 			}
 		}
@@ -261,14 +274,77 @@ void AWarframeCharacter::OnUnselected()
 	Cast<UCharacterWidget>(this->CharacterWidgetComponent->GetUserWidgetObject())->OnUnselected();
 }
 
-AWeaponBase *AWarframeCharacter::GetWeapon(EWeaponType WeaponType)
+void AWarframeCharacter::SetWeapon(EWeaponSlotType WeaponSlotType, AWeaponBase* Weapon)
 {
-	return EquippedWeapon;
+	if (WeaponSlotType == EWeaponSlotType::Primary)
+	{
+		Weapons[0] = Weapon;
+	}
+	if (WeaponSlotType == EWeaponSlotType::Secondary)
+	{
+		Weapons[1] = Weapon;
+	}
+	else // if (WeaponSlotType == EWeaponSlotType::Melee)
+	{
+		Weapons[2] = Weapon;
+	}
+}
+
+AWeaponBase *AWarframeCharacter::GetWeapon(EWeaponSlotType WeaponSlotType)
+{
+	if (WeaponSlotType == EWeaponSlotType::Primary)
+	{
+		return Weapons[0];
+	}
+	if (WeaponSlotType == EWeaponSlotType::Secondary)
+	{
+		return Weapons[1];
+	}
+	else // if (WeaponSlotType == EWeaponSlotType::Melee)
+	{
+		return Weapons[2];
+	}
 }
 
 AWeaponBase *AWarframeCharacter::GetCurrentWeapon()
 {
-	return EquippedWeapon;
+	return Weapons[CurrentWeaponSlotIndex];
+}
+
+void AWarframeCharacter::SwitchWeapon(EWeaponSlotType WeaponSlotType)
+{
+	if (WeaponSlotType == EWeaponSlotType::Primary)
+	{
+		CurrentWeaponSlotIndex = 0;
+	}
+	if (WeaponSlotType == EWeaponSlotType::Secondary)
+	{
+		CurrentWeaponSlotIndex = 1;
+	}
+	else // if (WeaponSlotType == EWeaponSlotType::Melee)
+	{
+		CurrentWeaponSlotIndex = 2;
+	}
+	
+}
+
+void AWarframeCharacter::Kill(AActor* Causer)
+{
+	this->DropItem();
+
+	OnDied.Broadcast(Causer, this);
+
+	this->Destroy();
+}
+
+void AWarframeCharacter::GainHealth(float Value)
+{
+	CurrentHealth += Value;
+
+	if (CurrentHealth > MaxHealth)
+	{
+		CurrentHealth = MaxHealth;
+	}
 }
 
 void AWarframeCharacter::ApplyDamageBP(AActor* DamageCauser, EDamageType Status, EDamageType DamageType, float Damage)
@@ -348,7 +424,7 @@ void AWarframeCharacter::ApplyDamage(AActor* DamageCauser, const FVector& HitLoc
 
 	if (CurrentHealth < 0.0f)
 	{
-		OnDied.Broadcast(DamageCauser, this);
+		this->Kill(DamageCauser);
 	}
 }
 

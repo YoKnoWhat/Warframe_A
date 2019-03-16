@@ -81,6 +81,18 @@ void UWarframeGameInstance::Init()
 			delete Begin;
 		}
 	}
+
+	// Read in pickable object table.
+	{
+		FilePath = FPaths::ProjectContentDir() + TEXT("DataTable/PickableObjectTable.dt");
+
+		if (Warframe::GetFileContent(FilePath, Begin, End))
+		{
+			this->ReadInPickableObjectTable(Begin, End);
+
+			delete Begin;
+		}
+	}
 }
 
 void UWarframeGameInstance::Shutdown()
@@ -112,6 +124,11 @@ const FWarframeInfo* UWarframeGameInstance::GetWarframeInfo(ECharacterID Charact
 const FWeaponInfo* UWarframeGameInstance::GetWeaponInfo(EWeaponID WeaponID)const
 {
 	return &WeaponInfoArray[static_cast<int32>(WeaponID)];
+}
+
+const FPickableObjectInfo* UWarframeGameInstance::GetPickableObjectInfo(EPickableObjectID PickableObjectID)const
+{
+	return &PickableObjectInfoArray[static_cast<int32>(PickableObjectID)];
 }
 
 void UWarframeGameInstance::ReadInCharacterTable(const char* Begin, const char* End)
@@ -348,5 +365,100 @@ void UWarframeGameInstance::ReadInWeaponTable(const char* Begin, const char* End
 		Warframe::ReadIn(CurrentWeaponMode.Magnetic, Begin);
 		Warframe::ReadIn(CurrentWeaponMode.Viral, Begin);
 		Warframe::ReadIn(CurrentWeaponMode.Corrosive, Begin);
+	}
+}
+
+void UWarframeGameInstance::ReadInPickableObjectTable(const char* Begin, const char* End)
+{
+	// Reserve space for all pickable objects.
+	PickableObjectInfoArray.SetNum(static_cast<int32>(CastToUnderlyingType(EPickableObjectID::End) - CastToUnderlyingType(EPickableObjectID::Begin) + 1));
+
+	TArray<FName> MeshArray;
+
+	// Read in mesh list.
+	{
+		uint32 MeshCount;
+		MeshCount = *reinterpret_cast<const uint32*>(Begin);
+		Begin += sizeof(MeshCount);
+
+		MeshArray.SetNum(MeshCount);
+
+		uint32 WordLength;
+
+		for (uint32 i = 0; i < MeshCount; ++i)
+		{
+			FName NewMesh = Warframe::GetWord(Begin, '\0', WordLength);
+			MeshArray[i] = NewMesh;
+			Begin += WordLength + 1;
+		}
+	}
+
+	// Read in pickable objects.
+	{
+		EPickableObjectID PickableObjectID;
+		EPredefinedColorID PredefinedColorID;
+		uint32 tempUint32;
+
+		while (Begin != End)
+		{
+			PickableObjectID = *reinterpret_cast<const EPickableObjectID*>(Begin);
+			Begin += sizeof(PickableObjectID);
+
+			PredefinedColorID = *reinterpret_cast<const EPredefinedColorID*>(Begin);
+			Begin += sizeof(PredefinedColorID);
+
+			FPickableObjectInfo& NewPickableObjectInfo = PickableObjectInfoArray[static_cast<int32>(PickableObjectID)];
+
+			switch (PredefinedColorID)
+			{
+			case EPredefinedColorID::White:
+				NewPickableObjectInfo.BeamColor = FLinearColor(1.0f, 1.0f, 1.0f, 1.0f);
+				break;
+			case EPredefinedColorID::Black:
+				NewPickableObjectInfo.BeamColor = FLinearColor(0.0f, 0.0f, 0.0f, 1.0f);
+				break;
+			case EPredefinedColorID::Transparent:
+				NewPickableObjectInfo.BeamColor = FLinearColor(0.0f, 0.0f, 0.0f, 0.0f);
+				break;
+			case EPredefinedColorID::Red:
+				NewPickableObjectInfo.BeamColor = FLinearColor(1.0f, 0.0f, 0.0f, 1.0f);
+				break;
+			case EPredefinedColorID::Green:
+				NewPickableObjectInfo.BeamColor = FLinearColor(0.0f, 1.0f, 0.0f, 1.0f);
+				break;
+			case EPredefinedColorID::Blue:
+				NewPickableObjectInfo.BeamColor = FLinearColor(0.0f, 0.0f, 1.0f, 1.0f);
+				break;
+			case EPredefinedColorID::Yellow:
+				NewPickableObjectInfo.BeamColor = FLinearColor(1.0f, 1.0f, 0.0f, 1.0f);
+				break;
+			case EPredefinedColorID::Cyan:
+				NewPickableObjectInfo.BeamColor = FLinearColor(0.0f, 1.0f, 1.0f, 1.0f);
+				break;
+			case EPredefinedColorID::Magenta:
+				NewPickableObjectInfo.BeamColor = FLinearColor(1.0f, 0.0f, 1.0f, 1.0f);
+				break;
+			case EPredefinedColorID::Orange:
+				NewPickableObjectInfo.BeamColor = FLinearColor(1.0f, 0.5f, 0.0f, 1.0f);
+				break;
+			case EPredefinedColorID::Purple:
+				NewPickableObjectInfo.BeamColor = FLinearColor(0.5f, 0.0f, 0.5f, 1.0f);
+				break;
+			case EPredefinedColorID::Turquoise:
+				NewPickableObjectInfo.BeamColor = FLinearColor(0.698039f, 1.0f, 1.0f, 1.0f);
+				break;
+			case EPredefinedColorID::Silver:
+				NewPickableObjectInfo.BeamColor = FLinearColor(0.75, 0.75f, 0.75f, 1.0f);
+				break;
+			case EPredefinedColorID::Emerald:
+				NewPickableObjectInfo.BeamColor = FLinearColor(0.25f, 0.88f, 0.815686f, 1.0f);
+				break;
+			default:
+				NewPickableObjectInfo.BeamColor = FLinearColor(0.0f, 0.0f, 0.0f, 1.0f);
+				break;
+			}
+			Warframe::ReadIn(tempUint32, Begin);
+			NewPickableObjectInfo.Mesh = MeshArray[tempUint32];
+		}
 	}
 }

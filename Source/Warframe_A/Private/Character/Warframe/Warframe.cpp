@@ -17,14 +17,6 @@
 #include "Runtime/Engine/Public/TimerManager.h"
 
 
-// Sets default values
-// AWarframe::AWarframe()
-// {
-//  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-// 	PrimaryActorTick.bCanEverTick = true;
-// 
-// }
-
 AWarframe::AWarframe(const FObjectInitializer& ObjectInitializer) :
 	Super(ObjectInitializer.SetDefaultSubobjectClass<UWarframeMovementComponent>(ACharacter::CharacterMovementComponentName)
 			.SetDefaultSubobjectClass<UWarframeStateMachineComponent>("StateMachine"))
@@ -52,6 +44,14 @@ AWarframe::AWarframe(const FObjectInitializer& ObjectInitializer) :
 	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Aim), new FAimState_Idle);
 }
 
+AWarframe::~AWarframe()
+{
+	for (uint32 i = 0; i < 4; ++i)
+	{
+		delete Abilities[i];
+	}
+}
+
 // Called when the game starts or when spawned
 void AWarframe::BeginPlay()
 {
@@ -69,11 +69,6 @@ void AWarframe::BeginPlay()
 void AWarframe::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-
-	for (uint32 i = 0; i < 4; ++i)
-	{
-		delete Abilities[i];
-	}
 }
 
 // Called every frame
@@ -86,6 +81,11 @@ void AWarframe::Tick(float DeltaTime)
 	if (CurrentEnergy > MaxEnergy)
 	{
 		CurrentEnergy = MaxEnergy;
+	}
+
+	for (FAbilityObject* Ability : Abilities)
+	{
+		Ability->Tick(DeltaTime);
 	}
 
 	this->TryFindTarget();
@@ -123,8 +123,6 @@ void AWarframe::Init(ECharacterID CharacterID, uint32 Level_)
 
 void AWarframe::OnLevelChanged()
 {
-	return;
-
 	// Ability 0.
 	if (Level >= 18)
 	{
@@ -207,6 +205,16 @@ void AWarframe::OnLevelChanged()
 	else
 	{
 		Abilities[3]->OnLevelChanged(-1);
+	}
+}
+
+void AWarframe::GainEnergy(float Value)
+{
+	CurrentEnergy += Value;
+
+	if (CurrentEnergy > MaxEnergy)
+	{
+		CurrentEnergy = MaxEnergy;
 	}
 }
 

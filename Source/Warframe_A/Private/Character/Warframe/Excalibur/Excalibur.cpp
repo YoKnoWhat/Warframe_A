@@ -6,14 +6,18 @@
 #include "Character/Warframe/Excalibur/SlashDash.h"
 
 
-void AExcalibur::BeginPlay()
+AExcalibur::AExcalibur(const FObjectInitializer& ObjectInitializer) :
+	Super(ObjectInitializer)
 {
-	Super::BeginPlay();
-
 	Abilities[0] = new FAbilityObject_Null();
 	Abilities[1] = new FAbilityObject_Null();
 	Abilities[2] = new FRadialJavelin(this);
 	Abilities[3] = new FAbilityObject_Null();
+}
+
+void AExcalibur::BeginPlay()
+{
+	Super::BeginPlay();
 }
 
 void AExcalibur::Tick(float DeltaTime)

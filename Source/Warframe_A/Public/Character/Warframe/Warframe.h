@@ -26,6 +26,8 @@ protected:
 public:
 	AWarframe(const FObjectInitializer& ObjectInitializer);
 
+	~AWarframe();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -42,6 +44,8 @@ public:
 	virtual void Init(ECharacterID CharacterID, uint32 Level)override;
 
 	virtual void OnLevelChanged();
+
+	void GainEnergy(float Value);
 
 	UFUNCTION(BlueprintCallable)
 	bool CastAbilityBP(int32 AbilityIndex, float Charge);

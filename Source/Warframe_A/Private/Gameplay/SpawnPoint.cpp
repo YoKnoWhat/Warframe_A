@@ -5,6 +5,7 @@
 #include "Gameplay/WarframeGameMode.h"
 #include "Gameplay/WarframeGameInstance.h"
 
+#include "Runtime/Engine/Classes/Animation/AnimInstance.h"
 #include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
@@ -45,7 +46,7 @@ void USpawnPoint::SpawnIfAllKilled()
 
 		for (uint32 SpawnIndex = 0; SpawnIndex < SpawnInfo.Number; ++SpawnIndex)
 		{
-			AWarframeCharacter *NewCharacter = this->GetWorld()->SpawnActor<AWarframeCharacter>(this->Location, FRotator(), SpawnParams);
+			AWarframeCharacter *NewCharacter = this->GetWorld()->SpawnActor<AWarframeCharacter>(this->Location, FRotator::ZeroRotator, SpawnParams);
 			if (NewCharacter != nullptr)
 			{
 				this->SpawnedCharacters.Add(NewCharacter);

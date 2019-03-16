@@ -24,6 +24,8 @@ class WARFRAME_A_API UWarframeMovementComponent : public UCharacterMovementCompo
 	GENERATED_BODY()
 
 public:
+	virtual bool IsFalling() const override;
+
 	virtual void OnMovementModeChanged(EMovementMode PreviousMovementMode, uint8 PreviousCustomMode)override;
 
 	virtual void PhysCustom(float DeltaTime, int32 Iterations)override;

@@ -48,7 +48,7 @@ public:
 	AWarframeCharacter(const FObjectInitializer &ObjectInitializer);
 
 protected:
-	// Called when the game starts or when spawned
+	// Called when the game starts or when spawned.
 	virtual void BeginPlay() override;
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason)override;
@@ -76,6 +76,10 @@ public:
 	void SetOrbDropChances(float HealthOrbChance, float EnergyOrbChance);
 
 	void SetCommonDropItems(const TArray<EPickableObjectID>& IDs, const TArray<float>& Chances);
+
+	void Kill(AActor* Causer);
+
+	void GainHealth(float Value);
 
 	UFUNCTION(BlueprintCallable)
 	void ApplyDamageBP(AActor *DamageCauser, EDamageType Status, EDamageType DamageType, float Damage);
@@ -165,10 +169,16 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable)
-	AWeaponBase *GetWeapon(EWeaponType WeaponType);
+	void SetWeapon(EWeaponSlotType WeaponSlotType, AWeaponBase* Weapon);
+
+	UFUNCTION(BlueprintCallable)
+	AWeaponBase *GetWeapon(EWeaponSlotType WeaponSlotType);
 
 	UFUNCTION(BlueprintCallable)
 	AWeaponBase *GetCurrentWeapon();
+
+	UFUNCTION(BlueprintCallable)
+	void SwitchWeapon(EWeaponSlotType WeaponSlotType);
 
 	// Multiplier getters.
 	FORCEINLINE float GetMovementSpeedMultiplier()
@@ -249,6 +259,11 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	AWeaponBase *EquippedWeapon;
+
+	/** Primary, secondary and melee weapon. */
+	UPROPERTY()
+	TArray<AWeaponBase*> Weapons;
+	int32 CurrentWeaponSlotIndex;
 
 	UPROPERTY(BlueprintReadOnly)
 	FHitResult SelectedTarget;

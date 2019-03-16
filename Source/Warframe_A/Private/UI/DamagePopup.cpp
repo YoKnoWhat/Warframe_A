@@ -55,43 +55,43 @@ void UDamagePopup::Show(const FVector &HitLocation_, EDamageType Status, float D
 		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Slash_Small"));
 		break;
 	case EDamageType::Impact:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Impact_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Impact_Small"));
 		break;
 	case EDamageType::Puncture:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Puncture_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Puncture_Small"));
 		break;
 	case EDamageType::Heat:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Heat_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Heat_Small"));
 		break;
 	case EDamageType::Cold:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Cold_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Cold_Small"));
 		break;
 	case EDamageType::Electricity:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Electricity_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Electricity_Small"));
 		break;
 	case EDamageType::Toxin:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Toxin_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Toxin_Small"));
 		break;
 	case EDamageType::Blast:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Blast_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Blast_Small"));
 		break;
 	case EDamageType::Radiation:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Radiation_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Radiation_Small"));
 		break;
 	case EDamageType::Gas:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Gas_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Gas_Small"));
 		break;
 	case EDamageType::Magnetic:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Magnetic_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Magnetic_Small"));
 		break;
 	case EDamageType::Viral:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Viral_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Viral_Small"));
 		break;
 	case EDamageType::Corrosive:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Corrosive_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Corrosive_Small"));
 		break;
 	case EDamageType::Void:
-		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Void_Small'"));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Void_Small"));
 		break;
 	default:
 		this->StatusImage->SetVisibility(ESlateVisibility::Hidden);

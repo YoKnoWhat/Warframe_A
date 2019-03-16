@@ -58,7 +58,10 @@ void FLowerState_AimGliding::OnExit()
 {
 	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(Character->GetMovementComponent());
 
-	CharacterMovement->SetMovementMode(EMovementMode::MOVE_Falling);
+	if (CharacterMovement->IsFalling())
+	{
+		CharacterMovement->SetMovementMode(EMovementMode::MOVE_Falling);
+	}
 	CharacterMovement->GravityScale = 1.0f;
 }
 

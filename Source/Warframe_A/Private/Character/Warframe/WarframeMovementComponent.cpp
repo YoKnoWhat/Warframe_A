@@ -4,6 +4,13 @@
 #include "Character/Warframe/Warframe.h"
 
 
+bool UWarframeMovementComponent::IsFalling()const
+{
+	return Super::IsFalling()
+		|| (MovementMode == EMovementMode::MOVE_Custom && CustomMovementMode == CastToUnderlyingType(EWarframeMovementMode::AirGliding))
+		|| (MovementMode == EMovementMode::MOVE_Custom && CustomMovementMode == CastToUnderlyingType(EWarframeMovementMode::DoubleJumping));
+}
+
 void UWarframeMovementComponent::OnMovementModeChanged(EMovementMode PreviousMovementMode, uint8 PreviousCustomMode)
 {
 	Super::OnMovementModeChanged(PreviousMovementMode, PreviousCustomMode);
@@ -77,6 +84,7 @@ void UWarframeMovementComponent::OnEnterAirGliding()
 
 void UWarframeMovementComponent::PhysCustomAirGliding(float DeltaTime, int32 Iterations)
 {
+	this->PhysFalling(DeltaTime, Iterations);
 }
 
 void UWarframeMovementComponent::OnEnterDoubleJumping()
