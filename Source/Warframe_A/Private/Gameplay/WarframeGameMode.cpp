@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Gameplay/WarframeGameMode.h"
+#include "Character/WarframeCharacter.h"
 #include "Gameplay/SpawnPoint.h"
 #include "Gameplay/WarframeGameInstance.h"
 #include "Utility/HelperFunction.h"
@@ -10,6 +11,27 @@
 
 void AWarframeGameMode::OnCharacterDamaged_Implementation(AActor* DamageCauser, AWarframeCharacter* DamagedCharacter, FVector HitLocation, EDamageType StatusEffect, float Damage, bool IsDamageOnShield, int32 CriticalTier)
 {}
+
+void AWarframeGameMode::OnCharacterSpawned(AWarframeCharacter* Character)
+{
+	Character->SetOrbDropChances(0.2f, 0.2f);
+	{
+		TArray<EPickableObjectID> IDs;
+		TArray<float> Chances;
+
+		IDs.Add(EPickableObjectID::RifleAmmo);
+		Chances.Add(0.2f);
+		IDs.Add(EPickableObjectID::ShotgunAmmo);
+		Chances.Add(0.2f);
+		IDs.Add(EPickableObjectID::SniperAmmo);
+		Chances.Add(0.2f);
+		IDs.Add(EPickableObjectID::BowAmmo);
+		Chances.Add(0.2f);
+		IDs.Add(EPickableObjectID::PistolAmmo);
+		Chances.Add(0.2f);
+		Character->SetCommonDropItems(IDs, Chances);
+	}
+}
 
 void AWarframeGameMode::BeginPlay()
 {

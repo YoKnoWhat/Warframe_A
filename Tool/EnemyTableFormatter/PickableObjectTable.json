@@ -1,0 +1,14 @@
+{
+    "SrcFilePath": "C:/Users/aer/Desktop/PickableObjectTable.csv",
+    "DstFilePath": "C:/Users/aer/Desktop/PickableObjectTable.dt",
+    "OutputCustomType":
+    [
+        "PickableObjectMesh"
+    ],
+    "ColumnType":
+    [
+        "PickableObjectID",
+        "PredefinedColorID",
+        "PickableObjectMesh"
+    ]
+}

@@ -1,6 +1,10 @@
 {
-    "ResourceRefs": [
+    "ClassRefs": [
         {"Type": "UCharacterHeaderPanel", "Ref": "UI_CharacterHeaderPanel=WidgetBlueprint'/Game/UI/UI_CharacterHeaderPanel.UI_CharacterHeaderPanel_C'"},
+        {"Type": "UStateMachineComponent", "Ref": "BP_TennoStateMachineComponent=Blueprint'/Game/Characters/Tenno/States/BP_TennoStateMachineComponent.BP_TennoStateMachineComponent_C'"}
+    ],
+    "ResourceRefs": [
+        {"Type": "UMaterial", "Ref": "M_HeaderBarFill=Material'/Game/UI/Materials/M_HealthBarFill.M_HealthBarFill'"},
 
         {"Type": "UTexture2D", "Ref": "T_Slash_Small=Texture2D'/Game/UI/Textures/Status/T_Slash_Small.T_Slash_Small'"},
         {"Type": "UTexture2D", "Ref": "T_Impact_Small=Texture2D'/Game/UI/Textures/Status/T_Impact_Small.T_Impact_Small'"},
@@ -22,8 +26,6 @@
         {"Type": "UTexture2D", "Ref": "T_HeaderBarMask=Texture2D'/Game/UI/Textures/HeaderPanel/T_HeaderBarMask.T_HeaderBarMask'"},
         {"Type": "UTexture2D", "Ref": "T_HeaderBarCover=Texture2D'/Game/UI/Textures/HeaderPanel/T_HeaderBarCover.T_HeaderBarCover'"},
         {"Type": "UTexture2D", "Ref": "T_HeaderBarDropMask=Texture2D'/Game/UI/Textures/HeaderPanel/T_HeaderBarDropMask.T_HeaderBarDropMask'"},
-        {"Type": "UTexture2D", "Ref": "T_LevelBackground=Texture2D'/Game/UI/Textures/HeaderPanel/T_LevelBackground.T_LevelBackground'"},
-
-        {"Type": "UMaterial", "Ref": "M_HeaderBarFill=Material'/Game/UI/Materials/M_HealthBarFill.M_HealthBarFill'"}
+        {"Type": "UTexture2D", "Ref": "T_LevelBackground=Texture2D'/Game/UI/Textures/HeaderPanel/T_LevelBackground.T_LevelBackground'"}
     ]
 }

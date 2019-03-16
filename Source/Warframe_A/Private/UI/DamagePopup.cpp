@@ -1,8 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UI/DamagePopup.h"
+#include "Gameplay/WarframeConfigSingleton.h"
 
 #include "Runtime/Engine/Classes/Engine/UserInterfaceSettings.h"
+#include "Runtime/Engine/Classes/Engine/Texture2D.h"
 #include "Runtime/Engine/Classes/GameFramework/PlayerController.h"
 #include "Runtime/UMG/Public/Components/CanvasPanelSlot.h"
 #include "Runtime/UMG/Public/Components/HorizontalBoxSlot.h"
@@ -39,10 +41,10 @@ void UDamagePopup::Init(UUserWidget* HUD)
 	StatusImageSlot->SetVerticalAlignment(EVerticalAlignment::VAlign_Center);
 }
 
-void UDamagePopup::Show(const FVector &HitLocation, EDamageType Status, float Damage, bool IsDamageOnShield, int32 CriticalTier)
+void UDamagePopup::Show(const FVector &HitLocation_, EDamageType Status, float Damage, bool IsDamageOnShield, int32 CriticalTier)
 {
 	this->Time = 0.0f;
-	this->HitLocation = HitLocation;
+	this->HitLocation = HitLocation_;
 
 	this->SetVisibility(ESlateVisibility::HitTestInvisible);
 
@@ -50,46 +52,46 @@ void UDamagePopup::Show(const FVector &HitLocation, EDamageType Status, float Da
 	switch (Status)
 	{
 	case EDamageType::Slash:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Slash_Small.T_Slash_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Slash_Small"));
 		break;
 	case EDamageType::Impact:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Impact_Small.T_Impact_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Impact_Small'"));
 		break;
 	case EDamageType::Puncture:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Puncture_Small.T_Puncture_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Puncture_Small'"));
 		break;
 	case EDamageType::Heat:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Heat_Small.T_Heat_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Heat_Small'"));
 		break;
 	case EDamageType::Cold:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Cold_Small.T_Cold_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Cold_Small'"));
 		break;
 	case EDamageType::Electricity:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Electricity_Small.T_Electricity_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Electricity_Small'"));
 		break;
 	case EDamageType::Toxin:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Toxin_Small.T_Toxin_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Toxin_Small'"));
 		break;
 	case EDamageType::Blast:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Blast_Small.T_Blast_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Blast_Small'"));
 		break;
 	case EDamageType::Radiation:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Radiation_Small.T_Radiation_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Radiation_Small'"));
 		break;
 	case EDamageType::Gas:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Gas_Small.T_Gas_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Gas_Small'"));
 		break;
 	case EDamageType::Magnetic:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Magnetic_Small.T_Magnetic_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Magnetic_Small'"));
 		break;
 	case EDamageType::Viral:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Viral_Small.T_Viral_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Viral_Small'"));
 		break;
 	case EDamageType::Corrosive:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Corrosive_Small.T_Corrosive_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Corrosive_Small'"));
 		break;
 	case EDamageType::Void:
-		this->StatusImage->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr, TEXT("Texture2D'/Game/UI/Textures/Status/T_Void_Small.T_Void_Small'")));
+		this->StatusImage->SetBrushFromTexture(FWarframeConfigSingleton::Instance().FindResource<UTexture2D>("T_Void_Small'"));
 		break;
 	default:
 		this->StatusImage->SetVisibility(ESlateVisibility::Hidden);

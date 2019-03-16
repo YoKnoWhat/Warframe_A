@@ -20,8 +20,10 @@ public:
 	void OnCharacterDamaged(AActor* DamageCauser, AWarframeCharacter* DamagedCharacter, FVector HitLocation, EDamageType StatusEffect, float Damage, bool IsDamageOnShield, int32 CriticalTier);
 	void OnCharacterDamaged_Implementation(AActor* DamageCauser, AWarframeCharacter* DamagedCharacter, FVector HitLocation, EDamageType StatusEffect, float Damage, bool IsDamageOnShield, int32 CriticalTier);
 
-	UFUNCTION(BlueprintImplementableEvent)
 	void OnCharacterSpawned(AWarframeCharacter* Character);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCharacterSpawnedBP(AWarframeCharacter* Character);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnCharacterDied(AActor *Causer, AWarframeCharacter* Character);

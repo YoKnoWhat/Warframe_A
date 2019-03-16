@@ -117,6 +117,61 @@
             ]
         },
         {
+            "Name": "PickableObjectID",
+            "Type": "uint8",
+            "Definition":
+            [
+                "None",
+                "HealthOrb",
+                "EnergyOrb",
+                "RifleAmmo",
+                "ShotgunAmmo",
+                "BowAmmo",
+                "PistolAmmo",
+                "Credit",
+                "AlloyPlate",
+                "Ferrite",
+                "NanoSpores",
+                "Salvage",
+                "Circuits",
+                "Cryotic",
+                "Oxium",
+                "Plastids",
+                "PolymerBundle",
+                "Rubedo",
+                "ArgonCrystal",
+                "ControlModule",
+                "Gallium",
+                "Morphics",
+                "NeuralSensors",
+                "Neurodes",
+                "NitainExtract",
+                "OrokinCell",
+                "Tellurium"
+            ]
+        },
+        {
+            "Name": "PredefinedColorID",
+            "Type": "uint8",
+            "Definition":
+            [
+                "White",
+                "Black",
+                "Transparent",
+                "Red",
+                "Green",
+                "Blue",
+                "Yellow",
+                "Cyan",
+                "Magenta",
+                "Orange",
+                "Purple",
+                "Turquoise",
+                "Silver",
+                "Emerald"
+            ]
+        },
+        {
             "Name": "HealthType",
             "Type": "uint8",
             "Definition":
@@ -265,6 +320,14 @@
             "Definition":
             [
                 "SkeletalMesh'/Game/AnimStarterPack/UE4_Mannequin/Mesh/SK_Mannequin.SK_Mannequin'"
+            ]
+        },
+        {
+            "Name": "PickableObjectMesh",
+            "Type": "uint32",
+            "Definition":
+            [
+                "StaticMesh'/Game/InfinityBladeEffects/Effects/FX_Meshes/SM_Gold_Bag_Pickup.SM_Gold_Bag_Pickup'"
             ]
         },
         {

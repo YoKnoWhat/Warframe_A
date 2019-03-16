@@ -73,6 +73,10 @@ public:
 
 	const FHitResult &GetSelectedTarget()const;
 
+	void SetOrbDropChances(float HealthOrbChance, float EnergyOrbChance);
+
+	void SetCommonDropItems(const TArray<EPickableObjectID>& IDs, const TArray<float>& Chances);
+
 	UFUNCTION(BlueprintCallable)
 	void ApplyDamageBP(AActor *DamageCauser, EDamageType Status, EDamageType DamageType, float Damage);
 
@@ -94,6 +98,12 @@ public:
 	float GetStatusTime(EDamageType Type)const;
 
 	// Property getters.
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE UStateMachineComponent* GetStateMachine()const
+	{
+		return this->StateMachineComponent;
+	}
+
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE int32 GetLevel()const
 	{
@@ -169,6 +179,8 @@ public:
 protected:
 	float PropertyLevelScaling(float BaseValue, float BaseLevel, float Exponent, float Coefficient, float CurrentLevel);
 
+	void DropItem();
+
 	// Status effect tick functions.
 	void SlashStatusTick(const FStatusEffectData* Data);
 
@@ -209,8 +221,11 @@ public:
 	FCharacterOnDiedDelegate OnDied;
 
 protected:
-	UPROPERTY(VisibleAnywhere)
-	UCharacterWidgetComponent *CharacterWidgetComponent;
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UCharacterWidgetComponent* CharacterWidgetComponent;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UStateMachineComponent* StateMachineComponent;
 
 	uint32 Level;
 	FName Name;
@@ -223,6 +238,14 @@ protected:
 	EArmorType ArmorType;
 	float Armor;
 	float Affinity;
+
+	struct FItemDropPair
+	{
+		EPickableObjectID ID;
+		float Chance;
+	};
+	TArray<FItemDropPair> OrbDropList;
+	TArray<FItemDropPair> CommonItemDropList;
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	AWeaponBase *EquippedWeapon;

@@ -1,11 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/StateMachineComponent.h"
+#include "Character/WarframeCharacter.h"
 #include "Character/StateObject.h"
 
 
 // Sets default values for this component's properties
-UStateMachineComponent::UStateMachineComponent()
+UStateMachineComponent::UStateMachineComponent() :
+	Super()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -15,6 +17,11 @@ UStateMachineComponent::UStateMachineComponent()
 	// ...
 }
 
+UStateMachineComponent::~UStateMachineComponent()
+{
+	// Ensure we clear all layer objects so they can be collected back to the pool.
+	this->ClearAllLayers();
+}
 
 // Called when the game starts
 void UStateMachineComponent::BeginPlay()
@@ -25,7 +32,6 @@ void UStateMachineComponent::BeginPlay()
 	
 }
 
-
 // Called every frame
 void UStateMachineComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -35,18 +41,16 @@ void UStateMachineComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	bool hasStateTransited;
 	float DeltaTimeCopy;
 
-	for (int32 LayerIndex = 0; LayerIndex < this->Layers.Num(); ++LayerIndex)
+	for (auto& Pair : this->Layers)
 	{
-		auto &Layer = this->Layers[LayerIndex];
-
-		if (Layer.IsEnabled)
+		if (Pair.Value.IsEnabled)
 		{
 			DeltaTimeCopy = DeltaTime;
 			do
 			{
-				NewStateID = Layer.CurrentState->OnUpdate(DeltaTimeCopy);
+				NewStateID = Pair.Value.CurrentState->OnUpdate(DeltaTimeCopy);
 
-				hasStateTransited = this->SetState(NewStateID, LayerIndex);
+				hasStateTransited = this->SetState(Pair.Key, NewStateID);
 
 				DeltaTimeCopy = 0.0f;
 			} while (hasStateTransited);
@@ -54,44 +58,48 @@ void UStateMachineComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	}
 }
 
-void UStateMachineComponent::Init(const TArray<int32> &InitStateIDs)
+void UStateMachineComponent::Init(const TMap<int32, int32> &InitStateIDs)
 {
-	this->ClearAllLayerObjects();
-
-	// Instantiate state objects for each layer.
-	for (int32 LayerIndex = 0; LayerIndex < this->Layers.Num(); ++LayerIndex)
+	for (auto& LayerPair : this->Layers)
 	{
-		auto &Layer = this->Layers[LayerIndex];
-
-		Layer.StateObjectInstances.Reserve(Layer.StateObjectClasses.Num());
-		int32 index = 0;
-
-		for (auto &Class : Layer.StateObjectClasses)
+		for (auto& StatePair : LayerPair.Value.StateObjects)
 		{
-			UStateObject *NewStateObject = NewObject<UStateObject>(this, Class);
-
-			Layer.StateObjectInstances.Add(NewStateObject->GetID(), NewStateObject);
+			StatePair.Value->Init(Cast<AWarframeCharacter>(this->GetOwner()));
 		}
+	}
+
+	for (auto& Pair : InitStateIDs)
+	{
+		auto &Layer = this->Layers[Pair.Key];
 
 		// Set initial state.
-		if (InitStateIDs[LayerIndex] == -1)
+		if (Pair.Value == -1)
 		{
 			Layer.IsEnabled = false;
 
-			Layer.CurrentState = Layer.StateObjectInstances.CreateConstIterator()->Value;
-
+			Layer.CurrentState = nullptr;
+			for (auto& StatePair : Layer.StateObjects)
+			{
+				if (StatePair.Value != nullptr)
+				{
+					Layer.CurrentState = StatePair.Value;
+					break;
+				}
+			}
 			if (Layer.CurrentState != nullptr)
 			{
-				Layer.CurrentState->OnEnter(this->GetOwner(), -1);
+				Layer.CurrentState->OnEnter(-1);
 			}
 		}
 		else
 		{
 			Layer.IsEnabled = true;
 
-			Layer.CurrentState = this->GetState(InitStateIDs[LayerIndex], LayerIndex);
-
-			Layer.CurrentState->OnEnter(this->GetOwner(), -1);
+			Layer.CurrentState = this->GetState(Pair.Key, Pair.Value);
+			if (Layer.CurrentState != nullptr)
+			{
+				Layer.CurrentState->OnEnter(-1);
+			}
 		}
 	}
 
@@ -101,97 +109,104 @@ void UStateMachineComponent::Init(const TArray<int32> &InitStateIDs)
 
 void UStateMachineComponent::EnableAll()
 {
-	for (auto &Layer : this->Layers)
+	for (auto& Pair : this->Layers)
 	{
-		Layer.IsEnabled = true;
+		Pair.Value.IsEnabled = true;
 	}
 }
 
 void UStateMachineComponent::Enable(int32 LayerIndex)
 {
-	if (this->Layers.Num() <= LayerIndex)
+	FStateMachineLayer* Layer = this->Layers.Find(LayerIndex);
+	if (Layer != nullptr)
 	{
-		return;
+		Layer->IsEnabled = true;
 	}
-
-	this->Layers[LayerIndex].IsEnabled = true;
 }
 
 void UStateMachineComponent::DisableAll()
 {
-	for (auto &Layer : this->Layers)
+	for (auto& Pair : this->Layers)
 	{
-		Layer.IsEnabled = false;
+		Pair.Value.IsEnabled = false;
 	}
 }
 
 void UStateMachineComponent::Disable(int32 LayerIndex)
 {
-	if (this->Layers.Num() <= LayerIndex)
+	FStateMachineLayer* Layer = this->Layers.Find(LayerIndex);
+	if (Layer != nullptr)
 	{
-		return;
-	}
-
-	this->Layers[LayerIndex].IsEnabled = false;
-}
-
-void UStateMachineComponent::ClearAllLayerClasses()
-{
-	for (auto &Layer : Layers)
-	{
-		Layer.StateObjectClasses.Empty();
+		Layer->IsEnabled = false;
 	}
 }
 
-void UStateMachineComponent::ClearAllLayerObjects()
+void UStateMachineComponent::ClearAllLayers()
 {
-	for (auto &Layer : Layers)
+	for (auto& Pair : this->Layers)
 	{
-		// Reverse unused memory for re-initialization.
-		Layer.StateObjectInstances.Empty(Layer.StateObjectInstances.Num());
+		for (auto& StatePair : Pair.Value.StateObjects)
+		{
+			delete StatePair.Value;
+		}
+		Pair.Value.StateObjects.Empty(Pair.Value.StateObjects.Num());
 	}
 }
 
-void UStateMachineComponent::ClearLayerClasses(int32 LayerIndex)
+void UStateMachineComponent::ClearLayer(int32 LayerIndex)
 {
-	this->Layers[LayerIndex].StateObjectClasses.Empty();
-}
-
-void UStateMachineComponent::ClearLayerObjects(int32 LayerIndex)
-{
-	auto &InstanceContainer = this->Layers[LayerIndex].StateObjectInstances;
-
-	// Reverse unused memory for re-initialization.
-	InstanceContainer.Empty(InstanceContainer.Num());
-}
-
-void UStateMachineComponent::AddStateClass(TSubclassOf<UStateObject> StateObjectClass, int32 LayerIndex)
-{
-	if (this->Layers.Num() <= LayerIndex)
+	FStateMachineLayer* Layer = this->Layers.Find(LayerIndex);
+	if (Layer != nullptr)
 	{
-		return;
+		for (auto& StatePair : Layer->StateObjects)
+		{
+			delete StatePair.Value;
+		}
+		Layer->StateObjects.Empty(Layer->StateObjects.Num());
+	}
+}
+
+void UStateMachineComponent::AddStateObject(int32 LayerIndex, FStateObject* StateObject)
+{
+	FStateMachineLayer* Layer = this->Layers.Find(LayerIndex);
+	if (Layer == nullptr)
+	{
+		this->Layers.Add(LayerIndex);
+		Layer = &this->Layers[LayerIndex];
 	}
 
-	this->Layers[LayerIndex].StateObjectClasses.Add(StateObjectClass);
+	auto& StateObjects = Layer->StateObjects;
+
+	FStateObject** ObjectPtr = StateObjects.Find(StateObject->GetID());
+	if (ObjectPtr == nullptr)
+	{
+		StateObjects.Add(StateObject->GetID(), StateObject);
+	}
+	else
+	{
+		delete *ObjectPtr;
+		*ObjectPtr = StateObject;
+	}
 }
 
-bool UStateMachineComponent::SetState(int32 StateID, int32 LayerIndex)
+bool UStateMachineComponent::SetState(int32 LayerIndex, int32 StateID)
 {
-	if (this->Layers.Num() <= LayerIndex)
+	FStateMachineLayer* Layer = this->Layers.Find(LayerIndex);
+	if (Layer == nullptr)
 	{
 		return false;
 	}
 
-	auto &CurrentState = this->Layers[LayerIndex].CurrentState;
+	auto &CurrentState = Layer->CurrentState;
 
 	if (StateID != CurrentState->GetID())
 	{
-		UStateObject *NewState = this->GetState(StateID, LayerIndex);
+		FStateObject *NewState = this->GetState(LayerIndex, StateID);
 
 		if (NewState != nullptr)
 		{
 			CurrentState->OnExit();
-			NewState->OnEnter(this->GetOwner(), CurrentState->GetID());
+			NewState->OnEnter(CurrentState->GetID());
 
 			CurrentState = NewState;
 
@@ -201,46 +216,60 @@ bool UStateMachineComponent::SetState(int32 StateID, int32 LayerIndex)
 	return false;
 }
 
-UStateObject *UStateMachineComponent::GetState(int32 StateID, int32 LayerIndex)
+FStateObject* UStateMachineComponent::GetState(int32 LayerIndex, int32 StateID)
 {
-	if (this->Layers.Num() <= LayerIndex)
+	FStateMachineLayer* Layer = this->Layers.Find(LayerIndex);
+	if (Layer == nullptr)
 	{
 		return nullptr;
 	}
 
-	UStateObject** Result = this->Layers[LayerIndex].StateObjectInstances.Find(StateID);
-
-	if (Result == nullptr)
+	FStateObject** ObjectPtr = Layer->StateObjects.Find(StateID);
+	if (ObjectPtr == nullptr)
 	{
 		return nullptr;
 	}
 	else
 	{
-		return *Result;
+		return *ObjectPtr;
 	}
 }
 
-UStateObject *UStateMachineComponent::GetCurrentState(int32 LayerIndex)
+FStateObject* UStateMachineComponent::GetCurrentState(int32 LayerIndex)
 {
-	if (this->Layers.Num() <= LayerIndex)
+	FStateMachineLayer* Layer = this->Layers.Find(LayerIndex);
+	if (Layer != nullptr)
+	{
+		return Layer->CurrentState;
+	}
+	else
 	{
 		return nullptr;
 	}
+}
 
-	return this->Layers[LayerIndex].CurrentState;
+int32 UStateMachineComponent::GetCurrentStateID(int32 LayerIndex)
+{
+	FStateObject* CurrentState = GetCurrentState(LayerIndex);
+	if (CurrentState == nullptr)
+	{
+		return -1;
+	}
+	else
+	{
+		return CurrentState->GetID();
+	}
 }
 
 void UStateMachineComponent::TriggerEvent(int32 EventID)
 {
-	for (int32 LayerIndex = 0; LayerIndex < this->Layers.Num(); ++LayerIndex)
+	for (auto& Pair : this->Layers)
 	{
-		auto &Layer = this->Layers[LayerIndex];
-
-		if (Layer.IsEnabled)
+		if (Pair.Value.IsEnabled)
 		{
-			int32 NewStateID = Layer.CurrentState->OnCustomEvent(EventID);
+			int32 NewStateID = Pair.Value.CurrentState->OnCustomEvent(EventID);
 
-			this->SetState(NewStateID, LayerIndex);
+			this->SetState(Pair.Key, NewStateID);
 		}
 	}
 }

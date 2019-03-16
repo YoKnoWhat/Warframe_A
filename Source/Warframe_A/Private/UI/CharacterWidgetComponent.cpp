@@ -15,7 +15,7 @@ UCharacterWidgetComponent::UCharacterWidgetComponent(const FObjectInitializer &O
 void UCharacterWidgetComponent::InitWidget()
 {
 	// Override default widget class first.
-	this->WidgetClass = FWarframeConfigSingleton::Instance().FindResource<UClass>("UI_CharacterHeaderPanel");
+	this->WidgetClass = FWarframeConfigSingleton::Instance().FindResourceClass("UI_CharacterHeaderPanel");
 
 	Super::InitWidget();
 

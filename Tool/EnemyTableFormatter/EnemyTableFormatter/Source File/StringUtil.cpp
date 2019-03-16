@@ -34,6 +34,18 @@ namespace StringUtil
 		return std::string(wordBegin, text - wordBegin);
 	}
 
+	std::string GetWord(const char *&text, char delimiter1, char delimiter2)
+	{
+		const char *wordBegin = text;
+
+		while (*text != delimiter1 && *text != delimiter2 && *text != '\0')
+		{
+			++text;
+		}
+
+		return std::string(wordBegin, text - wordBegin);
+	}
+
 	std::string GetWord(const std::string &str, char delimiter)
 	{
 		size_t count = 0;

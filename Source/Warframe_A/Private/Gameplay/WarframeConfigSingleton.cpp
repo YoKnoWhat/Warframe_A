@@ -54,11 +54,50 @@ void FWarframeConfigSingleton::LoadConfig()
 
 			ResourcesMap.Add(*ResName, { *ResType, ResRef });
 		}
+
+		auto& ClassRefs = JsonRoot->GetArrayField("ClassRefs");
+		for (int32 i = 0; i < ClassRefs.Num(); ++i)
+		{
+			auto& ClassRef = ClassRefs[i]->AsObject();
+
+			FString ClsType = ClassRef->GetStringField("Type");
+
+			FString ClsStr = ClassRef->GetStringField("Ref");
+			FString ClsName = Warframe::GetWord(ClsStr, 0, TEXT('='));
+			FString ClsRef = ClsStr.Mid(ClsName.Len() + 1);
+
+			ClassesMap.Add(*ClsName, { *ClsType, ClsRef });
+		}
 	}
 }
 
+UClass* FWarframeConfigSingleton::FindResourceClass(FName Name)
+{
+	UClass* Class;
+
+	auto Result = ClassesMap.Find(Name);
+	if (Result != nullptr)
+	{
+		Class = LoadObject<UClass>(nullptr, *Result->Ref);
+
+		if (Class == nullptr)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("UWarframeConfigSingleton failed to load %s."), *Name.ToString());
+			Class = Warframe::GetNativeClassByName(Result->Type);
+		}
+	}
+	else
+	{
+		Class = nullptr;
+	}
+
+	return Class;
+}
+
 FWarframeConfigSingleton::FWarframeConfigSingleton()
-{}
+{
+	this->LoadConfig();
+}
 
 UObject* FWarframeConfigSingleton::GetResourceDefaultObject(FName Name)
 {

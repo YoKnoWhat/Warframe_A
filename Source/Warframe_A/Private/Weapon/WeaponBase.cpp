@@ -38,23 +38,19 @@ void AWeaponBase::Tick(float DeltaTime)
 
 }
 
-void AWeaponBase::SetOwningCharacter(AWarframeCharacter *NewOwningCharacter)
+void AWeaponBase::InitBP(int32 WeaponID, int32 Level_/*Polarities, Mods*/)
 {
-	OwningCharacter = NewOwningCharacter;
+	this->Init(static_cast<EWeaponID>(WeaponID), Level_);
 }
 
-void AWeaponBase::InitBP(int32 WeaponID, int32 Level/*Polarities, Mods*/)
-{
-	this->Init(static_cast<EWeaponID>(WeaponID), Level);
-}
-
-void AWeaponBase::Init(EWeaponID WeaponID, uint32 Level)
+void AWeaponBase::Init(EWeaponID WeaponID, uint32 Level_)
 {
 	UWarframeGameInstance *GameInstance = Cast<UWarframeGameInstance>(this->GetGameInstance());
 
 	const FWeaponInfo *WeaponInfo = GameInstance->GetWeaponInfo(WeaponID);
 
 	this->Name = WeaponInfo->Name;
+	this->Level = Level_;
 	this->AmmoType = WeaponInfo->AmmoType;
 	this->MagazineCapacity = WeaponInfo->Magazine;
 	this->AmmoMaximum = WeaponInfo->Ammo;
@@ -357,7 +353,7 @@ void AWeaponBase::DoFire()
 
 	for (uint32 i = 0; i < TotalPellets; ++i)
 	{
-		ARoundBase *NewRound = this->OnRoundFired(OwningCharacter->GetSelectedTarget());
+		ARoundBase *NewRound = this->OnRoundFired(Cast<AWarframeCharacter>(Instigator)->GetSelectedTarget());
 	
 		NewRound->Instigator = Cast<AWarframeCharacter>(this->GetOwner());
 		NewRound->Init(this);

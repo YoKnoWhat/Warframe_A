@@ -48,6 +48,9 @@ void USpawnPoint::SpawnIfAllKilled()
 			AWarframeCharacter *NewCharacter = this->GetWorld()->SpawnActor<AWarframeCharacter>(this->Location, FRotator(), SpawnParams);
 			if (NewCharacter != nullptr)
 			{
+				this->SpawnedCharacters.Add(NewCharacter);
+
+				/** Set character appearance. */
 				const FCharacterAppearance* CharacterAppearance = GameInstance->GetCharacterAppearance(static_cast<ECharacterID>(SpawnInfo.CharacterID));
 
 				USkeletalMeshComponent *SkeletalMeshComponent = Cast<USkeletalMeshComponent>(NewCharacter->GetComponentByClass(USkeletalMeshComponent::StaticClass()));
@@ -62,13 +65,11 @@ void USpawnPoint::SpawnIfAllKilled()
 
 				NewCharacter->Init(static_cast<ECharacterID>(SpawnInfo.CharacterID), SpawnInfo.Level);
 
-				// Bind event to ACharacter::OnDestroyed().
+				/** Bind event to ACharacter::OnDestroyed(). */
 				NewCharacter->OnDied.AddUObject(this, &USpawnPoint::OnCharacterDied);
 				NewCharacter->OnDied.AddUObject(GameMode, &AWarframeGameMode::OnCharacterDied);
 
-				GameMode->OnCharacterSpawned(NewCharacter);
-
-				this->SpawnedCharacters.Add(NewCharacter);
+				GameMode->OnCharacterSpawned(NewCharacter);				
 			}
 		}
 	}

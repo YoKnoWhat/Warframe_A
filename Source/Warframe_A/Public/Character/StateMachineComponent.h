@@ -2,27 +2,18 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "WarframeCommon.h"
 #include "Components/ActorComponent.h"
 #include "StateMachineComponent.generated.h"
 
 
-class UStateObject;
-
-USTRUCT()
 struct FStateMachineLayer
 {
-	GENERATED_BODY()
-
 	bool IsEnabled;
 
-	UStateObject *CurrentState;
+	FStateObject *CurrentState;
 
-	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<UStateObject>> StateObjectClasses;
-
-	UPROPERTY()
-	TMap<int32, UStateObject*> StateObjectInstances;
+	TMap<int32, FStateObject*> StateObjects;
 };
 
 UCLASS( Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -33,6 +24,8 @@ class WARFRAME_A_API UStateMachineComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UStateMachineComponent();
+
+	virtual ~UStateMachineComponent();
 
 protected:
 	// Called when the game starts
@@ -47,7 +40,7 @@ public:
 	 * @param InitStateIDs - Initial state IDs for each layer. One layer can be initially disabled by specify -1, first state in the layer will be the default state then.
 	 */
 	UFUNCTION(BlueprintCallable)
-	void Init(const TArray<int32> &InitStateIDs);
+	void Init(const TMap<int32, int32> &InitStateIDs);
 
 	UFUNCTION(BlueprintCallable)
 	void EnableAll();
@@ -68,50 +61,35 @@ public:
 	void Disable(int32 LayerIndex);
 
 	/**
-	 * Clear state object classes and instances in all layers.
-	 */
-	UFUNCTION(BlueprintCallable)
-	void ClearAllLayerClasses();
-
-	/**
 	 * Clear state object instances in all layers.
 	 */
-	UFUNCTION(BlueprintCallable)
-	void ClearAllLayerObjects();
-
-	/**
-	 * Clear state object classes in specified layer.
-	 */
-	UFUNCTION(BlueprintCallable)
-	void ClearLayerClasses(int32 LayerIndex);
+	void ClearAllLayers();
 
 	/**
 	 * Clear state object instances in specified layer.
 	 */
-	UFUNCTION(BlueprintCallable)
-	void ClearLayerObjects(int32 LayerIndex);
+	void ClearLayer(int32 LayerIndex);
 
-	UFUNCTION(BlueprintCallable)
-	void AddStateClass(TSubclassOf<UStateObject> StateObjectClass, int32 LayerIndex = 0);
+	void AddStateObject(int32 LayerIndex, FStateObject* StateObject);
 
 	/**
 	 * Set new state with validity check.
 	 */
 	UFUNCTION(BlueprintCallable)
-	bool SetState(int32 StateID, int32 LayerIndex = 0);
+	bool SetState(int32 LayerIndex, int32 StateID);
 
 	// void SetState(UStateObject *NewState);
 
-	UFUNCTION(BlueprintCallable)
-	UStateObject *GetState(int32 StateID, int32 LayerIndex = 0);
+	FStateObject* GetState(int32 LayerIndex, int32 StateID);
+
+	FStateObject* GetCurrentState(int32 LayerIndex = 0);
 
 	UFUNCTION(BlueprintCallable)
-	UStateObject *GetCurrentState(int32 LayerIndex = 0);
+	int32 GetCurrentStateID(int32 LayerIndex = 0);
 
 	UFUNCTION(BlueprintCallable)
 	void TriggerEvent(int32 EventID);
 
 protected:
-	UPROPERTY(EditAnywhere)
-	TArray<FStateMachineLayer> Layers;
+	TMap<int32, FStateMachineLayer> Layers;
 };

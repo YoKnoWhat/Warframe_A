@@ -1,39 +1,23 @@
 #pragma once
 
-#include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
-#include "StateObject.generated.h"
+#include "WarframeCommon.h"
 
-/**
- * UStateObject
- */
-UCLASS(BlueprintType, Blueprintable)
-class WARFRAME_A_API UStateObject : public UObject
+
+class FStateObject
 {
-	GENERATED_BODY()
-
 public:
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-	int32 GetID()const;
-	virtual int32 GetID_Implementation()const;
+	void Init(AWarframeCharacter* Character);
 
-	// virtual FName OnUpdate_Native(AActor *Actor)
-	// {
-	// 	return this->OnUpdate(Actor);
-	// }
-	UFUNCTION(BlueprintNativeEvent)
-	int32 OnUpdate(float DeltaTime);
-	virtual int32 OnUpdate_Implementation(float DeltaTime);
+	virtual int32 GetID()const = 0;
 
-	UFUNCTION(BlueprintNativeEvent)
-	void OnEnter(AActor *Owner, int32 StateFromID);
-	virtual void OnEnter_Implementation(AActor *Owner, int32 StateFromID);
+	virtual int32 OnUpdate(float DeltaTime) = 0;
 
-	UFUNCTION(BlueprintNativeEvent)
-	void OnExit();
-	virtual void OnExit_Implementation();
+	virtual void OnEnter(int32 StateFromID) = 0;
 
-	UFUNCTION(BlueprintNativeEvent)
-	int32 OnCustomEvent(int32 EventID);
-	virtual int32 OnCustomEvent_Implementation(int32 EventID);
+	virtual void OnExit() = 0;
+
+	virtual int32 OnCustomEvent(int32 EventID) = 0;
+
+protected:
+	AWarframeCharacter* Character;
 };

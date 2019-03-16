@@ -366,8 +366,8 @@ bool TableFormatter::ParseSrcFile(std::shared_ptr<uint8> buffer)
 				baseOffset += columnSizeInBytes;
 			}
 
-			m_readInFunctions.back()(StringUtil::GetWord(text, '\n'), &m_formattedTableEntries[baseOffset]);
-			++text;
+			m_readInFunctions.back()(StringUtil::GetWord(text, '\r', '\n'), &m_formattedTableEntries[baseOffset]);
+			StringUtil::SkipWhiteSpace(text);
 			if (columnSizeInBytes == 0)
 			{
 				return false;

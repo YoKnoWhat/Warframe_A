@@ -13,6 +13,8 @@ public:
 
 	void LoadConfig();
 
+	UClass* FindResourceClass(FName Name);
+
 	template<class T>
 	T* FindResource(FName Name)
 	{
@@ -30,6 +32,7 @@ public:
 
 		if (Resource == nullptr)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("UWarframeConfigSingleton failed to load %s."), *Name.ToString());
 			Resource = Cast<T>(this->GetResourceDefaultObject(Name));
 			if (Resource == nullptr)
 			{
@@ -44,11 +47,15 @@ protected:
 
 	UObject* GetResourceDefaultObject(FName Name);
 
+public:
+	float FieldOfView = 90.0f;
+
 protected:
-	struct FResourceRef
+	struct FObjectRef
 	{
 		FName Type;
 		FString Ref;
 	};
-	TMap<FName, FResourceRef> ResourcesMap; // Use FName to find specified resource object.
+	TMap<FName, FObjectRef> ClassesMap; // Use FName to find specified resource object.
+	TMap<FName, FObjectRef> ResourcesMap; // Use FName to find specified resource object.
 };

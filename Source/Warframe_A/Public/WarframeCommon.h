@@ -1,6 +1,7 @@
 #pragma once
 
-#include "CoreMinimal.h"
+#include "Runtime/CoreUObject/Public/UObject/ObjectMacros.h"
+
 
 UENUM(BlueprintType)
 enum class EHealthType : uint8
@@ -305,6 +306,64 @@ enum class EWeaponID : uint16
 	End = DakraPrime,
 }; // End enum class EWeaponID.
 
+enum class EPickableObjectID : uint8
+{
+	Begin = 0,
+
+	None = Begin,
+	HealthOrb,
+	EnergyOrb,
+	RifleAmmo,
+	ShotgunAmmo,
+	SniperAmmo,
+	BowAmmo,
+	PistolAmmo,
+	Credit,
+	AlloyPlate,
+	Ferrite,
+	NanoSpores,
+	Salvage,
+	Circuits,
+	Cryotic,
+	Oxium,
+	Plastids,
+	PolymerBundle,
+	Rubedo,
+	ArgonCrystal,
+	ControlModule,
+	Gallium,
+	Morphics,
+	NeuralSensors,
+	Neurodes,
+	NitainExtract,
+	OrokinCell,
+	Tellurium,
+
+	End = Tellurium,
+};
+
+enum class EPredefinedColorID : uint8
+{
+	Begin = 0,
+
+	White = Begin,
+	Black,
+	Transparent,
+	Red,
+	Green,
+	Blue,
+	Yellow,
+	Cyan,
+	Magenta,
+	Orange,
+	Purple,
+	Turquoise,
+	Silver,
+	Emerald,
+
+	End = Emerald,
+};
+
 enum class EWeaponTriggerType : uint8
 {
 	Auto,
@@ -449,9 +508,13 @@ struct FWarframeConfigSingleton;
 class ARoundBase;
 class AWeaponBase;
 class AWarframeCharacter;
+class AWarframe;
+class FAbilityObject;
+class FStateObject;
 class UCharacterWidgetComponent;
 class UCharacterWidget;
 class USpawnPoint;
+class UStateMachineComponent;
 
 template<class T>
 constexpr std::underlying_type_t<T> CastToUnderlyingType(T value)

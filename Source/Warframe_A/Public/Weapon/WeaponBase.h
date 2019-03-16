@@ -52,9 +52,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
-	void SetOwningCharacter(AWarframeCharacter *NewOwningCharacter);
-
-	UFUNCTION(BlueprintCallable)
 	void InitBP(int32 WeaponID, int32 Level/*Polarities, Mods*/);
 
 	virtual void Init(EWeaponID WeaponID, uint32 Level/*Polarities, Mods*/);
@@ -89,6 +86,12 @@ public:
 	FORCEINLINE FName GetName()const
 	{
 		return Name;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE int32 GetLevel()const
+	{
+		return Level;
 	}
 
 	UFUNCTION(BlueprintCallable)
@@ -271,10 +274,8 @@ private:
 	void Reload();
 
 protected:
-	UPROPERTY()
-	AWarframeCharacter *OwningCharacter;
-
 	FName Name;
+	uint32 Level;
 	EAmmoType AmmoType;
 	uint32 MagazineCapacity;
 	uint32 AmmoMaximum;

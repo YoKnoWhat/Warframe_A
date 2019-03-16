@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/WarframeCharacter.h"
+#include "Character/StateMachineComponent.h"
+#include "Environment/PickableObject.h"
 #include "Gameplay/WarframeGameInstance.h"
 #include "Gameplay/WarframeGameMode.h"
 #include "UI/CharacterWidget.h"
@@ -15,13 +17,16 @@ FObjectPool<FStatusEffectData> AWarframeCharacter::StatusEffectDataPool;
 
 // Sets default values
 AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializer) :
-	Super(ObjectInitializer)
+	Super(ObjectInitializer.SetDefaultSubobjectClass<UStateMachineComponent>("StateMachine"))
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
+	/** Character widget component. */
 	CharacterWidgetComponent = ObjectInitializer.CreateDefaultSubobject<UCharacterWidgetComponent>(this, FName("CharacterWidget"));
 	CharacterWidgetComponent->SetupAttachment(this->RootComponent);
+
+	StateMachineComponent = ObjectInitializer.CreateDefaultSubobject<UStateMachineComponent>(this, FName("StateMachine"));
 }
 
 // Called when the game starts or when spawned
@@ -155,14 +160,14 @@ void AWarframeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 }
 
-void AWarframeCharacter::InitPropertiesBP(int32 CharacterID, int32 Level)
+void AWarframeCharacter::InitPropertiesBP(int32 CharacterID, int32 Level_)
 {
-	this->Init(static_cast<ECharacterID>(CharacterID), static_cast<uint32>(Level));
+	this->Init(static_cast<ECharacterID>(CharacterID), static_cast<uint32>(Level_));
 }
 
-void AWarframeCharacter::Init(ECharacterID CharacterID, uint32 Level)
+void AWarframeCharacter::Init(ECharacterID CharacterID, uint32 Level_)
 {
-	this->Level = Level;
+	this->Level = Level_;
 
 	UWarframeGameInstance *GameInstance = Cast<UWarframeGameInstance>(this->GetGameInstance());
 
@@ -188,6 +193,61 @@ void AWarframeCharacter::Init(ECharacterID CharacterID, uint32 Level)
 const FHitResult &AWarframeCharacter::GetSelectedTarget()const
 {
 	return SelectedTarget;
+}
+
+void AWarframeCharacter::SetOrbDropChances(float HealthOrbChance, float EnergyOrbChance)
+{
+	this->OrbDropList.Add({ EPickableObjectID::HealthOrb, HealthOrbChance });
+	this->OrbDropList.Add({ EPickableObjectID::EnergyOrb, HealthOrbChance + EnergyOrbChance });
+}
+
+void AWarframeCharacter::SetCommonDropItems(const TArray<EPickableObjectID>& IDs, const TArray<float>& Chances)
+{
+	float Base = 0.0f;
+
+	for (int32 i = 0; i < IDs.Num(); ++i)
+	{
+		Base += Chances[i];
+
+		this->CommonItemDropList.Add({ IDs[i], Base });
+	}
+}
+
+void AWarframeCharacter::DropItem()
+{
+	{
+		float Chance = FMath::FRandRange(0.0f, 1.0f);
+
+		for (auto& Item : OrbDropList)
+		{
+			if (Item.Chance < Chance)
+			{
+				FActorSpawnParameters SpawnParams;
+				SpawnParams.Owner = this->GetWorld()->GetAuthGameMode();
+				SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+				this->GetWorld()->SpawnActor<APickableObject>(this->GetActorLocation(), FRotator(), SpawnParams);
+				break;
+			}
+		}
+	}
+
+	{
+		float Chance = FMath::FRandRange(0.0f, 1.0f);
+
+		for (auto& Item : CommonItemDropList)
+		{
+			if (Item.Chance < Chance)
+			{
+				FActorSpawnParameters SpawnParams;
+				SpawnParams.Owner = this->GetWorld()->GetAuthGameMode();
+				SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+				this->GetWorld()->SpawnActor<APickableObject>(this->GetActorLocation(), FRotator(), SpawnParams);
+				break;
+			}
+		}
+	}
 }
 
 void AWarframeCharacter::OnSelected()

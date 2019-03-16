@@ -1,5 +1,7 @@
 
 #include "Utility/HelperFunction.h"
+#include "Character/StateMachineComponent.h"
+#include "UI/CharacterHeaderPanel.h"
 
 #include "Editor/UMGEditor/Public/WidgetBlueprint.h"
 #include "Runtime/Core/Public/Misc/Paths.h"
@@ -76,9 +78,13 @@ namespace Warframe
 		{
 			return UMaterial::StaticClass();
 		}
-		else if (Name == "UWidgetBlueprint")
+		else if (Name == "UStateMachineComponent")
 		{
-			return UWidgetBlueprint::StaticClass();
+			return UStateMachineComponent::StaticClass();
+		}
+		else if (Name == "UCharacterHeaderPanel")
+		{
+			return UCharacterHeaderPanel::StaticClass();
 		}
 		else
 		{
