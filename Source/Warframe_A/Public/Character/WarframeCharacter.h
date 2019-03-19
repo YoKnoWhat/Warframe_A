@@ -187,6 +187,10 @@ public:
 	}
 
 protected:
+	/** todo: temporary method provided for blueprint call. */
+	UFUNCTION(BlueprintCallable)
+	AWeaponBase* CreateWeapon(int32 WeaponID);
+
 	float PropertyLevelScaling(float BaseValue, float BaseLevel, float Exponent, float Coefficient, float CurrentLevel);
 
 	void DropItem();

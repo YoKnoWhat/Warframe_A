@@ -1,6 +1,9 @@
 
 #include "Character/Warframe/StateMachine/WarframeStateMachineComponent.h"
+#include "Character/WarframeCharacter.h"
 #include "Character/StateObject.h"
+
+#include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
 
 
 UWarframeStateMachineComponent::UWarframeStateMachineComponent() :
@@ -15,7 +18,7 @@ void UWarframeStateMachineComponent::TickComponent(float DeltaTime, ELevelTick T
 
 	TimeSinceLastFired += DeltaTime;
 
-	if (this->GetCurrentState(CastToUnderlyingType(EWarframeStateLayer::Lower))->GetID() != CastToUnderlyingType(EWarframeLowerState::AimGliding))
+	if (Cast<AWarframeCharacter>(this->GetOwner())->GetMovementComponent()->IsFalling() == false)
 	{
 		GlideTimer = FMath::Min(GlideTimer + DeltaTime, 3.0f);
 	}

@@ -8,8 +8,10 @@ FAbilityObject::FAbilityObject(AWarframe* Warframe_, bool CanCastInAir, bool Can
 	bCanRecast(CanRecast),
 	PreCastTime(PreCastTime_),
 	PostCastTime(PostCastTime_),
-	bIsLock(true),
-	bIsActive(false)
+	bIsLocked(true),
+	bIsActive(false),
+	bIsCastable(false),
+	EnergyCost(0.0f)
 {}
 
 void FAbilityObject::Tick(float DeltaTime)
@@ -58,17 +60,17 @@ void FAbilityObject::OnLevelChanged(uint32 NewLevel)
 {
 	if (NewLevel == static_cast<uint32>(-1))
 	{
-		bIsLock = true;
+		bIsLocked = true;
 	}
 	else
 	{
-		bIsLock = false;
+		bIsLocked = false;
 	}
 }
 
 void FAbilityObject::Cast(float Charge_)
 {
-	if (bIsLock == false && (bIsActive == false || (bIsActive && bCanRecast)))
+	if (bIsLocked == false && (bIsActive == false || (bIsActive && bCanRecast)))
 	{
 		bIsActive = true;
 		Charge = Charge_;

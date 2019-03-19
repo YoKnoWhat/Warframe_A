@@ -352,6 +352,9 @@ void UWarframeGameInstance::ReadInWeaponTable(const char* Begin, const char* End
 		Warframe::ReadIn(CurrentWeaponMode.Reload, Begin);
 		Warframe::ReadIn(CurrentWeaponMode.Status, Begin);
 		Warframe::ReadIn(CurrentWeaponMode.Trigger, Begin);
+		Warframe::ReadIn(CurrentWeaponMode.MaxBurstCount, Begin);
+		Warframe::ReadIn(CurrentWeaponMode.MaxChargeRounds, Begin);
+		Warframe::ReadIn(CurrentWeaponMode.ChargeMultiplier, Begin);
 		Warframe::ReadIn(CurrentWeaponMode.Slash, Begin);
 		Warframe::ReadIn(CurrentWeaponMode.Impact, Begin);
 		Warframe::ReadIn(CurrentWeaponMode.Puncture, Begin);

@@ -67,7 +67,7 @@ int32 FUpperState_Idle::OnUpdate(float DeltaTime)
 	{
 		return CastToUnderlyingType(EWarframeUpperState::Ironsight);
 	}
-	else if (StateMachine->IsFiring)
+	else if (StateMachine->IsFiring && Character->GetCurrentWeapon()->GetRemainingMagazine() != 0)
 	{
 		return CastToUnderlyingType(EWarframeUpperState::Firing);
 	}
@@ -107,7 +107,7 @@ int32 FUpperState_Ironsight::OnUpdate(float DeltaTime)
 {
 	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
 
-	if (StateMachine->IsFiring)
+	if (StateMachine->IsFiring && Character->GetCurrentWeapon()->GetRemainingMagazine() != 0)
 	{
 		return CastToUnderlyingType(EWarframeUpperState::Firing);
 	}

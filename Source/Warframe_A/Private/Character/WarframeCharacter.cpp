@@ -8,6 +8,7 @@
 #include "UI/CharacterWidget.h"
 #include "UI/CharacterWidgetComponent.h"
 #include "Weapon/RoundBase.h"
+#include "Weapon/WeaponFactory.h"
 
 #include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
@@ -325,7 +326,6 @@ void AWarframeCharacter::SwitchWeapon(EWeaponSlotType WeaponSlotType)
 	{
 		CurrentWeaponSlotIndex = 2;
 	}
-	
 }
 
 void AWarframeCharacter::Kill(AActor* Causer)
@@ -712,6 +712,11 @@ float AWarframeCharacter::GetStatusTime(EDamageType Type)const
 		return Data->TickTime - InternalTime + Data->TickCount /* * 1.0f */;
 	}
 	return 0.0f;
+}
+
+AWeaponBase* AWarframeCharacter::CreateWeapon(int32 WeaponID)
+{
+	return FWeaponFactory::Instance().CreateWeapon(this, static_cast<EWeaponID>(WeaponID));
 }
 
 float AWarframeCharacter::PropertyLevelScaling(float BaseValue, float BaseLevel, float Exponent, float Coefficient, float CurrentLevel)

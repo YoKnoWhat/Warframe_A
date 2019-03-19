@@ -1,6 +1,7 @@
 
 #include "Character/Warframe/Excalibur/RadialJavelin.h"
 #include "Character/Warframe/Excalibur/Excalibur.h"
+#include "Utility/PhysicsFunction.h"
 
 #include "Runtime/Engine/Classes/Engine/World.h"
 
@@ -14,6 +15,16 @@ FRadialJavelin::FRadialJavelin(AWarframe* Warframe) :
 void FRadialJavelin::Tick(float DeltaTime)
 {
 	FAbilityObject::Tick(DeltaTime);
+
+	EnergyCost = Warframe->GetAbilityEfficiency() * 75.0f;
+	if (EnergyCost < Warframe->GetCurrentEnergy())
+	{
+		bIsCastable = true;
+	}
+	else
+	{
+		bIsCastable = false;
+	}
 }
 
 void FRadialJavelin::OnLevelChanged(uint32 NewLevel)
@@ -46,8 +57,8 @@ void FRadialJavelin::OnLevelChanged(uint32 NewLevel)
 		break;
 	}
 
-	Damage *= Warframe->GetAbilityStrength() * 0.01f;
-	Range = static_cast<uint32>(Warframe->GetAbilityRange() * 0.01f * static_cast<float>(Range));
+	Damage *= Warframe->GetAbilityStrength();
+	Range = static_cast<uint32>(Warframe->GetAbilityRange() * static_cast<float>(Range));
 
 	return;
 }
@@ -59,38 +70,20 @@ void FRadialJavelin::PreCast()
 
 void FRadialJavelin::DoCast()
 {
-	/** Retrieve all warframe characters in specified sphere. */
-	TArray<AWarframeCharacter*> OverlapActors;
+	if (bIsCastable == false)
 	{
-		TArray<FOverlapResult> Overlaps;
+		return;
+	}
 
-		FCollisionObjectQueryParams ObjectParams(ECollisionChannel::ECC_Pawn);
+	Warframe->DrainEnergy(EnergyCost);
 
-		FCollisionQueryParams TraceParams;
-		TraceParams.bTraceComplex = true;
-		TraceParams.AddIgnoredActor(Warframe);
+	/** Retrieve all warframe characters in specified sphere. */
+	TArray<AActor*> OverlapActors;
+	{
+		TArray<ECollisionChannel> ObjectTypeArray = { ECollisionChannel::ECC_Pawn };
+		TArray<AActor*> ActorsToIgnore = { Warframe };
 
-		Warframe->GetWorld()->OverlapMultiByObjectType(
-			Overlaps,
-			Warframe->GetActorLocation(),
-			FQuat::Identity,
-			ObjectParams,
-			FCollisionShape::MakeSphere(this->Range),
-			TraceParams
-		);
-
-		for (int32 OverlapIdx = 0; OverlapIdx < Overlaps.Num(); ++OverlapIdx)
-		{
-			FOverlapResult const& O = Overlaps[OverlapIdx];
-			if (O.Actor.IsValid())
-			{
-				AWarframeCharacter* WarframeCharacter = ::Cast<AWarframeCharacter>(O.Actor.Get());
-				if (WarframeCharacter)
-				{
-					OverlapActors.AddUnique(WarframeCharacter);
-				}
-			}
-		}
+		WarframeUtil::SphereOverlapActors(Warframe, Warframe->GetActorLocation(), this->Range, ObjectTypeArray, AWarframeCharacter::StaticClass(), ActorsToIgnore, OverlapActors);
 	}
 
 	/** Apply damage to characters that are not behind obstacles. */
@@ -104,8 +97,10 @@ void FRadialJavelin::DoCast()
 
 		FCollisionResponseParams ReponseParams;
 
-		for (AWarframeCharacter* Character : OverlapActors)
+		for (AActor* Actor : OverlapActors)
 		{
+			AWarframeCharacter* Character = ::Cast<AWarframeCharacter>(Actor);
+
 			FHitResult HitResult;
 			// Warframe->GetWorld()->LineTraceSingleByChannel(
 			// 	HitResult,

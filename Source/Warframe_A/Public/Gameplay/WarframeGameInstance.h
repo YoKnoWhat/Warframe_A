@@ -54,6 +54,42 @@ struct FWarframeInfo
 	EPolarityID Polarity8;
 };
 
+struct FWeaponModeInfo
+{
+	float				Accuracy;
+	float				ChargeRate;
+	uint32				Pellets;
+	float				CriticalChance;
+	float				CriticalMultiplier;
+	uint32				FalloffStart;
+	uint32				FalloffEnd;
+	float				FalloffDamage;
+	float				FireRate;
+	ENoiseType			Noise;
+	uint32				PunchThrough;
+	float				Reload;
+	float				Status;
+	EWeaponTriggerType	Trigger;
+	/** Trigger specific begin. */
+	uint32				MaxBurstCount;
+	uint32				MaxChargeRounds;
+	float				ChargeMultiplier;
+	/** Trigger specific end. */
+	float				Slash;
+	float				Impact;
+	float				Puncture;
+	float				Heat;
+	float				Cold;
+	float				Electricity;
+	float				Toxin;
+	float				Blast;
+	float				Radiation;
+	float				Gas;
+	float				Magnetic;
+	float				Viral;
+	float				Corrosive;
+};
+
 struct FWeaponInfo
 {
 	FName Name;

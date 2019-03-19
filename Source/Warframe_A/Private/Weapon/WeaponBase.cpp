@@ -4,6 +4,7 @@
 #include "Character/WarframeCharacter.h"
 #include "Gameplay/WarframeGameInstance.h"
 #include "Weapon/RoundBase.h"
+#include "Weapon/TriggerModifier.h"
 
 #include "Runtime/Engine/Classes/Kismet/KismetSystemLibrary.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
@@ -12,12 +13,8 @@
 
 
 // Sets default values
-AWeaponBase::AWeaponBase() :
-	Zoom(0.5f),
-	AmmoMaximum(500),
-	MagazineCapacity(50),
-	AmmoLeft(500),
-	MagazineLeft(50)
+AWeaponBase::AWeaponBase(const FObjectInitializer& ObjectInitializer) :
+	Super(ObjectInitializer)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -28,7 +25,11 @@ AWeaponBase::AWeaponBase() :
 void AWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+}
+
+void AWeaponBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
 }
 
 // Called every frame
@@ -36,6 +37,33 @@ void AWeaponBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	TimeSinceLastFire += DeltaTime;
+
+	if (bIsFiring)
+	{
+		while (TimeSinceLastFire > GetFireInterval())
+		{
+			TimeSinceLastFire -= GetFireInterval();
+
+			if (FireModeArray[CurrentFireMode].TriggerModifier->SubsequentFire())
+			{
+				this->StopFire();
+
+				break;
+			}
+		}
+	}
+	else if (bIsReloading)
+	{
+		TimeSinceReloadBegin += DeltaTime;
+
+		if (TimeSinceReloadBegin > GetReloadTime())
+		{
+			this->Reload();
+
+			bIsReloading = false;
+		}
+	}
 }
 
 void AWeaponBase::InitBP(int32 WeaponID, int32 Level_/*Polarities, Mods*/)
@@ -55,11 +83,6 @@ void AWeaponBase::Init(EWeaponID WeaponID, uint32 Level_)
 	this->MagazineCapacity = WeaponInfo->Magazine;
 	this->AmmoMaximum = WeaponInfo->Ammo;
 
-	this->MagazineLeft = this->MagazineCapacity;
-	this->AmmoLeft = this->AmmoMaximum;
-	this->MultishotChance = 1.0f;
-	this->Zoom = 1.0f;
-	this->CurrentFireMode = 0;
 	this->FireModeArray.SetNum(WeaponInfo->ModeInfoArray.Num());
 
 	for (int32 i = 0; i < WeaponInfo->ModeInfoArray.Num(); ++i)
@@ -75,12 +98,13 @@ void AWeaponBase::Init(EWeaponID WeaponID, uint32 Level_)
 		FireMode.FalloffStart = static_cast<float>(ModeInfo.FalloffStart);
 		FireMode.FalloffEnd = static_cast<float>(ModeInfo.FalloffEnd);
 		FireMode.FalloffDamage = ModeInfo.FalloffDamage;
-		FireMode.FireRate = ModeInfo.FireRate;
+		FireMode.FireInterval = 1.0f / ModeInfo.FireRate;
 		FireMode.NoiseType = ModeInfo.Noise;
 		FireMode.PunchThrough = static_cast<float>(ModeInfo.PunchThrough);
 		FireMode.ReloadTime = ModeInfo.Reload;
 		FireMode.StatusChance = ModeInfo.Status;
 		FireMode.TriggerType = ModeInfo.Trigger;
+		FireMode.TriggerModifier = this->InitTriggerModifier(ModeInfo);
 
 		FireMode.BaseDamage = 0.0f;
 		FireMode.TotalProportionalDamage = 0.0f;
@@ -164,12 +188,7 @@ void AWeaponBase::Init(EWeaponID WeaponID, uint32 Level_)
 			FireMode.TotalProportionalDamage += ModeInfo.Corrosive;
 		}
 
-		// Apply mods (Specific note for base damage mod like Serration).
-		this->BleedMultiplier = 1.0f;
-		this->HeatModMultiplier = 1.0f;
-		this->ColdModMultiplier = 1.0f;
-		this->ElectricityModMultiplier = 1.0f;
-		this->ToxinModMultiplier = 1.0f;
+		// todo: Apply mods (Specific note for base damage mod like Serration).
 
 		FireMode.CriticalTier = static_cast<uint32>(FMath::TruncToInt(FireMode.CriticalChance));
 		FireMode.CriticalChance -= static_cast<float>(FireMode.CriticalTier);
@@ -192,6 +211,20 @@ void AWeaponBase::Init(EWeaponID WeaponID, uint32 Level_)
 			FireMode.StatusChanceIntervalArray[j] = StatusChanceInterval;
 		}
 	}
+
+	this->BleedMultiplier = 1.0f;
+	this->HeatModMultiplier = 1.0f;
+	this->ColdModMultiplier = 1.0f;
+	this->ElectricityModMultiplier = 1.0f;
+	this->ToxinModMultiplier = 1.0f;
+	this->MultishotChance = 1.0f;
+	this->Zoom = 0.75f;
+
+	this->MagazineLeft = this->MagazineCapacity;
+	this->AmmoLeft = this->AmmoMaximum;
+	this->CurrentFireMode = 0;
+
+	TimeSinceLastFire = GetFireInterval() + 1.0f;
 }
 
 void AWeaponBase::ApplyMods()
@@ -223,113 +256,30 @@ void AWeaponBase::SetFireModeBP(int32 FireMode)
 
 void AWeaponBase::BeginFire()
 {
-	FTimerDelegate Delegate;
+	bIsFiring = true;
 
-	Delegate.BindUObject(this, &AWeaponBase::Fire);
+	if (TimeSinceLastFire > GetFireInterval())
+	{
+		TimeSinceLastFire = 0.0f;
 
-	this->GetGameInstance()->GetTimerManager().SetTimer(FireTimerHandle, Delegate, 1.0f / GetFireRate(), true);
-
-	// Do fire immediately.
-	this->Fire();
+		if (FireModeArray[CurrentFireMode].TriggerModifier->FirstFire())
+		{
+			this->StopFire();
+		}
+	}
 }
 
 void AWeaponBase::StopFire()
 {
-	this->GetGameInstance()->GetTimerManager().ClearTimer(FireTimerHandle);
-}
+	bIsFiring = false;
 
-void AWeaponBase::BeginReload()
-{
-	if (AmmoLeft > 0)
+	if (FireModeArray[CurrentFireMode].TriggerType == EWeaponTriggerType::Charge)
 	{
-		bIsReloading = true;
-
-		FTimerDelegate Delegate;
-		Delegate.BindUObject(this, &AWeaponBase::Reload);
-
-		this->GetGameInstance()->GetTimerManager().SetTimer(ReloadTimerHandle, Delegate, GetReloadTime(), false);
+		dynamic_cast<FTriggerModifier_Charge*>(FireModeArray[CurrentFireMode].TriggerModifier)->StopFire();
 	}
 }
 
-void AWeaponBase::StopReload()
-{
-	bIsReloading = false;
-
-	this->GetGameInstance()->GetTimerManager().ClearTimer(ReloadTimerHandle);
-}
-
-bool AWeaponBase::IsReloading()const
-{
-	return bIsReloading;
-}
-
-ARoundBase *AWeaponBase::OnRoundFired_Implementation(const FHitResult &CurrentTarget)
-{
-	return nullptr;
-}
-
-void AWeaponBase::Fire()
-{
-	bool ShouldCeaseFire;
-
-	switch (GetTriggerType())
-	{
-		case EWeaponTriggerType::Auto:
-			ShouldCeaseFire = this->Fire_Auto();
-			break;
-		case EWeaponTriggerType::SemiAuto:
-			ShouldCeaseFire = this->Fire_SemiAuto();
-			break;
-		default:
-			ShouldCeaseFire = true;
-			break;
-	}
-
-	if (ShouldCeaseFire)
-	{
-		this->StopFire();
-	}
-}
-
-bool AWeaponBase::Fire_Auto()
-{
-	if (MagazineLeft == 0)
-	{
-		return true;
-	}
-	else
-	{
-		MagazineLeft -= 1;
-
-		this->DoFire();
-
-		return false;
-	}
-}
-
-bool AWeaponBase::Fire_SemiAuto()
-{
-	if (MagazineLeft != 0)
-	{
-		MagazineLeft -= 1;
-
-		this->Fire();
-	}
-
-	return true;
-}
-
-bool AWeaponBase::Fire_Charge()
-{
-	if (MagazineLeft > 0)
-	{
-		
-	}
-
-	return true;
-}
-
-void AWeaponBase::DoFire()
+void AWeaponBase::FireRound(float DamageScalar)
 {
 	// todo: multishot on continuous weapon.
 
@@ -354,10 +304,101 @@ void AWeaponBase::DoFire()
 	for (uint32 i = 0; i < TotalPellets; ++i)
 	{
 		ARoundBase *NewRound = this->OnRoundFired(Cast<AWarframeCharacter>(Instigator)->GetSelectedTarget());
-	
+
 		NewRound->Instigator = Cast<AWarframeCharacter>(this->GetOwner());
 		NewRound->Init(this);
+		NewRound->ApplyDamageScalar(DamageScalar);
 	}
+}
+
+void AWeaponBase::BeginReload()
+{
+	if (AmmoLeft > 0)
+	{
+		bIsReloading = true;
+
+		TimeSinceReloadBegin = 0.0f;
+	}
+}
+
+void AWeaponBase::StopReload()
+{
+	bIsReloading = false;
+}
+
+bool AWeaponBase::IsReloading()const
+{
+	return bIsReloading;
+}
+
+void AWeaponBase::GainMagazine(uint32 Value)
+{
+	MagazineLeft += Value;
+
+	if (MagazineLeft > MagazineCapacity)
+	{
+		MagazineLeft = MagazineCapacity;
+	}
+}
+
+void AWeaponBase::ConsumeMagazine(uint32 Value)
+{
+	if (MagazineLeft < Value)
+	{
+		MagazineLeft = 0;
+	}
+	else
+	{
+		MagazineLeft -= Value;
+	}
+}
+
+void AWeaponBase::GainAmmo(uint32 Value)
+{
+	AmmoLeft += Value;
+
+	if (AmmoLeft > AmmoMaximum)
+	{
+		AmmoLeft = AmmoMaximum;
+	}
+}
+
+FTriggerModifier* AWeaponBase::InitTriggerModifier(const FWeaponModeInfo& ModeInfo)
+{
+	switch (ModeInfo.Trigger)
+	{
+	case EWeaponTriggerType::Auto:
+		return new FTriggerModifier_Auto(this);
+	case EWeaponTriggerType::Burst:
+		return new FTriggerModifier_Burst(this, ModeInfo.MaxBurstCount);
+	case EWeaponTriggerType::Charge:
+		return new FTriggerModifier_Charge(this, ModeInfo.ChargeRate, ModeInfo.ChargeMultiplier, ModeInfo.MaxChargeRounds);
+	case EWeaponTriggerType::SemiAuto:
+		return new FTriggerModifier_SemiAuto(this);
+	default:
+		return new FTriggerModifier_Null();
+	}
+}
+
+ARoundBase* AWeaponBase::X(const FHitResult& CurrentTarget)
+{
+	ARoundBase* NewRound;
+
+	// SpawnEmitter.
+
+	// GetSocketLocation.
+	FVector SocketLocation;
+
+	FTransform(
+		(CurrentTarget.ImpactPoint - SocketLocation).ToOrientationRotator(),
+		SocketLocation,
+		FVector(1.0f, 1.0f, 1.0f)
+	);
+}
+
+ARoundBase *AWeaponBase::OnRoundFired_Implementation(const FHitResult &CurrentTarget)
+{
+	return nullptr;
 }
 
 void AWeaponBase::Reload()

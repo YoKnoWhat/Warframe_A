@@ -4,7 +4,8 @@
 
 
 /**
- *
+ * Global singleton for resource retrieve.
+ * It can be used when GameInstance is not available.
  */
 struct FWarframeConfigSingleton
 {

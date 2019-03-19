@@ -273,7 +273,20 @@
                 "Ferrox",
                 "FluxRifle",
                 "Glaxion",
-                "Gorgon"
+                "Gorgon",
+                "Acrid",
+	            "Afuris",
+	            "Akbolto",
+	            "AkboltoPrime",
+	            "Akbronco",
+	            "AkbroncoPrime",
+	            "Akjagara",
+	            "Aklato",
+	            "Aklex",
+	            "Akmagnus",
+	            "Aksomati",
+	            "Akstiletto",
+                "Staticor"
             ]
         },
         {
@@ -303,15 +316,15 @@
             "Definition":
             [
                 "Auto",
-                "SemiAuto",
-                "Burst",
-                "Hybrid",
-                "Continuous",
-                "Charge",
-                "Launcher",
-                "Speargun",
-                "Held",
-                "AutoBurst"
+	            "AutoSpool",
+	            "AutoBurst",
+	            "SemiAuto",
+	            "Burst",
+	            "Continuous",
+	            "Charge",
+	            "Launcher",
+	            "Speargun",
+	            "Held"
             ]
         },
         {

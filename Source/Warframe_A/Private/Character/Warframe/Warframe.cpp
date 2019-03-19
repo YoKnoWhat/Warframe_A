@@ -77,7 +77,7 @@ void AWarframe::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Regenerate energy anyway for now.
-	CurrentEnergy += 1;
+	CurrentEnergy += 0.016667f;
 	if (CurrentEnergy > MaxEnergy)
 	{
 		CurrentEnergy = MaxEnergy;
@@ -111,10 +111,10 @@ void AWarframe::Init(ECharacterID CharacterID, uint32 Level_)
 		this->MaxEnergy = this->CurrentEnergy = WarframeInfo->Energy + (Level - 1) * 10;
 	}
 
-	AbilityStrength = 100.0f;
-	AbilityRange = 100.0f;
-	AbilityEfficiency = 100.0f;
-	AbilityDuration = 100.0f;
+	AbilityStrength = 1.0f;
+	AbilityRange = 1.0f;
+	AbilityEfficiency = 1.0f;
+	AbilityDuration = 1.0f;
 
 	// Apply mods.
 
@@ -215,6 +215,18 @@ void AWarframe::GainEnergy(float Value)
 	if (CurrentEnergy > MaxEnergy)
 	{
 		CurrentEnergy = MaxEnergy;
+	}
+}
+
+void AWarframe::DrainEnergy(float Value)
+{
+	if (Value > CurrentEnergy)
+	{
+		CurrentEnergy = 0;
+	}
+	else
+	{
+		CurrentEnergy -= Value;
 	}
 }
 

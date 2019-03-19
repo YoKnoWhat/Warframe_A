@@ -47,6 +47,8 @@ public:
 
 	void GainEnergy(float Value);
 
+	void DrainEnergy(float Value);
+
 	UFUNCTION(BlueprintCallable)
 	bool CastAbilityBP(int32 AbilityIndex, float Charge);
 
@@ -89,7 +91,7 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE int32 GetCurrentEnergy()const
+	FORCEINLINE float GetCurrentEnergy()const
 	{
 		return CurrentEnergy;
 	}
@@ -108,5 +110,5 @@ protected:
 	/** Allocated in derived class, deleted in base class. */
 	FAbilityObject *Abilities[4];
 
-	uint32 CurrentEnergy;
+	float CurrentEnergy;
 };

@@ -38,6 +38,8 @@ void ARoundBase::InitBP(AWeaponBase* Weapon)
 void ARoundBase::Init(AWeaponBase* Weapon)
 {
 	// Init basic attributes.
+	this->CriticalTier = Weapon->GetCriticalTier();
+	this->CriticalChance = Weapon->GetCriticalChance() - 1.0f * CriticalTier;
 	this->CriticalMultiplier = Weapon->GetCriticalMultiplier();
 	this->FalloffStart = Weapon->GetFalloffStart();
 	this->FalloffEnd = Weapon->GetFalloffEnd();
@@ -50,13 +52,6 @@ void ARoundBase::Init(AWeaponBase* Weapon)
 	this->ColdModMultiplier = Weapon->GetColdModMultiplier();
 	this->ElectricityModMultiplier = Weapon->GetElectricityModMultiplier();
 	this->ToxinModMultiplier = Weapon->GetToxinModMultiplier();
-
-	// Critical hit roll.
-	this->CriticalTier = Weapon->GetCriticalTier();
-	if (FMath::FRandRange(0.0f, 1.0f) < Weapon->GetCriticalChance())
-	{
-		++this->CriticalTier;
-	}
 
 	// Status effect roll.
 	if (FMath::FRandRange(0.0f, 1.0f) < Weapon->GetStatusChance())
@@ -88,6 +83,7 @@ void ARoundBase::Init(AWeaponBase* Weapon)
 	{
 		this->StatusEffect = EDamageType::None;
 	}
+	this->DamageScalar = 1.0f;
 
 	// Miscellaneous attributes.
 	this->LastLocation = this->GetActorLocation();
@@ -100,8 +96,6 @@ void ARoundBase::OnHit(AActor *Target, FVector HitLocation)
 
 	if (WarframeCharacter != nullptr)
 	{
-		this->DamageScalar = 1.0f;
-
 		// Apply falloff scalar.
 		if (FalloffEnd > 0.0f)
 		{
@@ -121,10 +115,17 @@ void ARoundBase::OnHit(AActor *Target, FVector HitLocation)
 		//	PunchThrough = 0.0f;
 		//}
 
-		// Apply cirtical hit scalar.
-		DamageScalar *= (1.0 + CriticalTier * (CriticalMultiplier - 1.0f));
+		// Critical hit roll.
+		uint32 TempCriticalTier = this->CriticalTier;
 
-		WarframeCharacter->ApplyDamage(Instigator, HitLocation, StatusEffect, DamageArray, DamageScalar, CriticalTier);
+		if (FMath::FRandRange(0.0f, 1.0f) < this->CriticalChance)
+		{
+			++TempCriticalTier;
+		}
+
+		DamageScalar *= (1.0 + TempCriticalTier * (CriticalMultiplier - 1.0f));
+
+		WarframeCharacter->ApplyDamage(Instigator, HitLocation, StatusEffect, DamageArray, DamageScalar, TempCriticalTier);
 
 		WarframeCharacter->ApplyStatusEffect(Instigator, HitLocation, StatusEffect, BaseDamage, StatusDamageMultiplier);
 	}

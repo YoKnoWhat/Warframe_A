@@ -282,6 +282,8 @@ enum class EWeaponID : uint16
 	Aksomati,
 	Akstiletto,
 
+	Staticor,
+
 	// Melee weapons.
 	AckBrunt,
 	Amphis,
@@ -367,15 +369,15 @@ enum class EPredefinedColorID : uint8
 enum class EWeaponTriggerType : uint8
 {
 	Auto,
+	AutoSpool,
+	AutoBurst,
 	SemiAuto,
 	Burst,
-	Hybrid,
 	Continuous,
 	Charge,
 	Launcher,
 	Speargun,
-	Held,
-	AutoBurst,
+	Held
 };
 
 enum class EAmmoType : uint8
@@ -397,38 +399,6 @@ struct FMod
 {
 	FName	Name;
 	uint32	Level;
-};
-
-struct FWeaponModeInfo
-{
-	float	Accuracy;
-	float	ChargeRate;
-	uint32	Pellets;
-	float	CriticalChance;
-	float	CriticalMultiplier;
-	uint32	FalloffStart;
-	uint32	FalloffEnd;
-	float	FalloffDamage;
-	float	FireRate;
-	uint32	PunchThrough;
-	float	Reload;
-	float	Status;
-	float	Slash;
-	float	Impact;
-	float	Puncture;
-	float	Heat;
-	float	Cold;
-	float	Electricity;
-	float	Toxin;
-	float	Blast;
-	float	Radiation;
-	float	Gas;
-	float	Magnetic;
-	float	Viral;
-	float	Corrosive;
-	// Struct alignment.
-	ENoiseType			Noise;
-	EWeaponTriggerType	Trigger;
 };
 
 struct FDamagePair

@@ -17,11 +17,11 @@ public:
 
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void BeginPlay()override;
 
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaTime)override;
 
 	UFUNCTION(BlueprintCallable)
 	void InitBP(AWeaponBase* Weapon);
@@ -77,6 +77,11 @@ public:
 		return StatusEffect;
 	}
 
+	FORCEINLINE void ApplyDamageScalar(float Scalar)
+	{
+		DamageScalar *= Scalar;
+	}
+
 	FORCEINLINE float GetDamageScalar()const
 	{
 		return DamageScalar;
@@ -84,6 +89,7 @@ public:
 
 protected:
 	// Basic attributes inherited from shooter.
+	float CriticalChance; // [0-100]
 	float CriticalMultiplier;
 	float FalloffStart;
 	float FalloffEnd;
@@ -100,7 +106,7 @@ protected:
 	// Extra attributes computed in Init().
 	uint32 CriticalTier;
 	EDamageType StatusEffect;
-	float DamageScalar; // Damage scalar due to critical hit and falloff.
+	float DamageScalar; // Damage scalar due to charging, critical hit and falloff .
 	float StatusDamageMultiplier; // Status damage multiplier.
 
 	UPROPERTY(BlueprintReadOnly)

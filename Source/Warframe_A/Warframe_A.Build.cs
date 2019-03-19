@@ -6,6 +6,8 @@ public class Warframe_A : ModuleRules
 {
 	public Warframe_A(ReadOnlyTargetRules Target) : base(Target)
 	{
+		bUseRTTI = true;
+
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG" });

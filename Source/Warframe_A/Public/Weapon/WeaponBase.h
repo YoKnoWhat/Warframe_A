@@ -17,12 +17,13 @@ struct FWeaponFireMode
 	float FalloffStart;
 	float FalloffEnd;
 	float FalloffDamage;
-	float FireRate;
+	float FireInterval;
 	ENoiseType NoiseType;
 	float PunchThrough;
 	float ReloadTime;
 	float StatusChance;
 	EWeaponTriggerType TriggerType;
+	class FTriggerModifier* TriggerModifier;
 	TArray<FDamagePair> DamageArray;
 
 	float BaseDamage;
@@ -38,14 +39,15 @@ UCLASS()
 class WARFRAME_A_API AWeaponBase : public AActor
 {
 	GENERATED_BODY()
-	
+
 public:	
 	// Sets default values for this actor's properties
-	AWeaponBase();
+	AWeaponBase(const FObjectInitializer& ObjectInitializer);
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void BeginPlay()override;
+
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason)override;
 
 public:	
 	// Called every frame
@@ -72,6 +74,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StopFire();
 
+	/**
+	 * Fire all pellets, then init thier attributes.
+	 * Should only called by FTriggerModifier.
+	 */
+	void FireRound(float DamageScalar = 1.0f);
+
 	UFUNCTION(BlueprintCallable)
 	void BeginReload();
 
@@ -80,6 +88,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool IsReloading()const;
+
+	void GainMagazine(uint32 Value);
+
+	void ConsumeMagazine(uint32 Value);
+
+	void GainAmmo(uint32 Value);
 
 	// Property getters.
 	UFUNCTION(BlueprintCallable)
@@ -172,9 +186,9 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE float GetFireRate()const
+	FORCEINLINE float GetFireInterval()const
 	{
-		return FireModeArray[CurrentFireMode].FireRate;
+		return FireModeArray[CurrentFireMode].FireInterval;
 	}
 
 	UFUNCTION(BlueprintCallable)
@@ -253,23 +267,15 @@ public:
 		return Zoom;
 	}
 
+	virtual ARoundBase* X(const FHitResult& CurrentTarget);
+
 	// Called when a pellet is fired.
 	UFUNCTION(BlueprintNativeEvent)
 	ARoundBase *OnRoundFired(const FHitResult &CurrentTarget);
 	ARoundBase *OnRoundFired_Implementation(const FHitResult &CurrentTarget);
 
-private:
-	// Fire the weapon using current fire mode.
-	void Fire();
-
-	bool Fire_Auto();
-
-	bool Fire_SemiAuto();
-
-	bool Fire_Charge();
-
-	// Fire all pellets, then init thier attributes.
-	void DoFire();
+protected:
+	class FTriggerModifier* InitTriggerModifier(const struct FWeaponModeInfo& ModeInfo);
 
 	void Reload();
 
@@ -279,23 +285,26 @@ protected:
 	EAmmoType AmmoType;
 	uint32 MagazineCapacity;
 	uint32 AmmoMaximum;
+	TArray<FWeaponFireMode> FireModeArray;
 
+	/** Mutable variables. */
 	float BleedMultiplier;
 	float HeatModMultiplier;
 	float ColdModMultiplier;
 	float ElectricityModMultiplier;
 	float ToxinModMultiplier;
-
-	uint32 MagazineLeft;
-	uint32 AmmoLeft;
 	float MultishotChance;
 	float Zoom;
+
+	/** Used with FWeaponFireMode::TriggerSpecifiedData. */
+	uint32 MagazineLeft;
+	uint32 AmmoLeft;
 	uint32 CurrentFireMode;
-	TArray<FWeaponFireMode> FireModeArray;
 
-	FTimerHandle FireTimerHandle;
-	FTimerHandle ReloadTimerHandle;
+	float TimeSinceLastFire;
+	float TimeSinceReloadBegin;
 
+	bool bIsFiring;
 	bool bIsReloading;
 
 	// Cached variables.

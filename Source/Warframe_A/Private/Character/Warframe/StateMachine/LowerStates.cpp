@@ -212,7 +212,7 @@ int32 FLowerState_Falling::OnUpdate(float DeltaTime)
 
 	if (CharacterMovement->IsFalling())
 	{
-		if (StateMachine->IsAiming)
+		if (StateMachine->IsAiming && StateMachine->GlideTimer > 0.0f)
 		{
 			return CastToUnderlyingType(EWarframeLowerState::AimGliding);
 		}

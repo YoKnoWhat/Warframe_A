@@ -24,6 +24,8 @@ public:
 	/** Get ability remaining duration in second. */
 	virtual float GetDuration()const;
 
+	
+
 	FORCEINLINE bool CanCastInAir()const
 	{
 		return bCanCastInAir;
@@ -34,6 +36,19 @@ public:
 		return bCanRecast;
 	}
 
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE bool IsLock()const
+	{
+		return bIsLocked;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE bool IsCastable()const
+	{
+		return bIsCastable;
+	}
+
+	UFUNCTION(BlueprintCallable)
 	FORCEINLINE bool IsActive()const
 	{
 		return bIsActive;
@@ -47,10 +62,16 @@ protected:
 	float PostCastTime;
 	
 	/** Mutable variables. */
-	bool bIsLock;
+
+	// Updated in FAbilityObject
+	bool bIsLocked;
 	bool bIsActive;
 	float Charge;
 	float CastProgress;
+
+	// Updated in derived class.
+	bool bIsCastable;
+	float EnergyCost;
 };
 
 class FAbilityObject_Null : public FAbilityObject
