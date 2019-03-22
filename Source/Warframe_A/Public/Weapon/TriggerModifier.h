@@ -77,6 +77,11 @@ public:
 
 	void StopFire();
 
+	FORCEINLINE uint32 GetMaxChargeRounds()const
+	{
+		return MaxChargeRounds;
+	}
+
 	FORCEINLINE uint32 GetCurrentChargeRounds()const
 	{
 		return CurrentChargeRounds;

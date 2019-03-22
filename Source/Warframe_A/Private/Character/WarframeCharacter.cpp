@@ -12,6 +12,7 @@
 
 #include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
+#include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
 
 
 FObjectPool<FStatusEffectData> AWarframeCharacter::StatusEffectDataPool;
@@ -23,21 +24,23 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	/** Character widget component. */
+	/** Character movement component settings. */
+	UCharacterMovementComponent* CharacterMovement = GetCharacterMovement();
+	CharacterMovement->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
+	CharacterMovement->bOrientRotationToMovement = true;
+
+	/** Character widget component creation. */
 	CharacterWidgetComponent = ObjectInitializer.CreateDefaultSubobject<UCharacterWidgetComponent>(this, FName("CharacterWidget"));
 	CharacterWidgetComponent->SetupAttachment(this->RootComponent);
 
+	/** State machine component creation. */
 	StateMachineComponent = ObjectInitializer.CreateDefaultSubobject<UStateMachineComponent>(this, FName("StateMachine"));
-
-	Weapons.SetNum(3);
 }
 
 // Called when the game starts or when spawned
 void AWarframeCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	CurrentWeaponSlotIndex = 0;
 
 	CharacterWidgetComponent->SetRelativeLocation(FVector(0.0f, 0.0f, GetCapsuleComponent()->GetScaledCapsuleHalfHeight()));
 	
@@ -48,10 +51,9 @@ void AWarframeCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 
-	for (AWeaponBase*& Weapon : Weapons)
-	{
-		Weapon = nullptr;
-	}
+	PrimaryWeapon = nullptr;
+	SecondaryWeapon = nullptr;
+	MeleeWeapon = nullptr;
 
 	FStatusEffectData* Data;
 
@@ -277,54 +279,85 @@ void AWarframeCharacter::OnUnselected()
 
 void AWarframeCharacter::SetWeapon(EWeaponSlotType WeaponSlotType, AWeaponBase* Weapon)
 {
-	if (WeaponSlotType == EWeaponSlotType::Primary)
+	switch (WeaponSlotType)
 	{
-		Weapons[0] = Weapon;
-	}
-	if (WeaponSlotType == EWeaponSlotType::Secondary)
-	{
-		Weapons[1] = Weapon;
-	}
-	else // if (WeaponSlotType == EWeaponSlotType::Melee)
-	{
-		Weapons[2] = Weapon;
+	case EWeaponSlotType::Primary:
+		PrimaryWeapon = Weapon;
+		break;
+	case EWeaponSlotType::Secondary:
+		SecondaryWeapon = Weapon;
+		break;
+	case EWeaponSlotType::Melee:
+		MeleeWeapon = Weapon;
+		break;
+	default:
+		break;
 	}
 }
 
 AWeaponBase *AWarframeCharacter::GetWeapon(EWeaponSlotType WeaponSlotType)
 {
-	if (WeaponSlotType == EWeaponSlotType::Primary)
+	switch (WeaponSlotType)
 	{
-		return Weapons[0];
-	}
-	if (WeaponSlotType == EWeaponSlotType::Secondary)
-	{
-		return Weapons[1];
-	}
-	else // if (WeaponSlotType == EWeaponSlotType::Melee)
-	{
-		return Weapons[2];
+	case EWeaponSlotType::Primary:
+		return PrimaryWeapon;
+	case EWeaponSlotType::Secondary:
+		return SecondaryWeapon;
+	case EWeaponSlotType::Melee:
+		return MeleeWeapon;
+	default:
+		return nullptr;
 	}
 }
 
 AWeaponBase *AWarframeCharacter::GetCurrentWeapon()
 {
-	return Weapons[CurrentWeaponSlotIndex];
+	return CurrentWeapon;
 }
 
-void AWarframeCharacter::SwitchWeapon(EWeaponSlotType WeaponSlotType)
+void AWarframeCharacter::SwitchRangedWeapon()
 {
-	if (WeaponSlotType == EWeaponSlotType::Primary)
+	if (CurrentRangedWeapon == PrimaryWeapon)
 	{
-		CurrentWeaponSlotIndex = 0;
+		if (SecondaryWeapon != nullptr)
+		{
+			CurrentRangedWeapon = SecondaryWeapon;
+		}
 	}
-	if (WeaponSlotType == EWeaponSlotType::Secondary)
+	else // if (CurrentRangedWeapon == SecondaryWeapon)
 	{
-		CurrentWeaponSlotIndex = 1;
+		if (PrimaryWeapon != nullptr)
+		{
+			CurrentRangedWeapon = PrimaryWeapon;
+		}
 	}
-	else // if (WeaponSlotType == EWeaponSlotType::Melee)
+	CurrentWeapon = CurrentRangedWeapon;
+}
+
+void AWarframeCharacter::SwitchToRangedWeapon()
+{
+	if (CurrentRangedWeapon != nullptr)
 	{
-		CurrentWeaponSlotIndex = 2;
+		CurrentWeapon = CurrentRangedWeapon;
+	}
+	else
+	{
+		if (PrimaryWeapon != nullptr)
+		{
+			CurrentWeapon = CurrentRangedWeapon = PrimaryWeapon;
+		}
+		else if (SecondaryWeapon != nullptr)
+		{
+			CurrentWeapon = CurrentRangedWeapon = SecondaryWeapon;
+		}
+	}
+}
+
+void AWarframeCharacter::SwitchToMeleeWeapon()
+{
+	if (MeleeWeapon != nullptr)
+	{
+		CurrentWeapon = MeleeWeapon;
 	}
 }
 

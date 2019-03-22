@@ -80,7 +80,9 @@ void UWarframeMovementComponent::PhysCustomSliding(float DeltaTime, int32 Iterat
 }
 
 void UWarframeMovementComponent::OnEnterAirGliding()
-{}
+{
+	this->Velocity *= 0.5f;
+}
 
 void UWarframeMovementComponent::PhysCustomAirGliding(float DeltaTime, int32 Iterations)
 {
@@ -89,7 +91,15 @@ void UWarframeMovementComponent::PhysCustomAirGliding(float DeltaTime, int32 Ite
 
 void UWarframeMovementComponent::OnEnterDoubleJumping()
 {
-	this->Velocity = FVector::ZeroVector;
+	Velocity.Z = 0.0f;
+
+	if (Acceleration.Size2D() > 100.0)
+	{
+		float VelocityMagnitude = Velocity.Size();
+		Velocity = Acceleration; // Acceleration.Z will always be zero.
+		Velocity.Normalize();
+		Velocity *= VelocityMagnitude;
+	}
 }
 
 void UWarframeMovementComponent::PhysCustomDoubleJumping(float DeltaTime, int32 Iterations)

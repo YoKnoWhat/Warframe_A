@@ -11,6 +11,8 @@ class WARFRAME_A_API AStaticorRound : public ARoundBase
 	GENERATED_BODY()
 		
 public:
+	AStaticorRound(const FObjectInitializer& ObjectInitializer);
+
 	virtual void Tick(float DeltaTime)override;
 
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor)override;

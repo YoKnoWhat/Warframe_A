@@ -1,15 +1,58 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Weapon/RoundBase.h"
-#include "Weapon/WeaponBase.h"
 #include "Character/WarframeCharacter.h"
+#include "Gameplay/WarframeConfigSingleton.h"
+#include "Weapon/WeaponBase.h"
+
+#include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
+#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
+#include "Runtime/Engine/Classes/Engine/StaticMesh.h"
+#include "Runtime/Engine/Classes/GameFramework/ProjectileMovementComponent.h"
 
 
 // Sets default values
-ARoundBase::ARoundBase()
+ARoundBase::ARoundBase(const FObjectInitializer& ObjectInitializer) :
+	Super(ObjectInitializer)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	SetRootComponent(ObjectInitializer.CreateDefaultSubobject<USceneComponent>(this, "Root"));
+
+	/** Shape component creation. */
+	ShapeComponent = Cast<UShapeComponent>(ObjectInitializer.CreateDefaultSubobject(this, "Shape", UShapeComponent::StaticClass(), UCapsuleComponent::StaticClass(), true, false, false));
+	ShapeComponent->SetupAttachment(this->RootComponent);
+	ShapeComponent->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
+	ShapeComponent->SetRelativeScale3D(FVector(0.2f, 0.2f, 0.2f));
+
+	/** Mesh component creation. */
+	MeshComponent = Cast<UMeshComponent>(ObjectInitializer.CreateDefaultSubobject(this, "Mesh", UMeshComponent::StaticClass(), UStaticMeshComponent::StaticClass(), true, false, false));
+	MeshComponent->SetupAttachment(ShapeComponent);
+
+	UStaticMeshComponent* StaticMeshComponent = Cast<UStaticMeshComponent>(MeshComponent);
+	if (StaticMeshComponent != nullptr)
+	{
+		UCapsuleComponent* CapsuleComponent = Cast<UCapsuleComponent>(ShapeComponent);
+		if (CapsuleComponent != nullptr)
+		{
+			StaticMeshComponent->SetRelativeLocation(FVector(0.0f, 0.0f, -CapsuleComponent->GetUnscaledCapsuleHalfHeight()));
+		}
+
+		StaticMeshComponent->SetStaticMesh(FWarframeConfigSingleton::Instance().FindResource<UStaticMesh>("SM_NarrowCapsule"));
+		StaticMeshComponent->SetCollisionEnabled(ECollisionEnabled::Type::NoCollision);
+	}
+
+	/** Movement component creation. */
+	MovementComponent = Cast<UMovementComponent>(ObjectInitializer.CreateDefaultSubobject(this, "Movement", UMovementComponent::StaticClass(), UProjectileMovementComponent::StaticClass(), true, false, false));
+
+	UProjectileMovementComponent* ProjectileMovement = Cast<UProjectileMovementComponent>(MovementComponent);
+	if (ProjectileMovement != nullptr)
+	{
+		ProjectileMovement->InitialSpeed = 3500.0f;
+		ProjectileMovement->MaxSpeed = 3500.0f;
+		ProjectileMovement->ProjectileGravityScale = 0.05f;
+	}
 }
 
 // Called when the game starts or when spawned

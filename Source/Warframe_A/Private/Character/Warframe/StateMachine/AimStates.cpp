@@ -53,6 +53,7 @@ void FAimState_Aiming::OnEnter(int32 StateFromID)
 
 	Character->bUseControllerRotationYaw = true;
 
+	MaxWalkSpeedBefore = CharacterMovement->MaxWalkSpeed;
 	CharacterMovement->MaxWalkSpeed = 300.0f;
 
 }
@@ -63,7 +64,7 @@ void FAimState_Aiming::OnExit()
 
 	Character->bUseControllerRotationYaw = false;
 
-	CharacterMovement->MaxWalkSpeed = 600.0f;
+	CharacterMovement->MaxWalkSpeed = MaxWalkSpeedBefore;
 }
 
 int32 FAimState_Aiming::OnCustomEvent(int32 EventID)

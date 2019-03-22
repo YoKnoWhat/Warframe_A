@@ -178,7 +178,13 @@ public:
 	AWeaponBase *GetCurrentWeapon();
 
 	UFUNCTION(BlueprintCallable)
-	void SwitchWeapon(EWeaponSlotType WeaponSlotType);
+	void SwitchRangedWeapon();
+
+	UFUNCTION(BlueprintCallable)
+	void SwitchToRangedWeapon();
+
+	UFUNCTION(BlueprintCallable)
+	void SwitchToMeleeWeapon();
 
 	// Multiplier getters.
 	FORCEINLINE float GetMovementSpeedMultiplier()
@@ -261,13 +267,17 @@ protected:
 	TArray<FItemDropPair> OrbDropList;
 	TArray<FItemDropPair> CommonItemDropList;
 
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-	AWeaponBase *EquippedWeapon;
-
-	/** Primary, secondary and melee weapon. */
 	UPROPERTY()
-	TArray<AWeaponBase*> Weapons;
-	int32 CurrentWeaponSlotIndex;
+	AWeaponBase* PrimaryWeapon;
+
+	UPROPERTY()
+	AWeaponBase* SecondaryWeapon;
+
+	UPROPERTY()
+	AWeaponBase* MeleeWeapon;
+
+	AWeaponBase* CurrentWeapon;
+	AWeaponBase* CurrentRangedWeapon;
 
 	UPROPERTY(BlueprintReadOnly)
 	FHitResult SelectedTarget;

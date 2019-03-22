@@ -18,6 +18,8 @@ public:
 	virtual int32 OnCustomEvent(int32 EventID)override;
 
 protected:
+	float MaxWalkSpeedBefore;
+
 	float FOVZoomTo;
 	float CurveTime;
 	bool Cache_IsAiming;

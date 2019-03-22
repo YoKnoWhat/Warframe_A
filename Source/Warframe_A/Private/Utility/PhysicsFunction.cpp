@@ -39,5 +39,7 @@ namespace WarframeUtil
 				}
 			}
 		}
+
+		return OutActors.Num() != 0;
 	}
 }

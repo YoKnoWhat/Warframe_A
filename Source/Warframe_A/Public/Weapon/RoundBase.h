@@ -12,8 +12,7 @@ class WARFRAME_A_API ARoundBase : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
-	ARoundBase();
+	ARoundBase(const FObjectInitializer& ObjectInitializer);
 
 protected:
 	// Called when the game starts or when spawned
@@ -32,6 +31,21 @@ public:
 	void OnHit(AActor *Target, FVector HitLocation);
 
 	// Property getters.
+	FORCEINLINE class UShapeComponent* GetShape()const
+	{
+		return ShapeComponent;
+	}
+
+	FORCEINLINE class UMeshComponent* GetMesh()const
+	{
+		return MeshComponent;
+	}
+
+	FORCEINLINE class UMovementComponent* GetMovement()const
+	{
+		return MovementComponent;
+	}
+
 	FORCEINLINE float GetBaseDamage()const
 	{
 		return BaseDamage;
@@ -88,6 +102,15 @@ public:
 	}
 
 protected:
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UShapeComponent* ShapeComponent;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	class UMeshComponent* MeshComponent;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UMovementComponent* MovementComponent;
+
 	// Basic attributes inherited from shooter.
 	float CriticalChance; // [0-100]
 	float CriticalMultiplier;

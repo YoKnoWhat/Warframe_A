@@ -3,9 +3,22 @@
 #include "Character/WarframeCharacter.h"
 #include "Gameplay/WarframeConfigSingleton.h"
 #include "Utility/PhysicsFunction.h"
+#include "Weapon/Secondary/Staticor.h"
 
+#include "Runtime/Engine/Classes/Components/ShapeComponent.h"
+#include "Runtime/Engine/Classes/GameFramework/ProjectileMovementComponent.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Classes/Particles/ParticleSystem.h"
 
+
+AStaticorRound::AStaticorRound(const FObjectInitializer& ObjectInitializer) :
+	Super(ObjectInitializer)
+{
+	UProjectileMovementComponent* ProjectileMovement = Cast<UProjectileMovementComponent>(MovementComponent);
+	ProjectileMovement->InitialSpeed = 5000.0f;
+	ProjectileMovement->MaxSpeed = 5000.0f;
+	ProjectileMovement->ProjectileGravityScale = 0.0f;
+}
 
 void AStaticorRound::Tick(float DeltaTime)
 {
@@ -44,7 +57,7 @@ void AStaticorRound::NotifyActorBeginOverlap(AActor* OtherActor)
 
 		UParticleSystem* ParticleSystem = FWarframeConfigSingleton::Instance().FindResource<UParticleSystem>("P_StaticorExplosion");
 
-		UParticleSystemComponent* UGameplayStatics::SpawnEmitterAtLocation(this, ParticleSystem, GetActorLocation());
+		UGameplayStatics::SpawnEmitterAtLocation(this, ParticleSystem, GetActorLocation());
 
 		this->Destroy();
 	}
@@ -53,4 +66,6 @@ void AStaticorRound::NotifyActorBeginOverlap(AActor* OtherActor)
 void AStaticorRound::Init(AWeaponBase* Weapon)
 {
 	Super::Init(Weapon);
+
+	this->bIsFullCharged = Cast<AStaticor>(Weapon)->IsFullCharged();
 }

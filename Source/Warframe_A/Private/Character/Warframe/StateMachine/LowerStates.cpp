@@ -62,6 +62,10 @@ void FLowerState_AimGliding::OnExit()
 	{
 		CharacterMovement->SetMovementMode(EMovementMode::MOVE_Falling);
 	}
+	// else
+	// {
+	// 	See UCharacterMovementComponent::ProcessLanded().
+	// }
 	CharacterMovement->GravityScale = 1.0f;
 }
 
@@ -142,10 +146,14 @@ int32 FLowerState_Crouching::OnUpdate(float DeltaTime)
 }
 
 void FLowerState_Crouching::OnEnter(int32 StateFromID)
-{}
+{
+	Character->Crouch();
+}
 
 void FLowerState_Crouching::OnExit()
-{}
+{
+	Character->UnCrouch();
+}
 
 int32 FLowerState_Crouching::OnCustomEvent(int32 EventID)
 {
@@ -183,15 +191,29 @@ int32 FLowerState_DoubleJumping::OnUpdate(float DeltaTime)
 void FLowerState_DoubleJumping::OnEnter(int32 StateFromID)
 {
 	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
+	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(Character->GetMovementComponent());
 
 	Time = 0.0f;
 
 	Character->Jump();
 	StateMachine->HasDoubleJumped = true;
+
+	CharacterMovement->SetMovementMode(EMovementMode::MOVE_Custom, CastToUnderlyingType(EWarframeMovementMode::DoubleJumping));
 }
 
 void FLowerState_DoubleJumping::OnExit()
-{}
+{
+	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(Character->GetMovementComponent());
+
+	if (CharacterMovement->IsFalling())
+	{
+		CharacterMovement->SetMovementMode(EMovementMode::MOVE_Falling);
+	}
+	// else
+	// {
+	// 	See UCharacterMovementComponent::ProcessLanded().
+	// }
+}
 
 int32 FLowerState_DoubleJumping::OnCustomEvent(int32 EventID)
 {
@@ -434,6 +456,7 @@ void FLowerState_Sliding::OnEnter(int32 StateFromID)
 	StateMachine->HasDoubleJumped = false;
 
 	CharacterMovement->SetMovementMode(EMovementMode::MOVE_Custom, CastToUnderlyingType(EWarframeMovementMode::Sliding));
+	MaxCustomMovementSpeedBefore = CharacterMovement->MaxCustomMovementSpeed;
 	CharacterMovement->MaxCustomMovementSpeed = 2000.0f;
 	CharacterMovement->GroundFriction = 1.0f;
 	CharacterMovement->StandToSlideDuration = 0.0f;
@@ -446,7 +469,7 @@ void FLowerState_Sliding::OnExit()
 	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
 
 	CharacterMovement->SetMovementMode(EMovementMode::MOVE_Walking);
-	CharacterMovement->MaxCustomMovementSpeed = 600.0f;
+	CharacterMovement->MaxCustomMovementSpeed = MaxCustomMovementSpeedBefore;
 	CharacterMovement->GroundFriction = 8.0f;
 }
 
@@ -497,15 +520,15 @@ void FLowerState_Sprinting::OnEnter(int32 StateFromID)
 {
 	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
 
-	this->SpeedBefore = CharacterMovement->MaxWalkSpeed;
-	CharacterMovement->MaxWalkSpeed = 1000.0f;
+	this->MaxWalkSpeedBerore = CharacterMovement->MaxWalkSpeed;
+	CharacterMovement->MaxWalkSpeed = 800.0f;
 }
 
 void FLowerState_Sprinting::OnExit()
 {
 	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
 
-	CharacterMovement->MaxWalkSpeed = this->SpeedBefore;
+	CharacterMovement->MaxWalkSpeed = this->MaxWalkSpeedBerore;
 }
 
 int32 FLowerState_Sprinting::OnCustomEvent(int32 EventID)

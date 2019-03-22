@@ -6,9 +6,10 @@
 #include "Weapon/RoundBase.h"
 #include "Weapon/TriggerModifier.h"
 
-#include "Runtime/Engine/Classes/Kismet/KismetSystemLibrary.h"
+#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Classes/Kismet/KismetSystemLibrary.h"
 #include "Runtime/Engine/Public/TimerManager.h"
 
 
@@ -19,6 +20,8 @@ AWeaponBase::AWeaponBase(const FObjectInitializer& ObjectInitializer) :
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	MeshComponent = Cast<UMeshComponent>(ObjectInitializer.CreateDefaultSubobject(this, "Mesh", UMeshComponent::StaticClass(), UStaticMeshComponent::StaticClass(), true, false, false));
+	MeshComponent->SetupAttachment(this->RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -227,6 +230,34 @@ void AWeaponBase::Init(EWeaponID WeaponID, uint32 Level_)
 	TimeSinceLastFire = GetFireInterval() + 1.0f;
 }
 
+UClass* AWeaponBase::GetRoundClass_Implementation()const
+{
+	return AWeaponBase::StaticClass();
+}
+
+ARoundBase* AWeaponBase::OnRoundFired_Implementation(const FHitResult& CurrentTarget)
+{
+	// SpawnEmitter.
+
+	// GetSocketLocation.
+	FVector SocketLocation = MeshComponent->GetSocketLocation("Socket_Muzzle");
+
+	FTransform SpawnTransform(
+		(CurrentTarget.ImpactPoint - SocketLocation).ToOrientationRotator(),
+		SocketLocation,
+		FVector(1.0f, 1.0f, 1.0f)
+	);
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = Cast<AWarframeCharacter>(this->GetOwner());
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+	ARoundBase* NewRound = Cast<ARoundBase>(this->GetWorld()->SpawnActor(GetRoundClass(), &SpawnTransform, SpawnParams));
+
+	return NewRound;
+}
+
 void AWeaponBase::ApplyMods()
 {
 	// TODO
@@ -305,7 +336,6 @@ void AWeaponBase::FireRound(float DamageScalar)
 	{
 		ARoundBase *NewRound = this->OnRoundFired(Cast<AWarframeCharacter>(Instigator)->GetSelectedTarget());
 
-		NewRound->Instigator = Cast<AWarframeCharacter>(this->GetOwner());
 		NewRound->Init(this);
 		NewRound->ApplyDamageScalar(DamageScalar);
 	}
@@ -378,27 +408,6 @@ FTriggerModifier* AWeaponBase::InitTriggerModifier(const FWeaponModeInfo& ModeIn
 	default:
 		return new FTriggerModifier_Null();
 	}
-}
-
-ARoundBase* AWeaponBase::X(const FHitResult& CurrentTarget)
-{
-	ARoundBase* NewRound;
-
-	// SpawnEmitter.
-
-	// GetSocketLocation.
-	FVector SocketLocation;
-
-	FTransform(
-		(CurrentTarget.ImpactPoint - SocketLocation).ToOrientationRotator(),
-		SocketLocation,
-		FVector(1.0f, 1.0f, 1.0f)
-	);
-}
-
-ARoundBase *AWeaponBase::OnRoundFired_Implementation(const FHitResult &CurrentTarget)
-{
-	return nullptr;
 }
 
 void AWeaponBase::Reload()

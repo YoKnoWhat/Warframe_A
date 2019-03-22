@@ -141,6 +141,9 @@ public:
 	virtual void OnExit()override;
 
 	virtual int32 OnCustomEvent(int32 EventID)override;
+
+protected:
+	float MaxCustomMovementSpeedBefore;
 };
 
 class WARFRAME_A_API FLowerState_Sprinting : public FStateObject
@@ -157,5 +160,5 @@ public:
 	virtual int32 OnCustomEvent(int32 EventID)override;
 
 protected:
-	float SpeedBefore;
+	float MaxWalkSpeedBerore;
 };

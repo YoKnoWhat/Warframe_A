@@ -207,7 +207,9 @@ void FUpperState_WeaponSwitching::OnEnter(int32 StateFromID)
 }
 
 void FUpperState_WeaponSwitching::OnExit()
-{}
+{
+	Character->SwitchRangedWeapon();
+}
 
 int32 FUpperState_WeaponSwitching::OnCustomEvent(int32 EventID)
 {

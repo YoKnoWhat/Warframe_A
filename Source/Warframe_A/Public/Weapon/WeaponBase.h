@@ -56,7 +56,18 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void InitBP(int32 WeaponID, int32 Level/*Polarities, Mods*/);
 
+	/** Override this method to init the extra properties of derived weapon. */
 	virtual void Init(EWeaponID WeaponID, uint32 Level/*Polarities, Mods*/);
+
+	/** Override this method to provide the correct class of derived weapon. */
+	UFUNCTION(BlueprintNativeEvent)
+	UClass* GetRoundClass()const;
+	virtual UClass* GetRoundClass_Implementation()const;
+
+	// Called when a pellet is fired.
+	UFUNCTION(BlueprintNativeEvent)
+	ARoundBase* OnRoundFired(const FHitResult &CurrentTarget);
+	ARoundBase* OnRoundFired_Implementation(const FHitResult &CurrentTarget);
 
 	void ApplyMods();
 
@@ -267,19 +278,25 @@ public:
 		return Zoom;
 	}
 
-	virtual ARoundBase* X(const FHitResult& CurrentTarget);
-
-	// Called when a pellet is fired.
-	UFUNCTION(BlueprintNativeEvent)
-	ARoundBase *OnRoundFired(const FHitResult &CurrentTarget);
-	ARoundBase *OnRoundFired_Implementation(const FHitResult &CurrentTarget);
+	FORCEINLINE class UMeshComponent* GetMesh()const
+	{
+		return MeshComponent;
+	}
 
 protected:
 	class FTriggerModifier* InitTriggerModifier(const struct FWeaponModeInfo& ModeInfo);
 
 	void Reload();
 
+	FORCEINLINE class FTriggerModifier* GetTriggerModifier()const
+	{
+		return FireModeArray[CurrentFireMode].TriggerModifier;
+	}
+
 protected:
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	class UMeshComponent* MeshComponent;
+
 	FName Name;
 	uint32 Level;
 	EAmmoType AmmoType;

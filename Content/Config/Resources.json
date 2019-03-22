@@ -8,6 +8,8 @@
 
         {"Type": "UParticleSystem", "Ref": "P_StaticorExplosion=ParticleSystem'/Game/Weapons/Secondary/Staticor/P_StaticorExplosion.P_StaticorExplosion'"},
 
+        {"Type": "UStaticMesh", "Ref": "SM_NarrowCapsule=StaticMesh'/Game/Weapons/Base/SM_NarrowCapsule.SM_NarrowCapsule'"},
+
         {"Type": "UTexture2D", "Ref": "T_Slash_Small=Texture2D'/Game/UI/Textures/Status/T_Slash_Small.T_Slash_Small'"},
         {"Type": "UTexture2D", "Ref": "T_Impact_Small=Texture2D'/Game/UI/Textures/Status/T_Impact_Small.T_Impact_Small'"},
         {"Type": "UTexture2D", "Ref": "T_Puncture_Small=Texture2D'/Game/UI/Textures/Status/T_Puncture_Small.T_Puncture_Small'"},
