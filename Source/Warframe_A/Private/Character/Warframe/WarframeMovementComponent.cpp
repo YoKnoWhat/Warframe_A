@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/Warframe/WarframeMovementComponent.h"
+#include "Character/Warframe/StateMachine/WarframeStateMachineComponent.h"
 #include "Character/Warframe/Warframe.h"
 
 
@@ -72,7 +73,7 @@ void UWarframeMovementComponent::PhysCustomSliding(float DeltaTime, int32 Iterat
 	{
 		AWarframe* Owner = Cast<AWarframe>(this->GetOwner());
 
-		this->Acceleration = this->Acceleration.GetUnsafeNormal() * StandToSlideDeltaSpeed / StandToSlideTime * Owner->GetMovementSpeedMultiplier();
+		this->Acceleration = this->Acceleration.GetSafeNormal() * StandToSlideDeltaSpeed / StandToSlideTime * Owner->GetMovementSpeedMultiplier();
 		// this->Acceleration = Owner->GetActorRotation().Vector() * 600.0f / 0.2f * Owner->GetMovementSpeedMultiplier();
 	}
 
@@ -93,12 +94,11 @@ void UWarframeMovementComponent::OnEnterDoubleJumping()
 {
 	Velocity.Z = 0.0f;
 
-	if (Acceleration.Size2D() > 100.0)
+	if (Acceleration.Size2D() > 100.0f)
 	{
-		float VelocityMagnitude = Velocity.Size();
 		Velocity = Acceleration; // Acceleration.Z will always be zero.
 		Velocity.Normalize();
-		Velocity *= VelocityMagnitude;
+		Velocity *= this->MaxWalkSpeed * Acceleration.Size2D() / this->MaxAcceleration;
 	}
 }
 

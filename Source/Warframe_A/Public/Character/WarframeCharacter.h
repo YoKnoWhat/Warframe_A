@@ -5,6 +5,8 @@
 #include "WarframeCommon.h"
 #include "GameFramework/Character.h"
 #include "ObjectPool.h"
+
+#include "Runtime/AIModule/Classes/GenericTeamAgentInterface.h"
 #include "Runtime/Core/Public/Delegates/Delegate.h"
 #include "Runtime/Core/Public/Containers/Queue.h"
 #include "WarframeCharacter.generated.h"
@@ -40,7 +42,7 @@ struct FStatusEffectData
 };
 
 UCLASS()
-class WARFRAME_A_API AWarframeCharacter : public ACharacter
+class WARFRAME_A_API AWarframeCharacter : public ACharacter, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
@@ -64,6 +66,16 @@ public:
 	void InitPropertiesBP(int32 CharacterID, int32 Level);
 
 	virtual void Init(ECharacterID CharacterID, uint32 Level);
+
+	/**
+	 * IGenericTeamAgentInterface begin
+	 */
+	virtual void SetGenericTeamId(const FGenericTeamId& NewTeamID) override;
+
+	virtual FGenericTeamId GetGenericTeamId() const override;
+	/**
+	 * IGenericTeamAgentInterface end
+	 */
 
 	// Selected by player.
 	void OnSelected();
@@ -308,4 +320,7 @@ protected:
 	float ShieldRechargeTimer = 0.0f;
 	float MovementSpeedMultiplier = 1.0f;
 	float HeatModeMultiplier = 1.0f;
+
+private:
+	FGenericTeamId TeamID;
 };

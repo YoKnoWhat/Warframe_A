@@ -98,9 +98,9 @@ void AWarframe::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void AWarframe::Init(ECharacterID CharacterID, uint32 Level_)
+void AWarframe::Init(ECharacterID CharacterID, uint32 InLevel)
 {
-	Super::Init(CharacterID, Level_);
+	Super::Init(CharacterID, InLevel);
 
 	UWarframeGameInstance *GameInstance = Cast<UWarframeGameInstance>(this->GetGameInstance());
 

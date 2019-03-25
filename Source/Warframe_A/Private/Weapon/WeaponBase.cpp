@@ -69,19 +69,19 @@ void AWeaponBase::Tick(float DeltaTime)
 	}
 }
 
-void AWeaponBase::InitBP(int32 WeaponID, int32 Level_/*Polarities, Mods*/)
+void AWeaponBase::InitBP(int32 WeaponID, int32 InLevel/*Polarities, Mods*/)
 {
-	this->Init(static_cast<EWeaponID>(WeaponID), Level_);
+	this->Init(static_cast<EWeaponID>(WeaponID), InLevel);
 }
 
-void AWeaponBase::Init(EWeaponID WeaponID, uint32 Level_)
+void AWeaponBase::Init(EWeaponID WeaponID, uint32 InLevel)
 {
 	UWarframeGameInstance *GameInstance = Cast<UWarframeGameInstance>(this->GetGameInstance());
 
 	const FWeaponInfo *WeaponInfo = GameInstance->GetWeaponInfo(WeaponID);
 
 	this->Name = WeaponInfo->Name;
-	this->Level = Level_;
+	this->Level = InLevel;
 	this->AmmoType = WeaponInfo->AmmoType;
 	this->MagazineCapacity = WeaponInfo->Magazine;
 	this->AmmoMaximum = WeaponInfo->Ammo;

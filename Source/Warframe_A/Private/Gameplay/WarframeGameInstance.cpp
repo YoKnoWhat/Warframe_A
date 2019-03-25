@@ -4,10 +4,26 @@
 #include "Gameplay/WarframeConfigSingleton.h"
 #include "Utility/HelperFunction.h"
 
+#include "Runtime/AIModule/Classes/GenericTeamAgentInterface.h"
 #include "Runtime/Core/Public/Misc/Paths.h"
 #include "Runtime/Core/Public/HAL/PlatformFilemanager.h"
 #include "Runtime/Core/Public/GenericPlatform/GenericPlatformFile.h"
 #include "Runtime/Core/Public/HAL/UnrealMemory.h"
+
+
+ETeamAttitude::Type WarframeAttitudeSolver(FGenericTeamId A, FGenericTeamId B)
+{
+	if (A == CastToUnderlyingType(EWarframeTeamID::Neutral) || A == FGenericTeamId::NoTeam
+		|| B == CastToUnderlyingType(EWarframeTeamID::Neutral) || B == FGenericTeamId::NoTeam)
+	{
+		return ETeamAttitude::Neutral;
+	}
+	else
+	{
+		return A != B ? ETeamAttitude::Hostile : ETeamAttitude::Friendly;
+	}
+}
+
 
 
 UWarframeGameInstance::UWarframeGameInstance(const FObjectInitializer& ObjectInitializer) :
@@ -18,6 +34,49 @@ void UWarframeGameInstance::Init()
 {
 	FWarframeConfigSingleton::Instance().LoadConfig();
 
+	this->ReadInDataTables();
+
+	FGenericTeamId::SetAttitudeSolver(WarframeAttitudeSolver);
+}
+
+void UWarframeGameInstance::Shutdown()
+{}
+
+const FCharacterInfo *UWarframeGameInstance::GetCharacterInfo(ECharacterID CharacterID)const
+{
+	return &CharacterInfoArray[static_cast<int32>(CharacterID)];
+}
+
+const FCharacterAppearance *UWarframeGameInstance::GetCharacterAppearance(ECharacterID CharacterID)const
+{
+	return &CharacterAppearanceArray[static_cast<int32>(CharacterID)];
+}
+
+const FEnemyInfo* UWarframeGameInstance::GetEnemyInfo(ECharacterID CharacterID)const
+{
+	return &EnemyInfoArray[static_cast<int32>(CharacterID)];
+}
+
+const FWarframeInfo* UWarframeGameInstance::GetWarframeInfo(ECharacterID CharacterID)const
+{
+	// Mapping character id to warframe id.
+	int32 WarframeID = CastToUnderlyingType(CharacterID) - CastToUnderlyingType(ECharacterID::EndEnemy) - 1;
+	
+	return &WarframeInfoArray[WarframeID];
+}
+
+const FWeaponInfo* UWarframeGameInstance::GetWeaponInfo(EWeaponID WeaponID)const
+{
+	return &WeaponInfoArray[static_cast<int32>(WeaponID)];
+}
+
+const FPickableObjectInfo* UWarframeGameInstance::GetPickableObjectInfo(EPickableObjectID PickableObjectID)const
+{
+	return &PickableObjectInfoArray[static_cast<int32>(PickableObjectID)];
+}
+
+void UWarframeGameInstance::ReadInDataTables()
+{
 	FString FilePath;
 	const char *Begin;
 	const char *End;
@@ -93,42 +152,6 @@ void UWarframeGameInstance::Init()
 			delete Begin;
 		}
 	}
-}
-
-void UWarframeGameInstance::Shutdown()
-{}
-
-const FCharacterInfo *UWarframeGameInstance::GetCharacterInfo(ECharacterID CharacterID)const
-{
-	return &CharacterInfoArray[static_cast<int32>(CharacterID)];
-}
-
-const FCharacterAppearance *UWarframeGameInstance::GetCharacterAppearance(ECharacterID CharacterID)const
-{
-	return &CharacterAppearanceArray[static_cast<int32>(CharacterID)];
-}
-
-const FEnemyInfo* UWarframeGameInstance::GetEnemyInfo(ECharacterID CharacterID)const
-{
-	return &EnemyInfoArray[static_cast<int32>(CharacterID)];
-}
-
-const FWarframeInfo* UWarframeGameInstance::GetWarframeInfo(ECharacterID CharacterID)const
-{
-	// Mapping character id to warframe id.
-	int32 WarframeID = CastToUnderlyingType(CharacterID) - CastToUnderlyingType(ECharacterID::EndEnemy) - 1;
-	
-	return &WarframeInfoArray[WarframeID];
-}
-
-const FWeaponInfo* UWarframeGameInstance::GetWeaponInfo(EWeaponID WeaponID)const
-{
-	return &WeaponInfoArray[static_cast<int32>(WeaponID)];
-}
-
-const FPickableObjectInfo* UWarframeGameInstance::GetPickableObjectInfo(EPickableObjectID PickableObjectID)const
-{
-	return &PickableObjectInfoArray[static_cast<int32>(PickableObjectID)];
 }
 
 void UWarframeGameInstance::ReadInCharacterTable(const char* Begin, const char* End)

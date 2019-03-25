@@ -29,14 +29,6 @@ int32 FLowerState_AimGliding::OnUpdate(float DeltaTime)
 		
 		if (StateMachine->GlideTimer > 0.0f)
 		{
-			if (3.0f - StateMachine->GlideTimer < 1.5f)
-			{
-				CharacterMovement->GravityScale = 0.1f;
-			}
-			else
-			{
-				CharacterMovement->GravityScale = (3.0f - StateMachine->GlideTimer) * 0.6f - 0.8f;
-			}
 			return this->GetID();
 		}
 		else
@@ -50,7 +42,7 @@ void FLowerState_AimGliding::OnEnter(int32 StateFromID)
 {
 	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(Character->GetMovementComponent());
 
-	CharacterMovement->GravityScale = 0.1f;
+	CharacterMovement->GravityScale = 0.05f;
 	CharacterMovement->SetMovementMode(EMovementMode::MOVE_Custom, CastToUnderlyingType(EWarframeMovementMode::AirGliding));
 }
 

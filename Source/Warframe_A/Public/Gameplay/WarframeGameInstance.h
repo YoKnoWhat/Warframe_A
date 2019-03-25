@@ -134,6 +134,8 @@ public:
 	const FPickableObjectInfo* GetPickableObjectInfo(EPickableObjectID PickableObjectID)const;
 
 protected:
+	void ReadInDataTables();
+
 	void ReadInCharacterTable(const char* Begin, const char* End);
 
 	void ReadInCharacterAppearanceTable(const char* Begin, const char* End);

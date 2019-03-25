@@ -22,6 +22,8 @@ class WARFRAME_A_API UCharacterHeaderPanel : public UCharacterWidget
 public:
 	UCharacterHeaderPanel(const FObjectInitializer& ObjectInitializer);
 
+	virtual void SetVisibility(ESlateVisibility InVisibility)override;
+
 	virtual void NativeConstruct()override;
 
 	virtual void NativeDestruct()override;

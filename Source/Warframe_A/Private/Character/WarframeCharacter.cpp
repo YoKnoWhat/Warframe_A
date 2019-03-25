@@ -10,6 +10,10 @@
 #include "Weapon/RoundBase.h"
 #include "Weapon/WeaponFactory.h"
 
+#include "Runtime/AIModule/Classes/Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Runtime/AIModule/Classes/Perception/AIPerceptionSystem.h"
+#include "Runtime/AIModule/Classes/Perception/AISense_Hearing.h"
+#include "Runtime/AIModule/Classes/Perception/AISense_Sight.h"
 #include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
@@ -21,11 +25,12 @@ FObjectPool<FStatusEffectData> AWarframeCharacter::StatusEffectDataPool;
 AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializer) :
 	Super(ObjectInitializer.SetDefaultSubobjectClass<UStateMachineComponent>("StateMachine"))
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	
+
 	/** Character movement component settings. */
 	UCharacterMovementComponent* CharacterMovement = GetCharacterMovement();
+	CharacterMovement->JumpZVelocity = 600.0f;
 	CharacterMovement->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
 	CharacterMovement->bOrientRotationToMovement = true;
 
@@ -35,6 +40,16 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 
 	/** State machine component creation. */
 	StateMachineComponent = ObjectInitializer.CreateDefaultSubobject<UStateMachineComponent>(this, FName("StateMachine"));
+
+	/** Registers owning actor as source of stimuli for senses */
+	UAIPerceptionSystem* PerceptionSystem = UAIPerceptionSystem::GetCurrent(this->GetWorld());
+	if (PerceptionSystem)
+	{
+		PerceptionSystem->RegisterSourceForSenseClass(UAISense_Hearing::StaticClass(), *this);
+		PerceptionSystem->RegisterSourceForSenseClass(UAISense_Sight::StaticClass(), *this);
+	}
+
+	this->SetGenericTeamId(FGenericTeamId::NoTeam);
 }
 
 // Called when the game starts or when spawned
@@ -174,14 +189,14 @@ void AWarframeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 }
 
-void AWarframeCharacter::InitPropertiesBP(int32 CharacterID, int32 Level_)
+void AWarframeCharacter::InitPropertiesBP(int32 CharacterID, int32 InLevel)
 {
-	this->Init(static_cast<ECharacterID>(CharacterID), static_cast<uint32>(Level_));
+	this->Init(static_cast<ECharacterID>(CharacterID), static_cast<uint32>(InLevel));
 }
 
-void AWarframeCharacter::Init(ECharacterID CharacterID, uint32 Level_)
+void AWarframeCharacter::Init(ECharacterID CharacterID, uint32 InLevel)
 {
-	this->Level = Level_;
+	this->Level = InLevel;
 
 	UWarframeGameInstance *GameInstance = Cast<UWarframeGameInstance>(this->GetGameInstance());
 
@@ -202,6 +217,27 @@ void AWarframeCharacter::Init(ECharacterID CharacterID, uint32 Level_)
 
 		this->Affinity = this->PropertyLevelScaling(CharacterInfo->Affinity, CharacterInfo->BaseLevel, 0.5f, 0.1425f, Level);
 	}
+}
+
+void AWarframeCharacter::SetGenericTeamId(const FGenericTeamId& NewTeamID)
+{
+	TeamID = NewTeamID;
+}
+
+FGenericTeamId AWarframeCharacter::GetGenericTeamId()const
+{
+	return TeamID;
+}
+
+void AWarframeCharacter::OnSelected()
+{
+	Cast<UCharacterWidget>(this->CharacterWidgetComponent->GetUserWidgetObject())->OnSelected();
+}
+
+// Unselected by player.
+void AWarframeCharacter::OnUnselected()
+{
+	Cast<UCharacterWidget>(this->CharacterWidgetComponent->GetUserWidgetObject())->OnUnselected();
 }
 
 const FHitResult &AWarframeCharacter::GetSelectedTarget()const
@@ -264,17 +300,6 @@ void AWarframeCharacter::DropItem()
 			}
 		}
 	}
-}
-
-void AWarframeCharacter::OnSelected()
-{
-	Cast<UCharacterWidget>(this->CharacterWidgetComponent->GetUserWidgetObject())->OnSelected();
-}
-
-// Unselected by player.
-void AWarframeCharacter::OnUnselected()
-{
-	Cast<UCharacterWidget>(this->CharacterWidgetComponent->GetUserWidgetObject())->OnUnselected();
 }
 
 void AWarframeCharacter::SetWeapon(EWeaponSlotType WeaponSlotType, AWeaponBase* Weapon)

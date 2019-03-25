@@ -66,6 +66,20 @@ enum class EDamageType : uint8
 	End = Tau,
 };
 
+enum class EWarframeTeamID : uint8
+{
+	Player,
+	Neutral,
+	Enemy1,
+	Enemy2,
+	Enemy3,
+	Enemy4,
+	Enemy5,
+	Enemy6,
+	Enemy7,
+	Enemy8,
+};
+
 enum class EFactionType : uint8
 {
 	None,

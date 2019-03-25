@@ -25,9 +25,24 @@ UCharacterHeaderPanel::UCharacterHeaderPanel(const FObjectInitializer& ObjectIni
 	Super(ObjectInitializer)
 {}
 
+void UCharacterHeaderPanel::SetVisibility(ESlateVisibility InVisibility)
+{
+	Super::SetVisibility(InVisibility);
+
+	if (InVisibility == ESlateVisibility::HitTestInvisible)
+	{
+		float InvHealthAndShield = 1.0f / (WarframeCharacter->GetMaxHealth() + WarframeCharacter->GetMaxShield());
+
+		HealthPercentCache = WarframeCharacter->GetCurrentHealth() * InvHealthAndShield;
+		ShieldPercentCache = WarframeCharacter->GetCurrentShield() * InvHealthAndShield;
+	}
+}
+
 void UCharacterHeaderPanel::NativeConstruct()
 {
 	Super::NativeConstruct();
+
+	this->SetVisibility(ESlateVisibility::Hidden);
 
 	this->Name->SetText(FText::FromName(this->WarframeCharacter->GetName()));
 	this->Level->SetText(FText::AsNumber(this->WarframeCharacter->GetLevel(), nullptr));
