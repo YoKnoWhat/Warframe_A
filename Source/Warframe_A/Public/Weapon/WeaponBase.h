@@ -203,6 +203,12 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable)
+	FORCEINLINE ENoiseType GetNoiseType()const
+	{
+		return FireModeArray[CurrentFireMode].NoiseType;
+	}
+
+	UFUNCTION(BlueprintCallable)
 	FORCEINLINE float GetPunchThrough()const
 	{
 		return FireModeArray[CurrentFireMode].PunchThrough;

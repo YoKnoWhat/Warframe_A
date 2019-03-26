@@ -1,11 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Weapon/WeaponBase.h"
+#include "Character/TargetSelectionComponent.h"
 #include "Character/WarframeCharacter.h"
 #include "Gameplay/WarframeGameInstance.h"
 #include "Weapon/RoundBase.h"
 #include "Weapon/TriggerModifier.h"
 
+#include "Runtime/AIModule/Classes/Perception/AISense_Hearing.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
@@ -312,6 +314,11 @@ void AWeaponBase::StopFire()
 
 void AWeaponBase::FireRound(float DamageScalar)
 {
+	if (GetNoiseType() == ENoiseType::Alarming)
+	{
+		UAISense_Hearing::ReportNoiseEvent(this, Instigator->GetActorLocation(), 1.0f, Instigator);
+	}
+
 	// todo: multishot on continuous weapon.
 
 	// todo: accuracy & recoil
@@ -332,12 +339,18 @@ void AWeaponBase::FireRound(float DamageScalar)
 		}
 	}
 
-	for (uint32 i = 0; i < TotalPellets; ++i)
+	AController* Controller = Instigator->GetController();
+	if (Controller != nullptr)
 	{
-		ARoundBase *NewRound = this->OnRoundFired(Cast<AWarframeCharacter>(Instigator)->GetSelectedTarget());
+		UTargetSelectionComponent* TargetSelectionComponent = Cast<UTargetSelectionComponent>(Controller->GetComponentByClass(UTargetSelectionComponent::StaticClass()));
+		const FHitResult& SelectedTarget = TargetSelectionComponent->GetSelectedTarget();
 
-		NewRound->Init(this);
-		NewRound->ApplyDamageScalar(DamageScalar);
+		for (uint32 i = 0; i < TotalPellets; ++i)
+		{
+			ARoundBase *NewRound = this->OnRoundFired(SelectedTarget);
+			NewRound->Init(this);
+			NewRound->ApplyDamageScalar(DamageScalar);
+		}
 	}
 }
 

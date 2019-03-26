@@ -87,8 +87,6 @@ void AWarframe::Tick(float DeltaTime)
 	{
 		Ability->Tick(DeltaTime);
 	}
-
-	this->TryFindTarget();
 }
 
 // Called to bind functionality to input
@@ -240,39 +238,4 @@ bool AWarframe::CastAbility(uint32 AbilityIndex, float Charge)
 	this->Abilities[AbilityIndex]->Cast(Charge);
 
 	return true;
-}
-
-void AWarframe::TryFindTarget()
-{
-	UCameraComponent *CameraComponent = Cast<UCameraComponent>(this->GetComponentByClass(UCameraComponent::StaticClass()));
-
-	FCollisionQueryParams RV_TraceParams;
-	RV_TraceParams.bTraceComplex = true;
-	RV_TraceParams.AddIgnoredActor(this);
-
-	AWarframeCharacter* PrevTarget = Cast<AWarframeCharacter>(this->SelectedTarget.Actor.Get());
-
-	if (GetWorld()->LineTraceSingleByChannel(
-		this->SelectedTarget,
-		CameraComponent->GetComponentLocation(),
-		CameraComponent->GetComponentLocation() + CameraComponent->GetForwardVector() * 10000.0f,
-		ECC_Pawn,
-		RV_TraceParams) == false)
-	{
-		this->SelectedTarget.ImpactPoint = this->SelectedTarget.TraceEnd;
-	}
-
-	AWarframeCharacter* NewTarget = Cast<AWarframeCharacter>(this->SelectedTarget.Actor.Get());
-
-	if (PrevTarget != NewTarget)
-	{
-		if (PrevTarget != nullptr)
-		{
-			PrevTarget->OnUnselected();
-		}
-		if (NewTarget != nullptr)
-		{
-			NewTarget->OnSelected();
-		}
-	}
 }

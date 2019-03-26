@@ -403,6 +403,7 @@ enum class EAmmoType : uint8
 	Pistol,
 };
 
+UENUM(BlueprintType)
 enum class ENoiseType : uint8
 {
 	Alarming,

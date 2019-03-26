@@ -1,5 +1,6 @@
 
 #include "Character/WarframeCharacterAIController.h"
+#include "Character/AITargetSelectionComponent.h"
 #include "Character/WarframeCharacter.h"
 
 #include "Runtime/AIModule/Classes/Perception/AIPerceptionComponent.h"
@@ -11,6 +12,10 @@
 AWarframeCharacterAIController::AWarframeCharacterAIController(const FObjectInitializer& ObjectInitializer) :
 	Super(ObjectInitializer)
 {
+	/** Target selection component creation. */
+	TargetSelection = ObjectInitializer.CreateDefaultSubobject<UAITargetSelectionComponent>(this, "TargetSelection");
+
+	/** AI perception component creation. */
 	UAIPerceptionComponent* AIPerception = ObjectInitializer.CreateDefaultSubobject<UAIPerceptionComponent>(this, "AIPerception");
 	this->SetPerceptionComponent(*AIPerception);
 
@@ -29,6 +34,7 @@ AWarframeCharacterAIController::AWarframeCharacterAIController(const FObjectInit
 
 	UAISenseConfig_Sight* SenseConfig_Sight = NewObject<UAISenseConfig_Sight>(AIPerception, "AISenseConfig_Sight");
 	{
+
 		SenseConfig_Sight->Implementation = UAISense_Sight::StaticClass();
 		SenseConfig_Sight->SightRadius = 3000.0f;
 		SenseConfig_Sight->LoseSightRadius = 3500.0f;
@@ -54,4 +60,11 @@ void AWarframeCharacterAIController::Possess(APawn* InPawn)
 	Super::Possess(InPawn);
 
 	Cast<AWarframeCharacter>(InPawn)->SetGenericTeamId(FGenericTeamId(CastToUnderlyingType(EWarframeTeamID::Enemy1)));
+}
+
+void AWarframeCharacterAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	TargetSelection->UpdateSelectedTarget();
 }

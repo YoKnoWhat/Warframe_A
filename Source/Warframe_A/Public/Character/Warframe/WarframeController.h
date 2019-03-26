@@ -13,4 +13,12 @@ public:
 	AWarframeController(const FObjectInitializer& ObjectInitializer);
 
 	virtual void Possess(APawn* Pawn)override;
+
+	virtual void UnPossess()override;
+
+	virtual void PlayerTick(float DeltaTime)override;
+
+protected:
+	UPROPERTY()
+	class UTargetSelectionComponent* TargetSelection;
 };

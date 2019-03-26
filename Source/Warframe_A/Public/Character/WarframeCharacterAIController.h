@@ -14,4 +14,10 @@ public:
 	AWarframeCharacterAIController(const FObjectInitializer& ObjectInitializer);
 
 	virtual void Possess(APawn* Pawn)override;
+
+	virtual void Tick(float DeltaTime)override;
+
+protected:
+	UPROPERTY()
+	class UTargetSelectionComponent* TargetSelection;
 };

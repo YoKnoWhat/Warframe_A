@@ -97,9 +97,6 @@ public:
 	}
 
 protected:
-	void TryFindTarget();
-
-protected:
 	uint32 MaxEnergy;
 	float AbilityStrength;
 	float AbilityRange;
