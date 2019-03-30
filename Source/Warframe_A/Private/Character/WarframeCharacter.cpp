@@ -1,8 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/WarframeCharacter.h"
+#include "Character/AISense_Sight_NoAutoRegister.h"
 #include "Character/StateMachineComponent.h"
+#include "Character/WarframeCharacterAIController.h"
 #include "Environment/PickableObject.h"
+#include "Gameplay/WarframeConfigSingleton.h"
 #include "Gameplay/WarframeGameInstance.h"
 #include "Gameplay/WarframeGameMode.h"
 #include "UI/CharacterWidget.h"
@@ -13,7 +16,6 @@
 #include "Runtime/AIModule/Classes/Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Runtime/AIModule/Classes/Perception/AIPerceptionSystem.h"
 #include "Runtime/AIModule/Classes/Perception/AISense_Hearing.h"
-#include "Runtime/AIModule/Classes/Perception/AISense_Sight.h"
 #include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
@@ -27,6 +29,11 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	this->AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+	this->AIControllerClass = FWarframeConfigSingleton::Instance().FindResourceClass("BP_WarframeCharacterAIController");
+
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 
 	/** Character movement component settings. */
 	UCharacterMovementComponent* CharacterMovement = GetCharacterMovement();
@@ -46,7 +53,7 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 	if (PerceptionSystem)
 	{
 		PerceptionSystem->RegisterSourceForSenseClass(UAISense_Hearing::StaticClass(), *this);
-		PerceptionSystem->RegisterSourceForSenseClass(UAISense_Sight::StaticClass(), *this);
+		PerceptionSystem->RegisterSourceForSenseClass(UAISense_Sight_NoAutoRegister::StaticClass(), *this);
 	}
 
 	this->SetGenericTeamId(FGenericTeamId::NoTeam);
@@ -423,6 +430,14 @@ void AWarframeCharacter::ApplyDamage(AActor* DamageCauser, const FVector& HitLoc
 
 void AWarframeCharacter::ApplyDamage(AActor* DamageCauser, const FVector& HitLocation, EDamageType Status, TArray<FDamagePair> &DamageArray, float DamageScalar, uint32 CriticalTier)
 {
+	if (FGenericTeamId::GetAttitude(DamageCauser, this) == ETeamAttitude::Friendly)
+	{
+		if (Cast<AWarframeCharacter>(DamageCauser)->GetStatusTime(EDamageType::Radiation) == 0.0f)
+		{
+			return;
+		}
+	}
+
 	AWarframeGameMode *GameMode = Cast<AWarframeGameMode>(this->GetWorld()->GetAuthGameMode());
 
 	float Damage = 0.0f;

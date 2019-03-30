@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/Warframe/Warframe.h"
-#include "Character/AbilityObject.h"
+#include "Character/Warframe/AbilityObject.h"
 #include "Character/Warframe/WarframeMovementComponent.h"
 #include "Character/Warframe/StateMachine/LowerStates.h"
 #include "Character/Warframe/StateMachine/UpperStates.h"

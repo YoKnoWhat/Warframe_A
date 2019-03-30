@@ -1,6 +1,7 @@
 
 #include "Utility/HelperFunction.h"
 #include "Character/StateMachineComponent.h"
+#include "Character/WarframeCharacterAIController.h"
 #include "UI/CharacterHeaderPanel.h"
 
 #include "Editor/UMGEditor/Public/WidgetBlueprint.h"
@@ -9,6 +10,8 @@
 #include "Runtime/Core/Public/GenericPlatform/GenericPlatformFile.h"
 #include "Runtime/Engine/Classes/Engine/Texture2D.h"
 #include "Runtime/Engine/Classes/Materials/Material.h"
+#include "Runtime/Engine/Classes/Particles/ParticleSystem.h"
+#include "Runtime/Engine/Classes/Engine/StaticMesh.h"
 
 
 namespace Warframe
@@ -70,26 +73,39 @@ namespace Warframe
 
 	UClass* GetNativeClassByName(FName Name)
 	{
+		// ClassRefs
+		if (Name == "AWarframeCharacterAIController")
+		{
+			return AWarframeCharacterAIController::StaticClass();
+		}
+		if (Name == "UStateMachineComponent")
+		{
+			return UStateMachineComponent::StaticClass();
+		}
+		if (Name == "UCharacterHeaderPanel")
+		{
+			return UCharacterHeaderPanel::StaticClass();
+		}
+
+		// ResourceRefs
+		if (Name == "UMaterial")
+		{
+			return UMaterial::StaticClass();
+		}
+		if (Name == "UParticleSystem")
+		{
+			return UParticleSystem::StaticClass();
+		}
+		if (Name == "UStaticMesh")
+		{
+			return UStaticMesh::StaticClass();
+		}
 		if (Name == "UTexture2D")
 		{
 			return UTexture2D::StaticClass();
 		}
-		else if (Name == "UMaterial")
-		{
-			return UMaterial::StaticClass();
-		}
-		else if (Name == "UStateMachineComponent")
-		{
-			return UStateMachineComponent::StaticClass();
-		}
-		else if (Name == "UCharacterHeaderPanel")
-		{
-			return UCharacterHeaderPanel::StaticClass();
-		}
-		else
-		{
-			return UObject::StaticClass();
-		}
+		
+		return UObject::StaticClass();
 	}
 
 } // End namespace Warframe.

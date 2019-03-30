@@ -20,4 +20,7 @@ public:
 protected:
 	UPROPERTY()
 	class UTargetSelectionComponent* TargetSelection;
+
+	UPROPERTY(BlueprintReadOnly)
+	float PatrolRadius = 300.0f;
 };

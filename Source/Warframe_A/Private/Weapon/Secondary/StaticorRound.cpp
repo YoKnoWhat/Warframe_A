@@ -23,8 +23,6 @@ AStaticorRound::AStaticorRound(const FObjectInitializer& ObjectInitializer) :
 void AStaticorRound::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-
 }
 
 void AStaticorRound::NotifyActorBeginOverlap(AActor* OtherActor)

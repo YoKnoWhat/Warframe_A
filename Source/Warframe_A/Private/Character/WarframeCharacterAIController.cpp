@@ -2,6 +2,7 @@
 #include "Character/WarframeCharacterAIController.h"
 #include "Character/AITargetSelectionComponent.h"
 #include "Character/WarframeCharacter.h"
+#include "Character/AISense_Sight_NoAutoRegister.h"
 
 #include "Runtime/AIModule/Classes/Perception/AIPerceptionComponent.h"
 #include "Runtime/AIModule/Classes/Perception/AISenseConfig_Hearing.h"
@@ -19,7 +20,7 @@ AWarframeCharacterAIController::AWarframeCharacterAIController(const FObjectInit
 	UAIPerceptionComponent* AIPerception = ObjectInitializer.CreateDefaultSubobject<UAIPerceptionComponent>(this, "AIPerception");
 	this->SetPerceptionComponent(*AIPerception);
 
-	AIPerception->SetDominantSense(UAISense_Sight::StaticClass());
+	AIPerception->SetDominantSense(UAISense_Sight_NoAutoRegister::StaticClass());
 
 	UAISenseConfig_Hearing* SenseConfig_Hearing = NewObject<UAISenseConfig_Hearing>(AIPerception, "AISenseConfig_Hearing");
 	{
@@ -34,8 +35,7 @@ AWarframeCharacterAIController::AWarframeCharacterAIController(const FObjectInit
 
 	UAISenseConfig_Sight* SenseConfig_Sight = NewObject<UAISenseConfig_Sight>(AIPerception, "AISenseConfig_Sight");
 	{
-
-		SenseConfig_Sight->Implementation = UAISense_Sight::StaticClass();
+		SenseConfig_Sight->Implementation = UAISense_Sight_NoAutoRegister::StaticClass();
 		SenseConfig_Sight->SightRadius = 3000.0f;
 		SenseConfig_Sight->LoseSightRadius = 3500.0f;
 		SenseConfig_Sight->PeripheralVisionAngleDegrees = 45.0f;

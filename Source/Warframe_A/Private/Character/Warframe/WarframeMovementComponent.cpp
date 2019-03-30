@@ -12,6 +12,12 @@ bool UWarframeMovementComponent::IsFalling()const
 		|| (MovementMode == EMovementMode::MOVE_Custom && CustomMovementMode == CastToUnderlyingType(EWarframeMovementMode::DoubleJumping));
 }
 
+bool UWarframeMovementComponent::IsMovingOnGround()const
+{
+	return Super::IsMovingOnGround()
+		|| (MovementMode == EMovementMode::MOVE_Custom && CustomMovementMode == CastToUnderlyingType(EWarframeMovementMode::Sliding));
+}
+
 void UWarframeMovementComponent::OnMovementModeChanged(EMovementMode PreviousMovementMode, uint8 PreviousCustomMode)
 {
 	Super::OnMovementModeChanged(PreviousMovementMode, PreviousCustomMode);
@@ -59,7 +65,17 @@ void UWarframeMovementComponent::PhysCustom(float DeltaTime, int32 Iterations)
 }
 
 void UWarframeMovementComponent::OnEnterSliding()
-{}
+{
+	// Walking uses only XY velocity, and must be on a walkable floor, with a Base.
+	Velocity.Z = 0.f;
+	bCrouchMaintainsBaseLocation = true;
+	SetGroundMovementMode(MovementMode);
+
+	// make sure we update our new floor/base on initial entry of the walking physics
+	FindFloor(UpdatedComponent->GetComponentLocation(), CurrentFloor, false);
+	AdjustFloorHeight();
+	SetBaseFromFloor(CurrentFloor);
+}
 
 void UWarframeMovementComponent::PhysCustomSliding(float DeltaTime, int32 Iterations)
 {

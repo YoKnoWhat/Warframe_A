@@ -454,11 +454,15 @@ void FLowerState_Sliding::OnEnter(int32 StateFromID)
 	CharacterMovement->StandToSlideDuration = 0.0f;
 	CharacterMovement->StandToSlideTime = 0.3f;
 	CharacterMovement->StandToSlideDeltaSpeed = 450.0f;
+
+	Character->Crouch();
 }
 
 void FLowerState_Sliding::OnExit()
 {
 	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
+
+	Character->UnCrouch();
 
 	CharacterMovement->SetMovementMode(EMovementMode::MOVE_Walking);
 	CharacterMovement->MaxCustomMovementSpeed = MaxCustomMovementSpeedBefore;

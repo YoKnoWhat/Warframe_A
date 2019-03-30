@@ -1,5 +1,6 @@
 {
     "ClassRefs": [
+        {"Type": "AWarframeCharacterAIController", "Ref": "BP_WarframeCharacterAIController=Blueprint'/Game/Characters/AI/BP_WarframeCharacterAIController.BP_WarframeCharacterAIController_C'"},
         {"Type": "UCharacterHeaderPanel", "Ref": "UI_CharacterHeaderPanel=WidgetBlueprint'/Game/UI/UI_CharacterHeaderPanel.UI_CharacterHeaderPanel_C'"},
         {"Type": "UStateMachineComponent", "Ref": "BP_TennoStateMachineComponent=Blueprint'/Game/Characters/Tenno/States/BP_TennoStateMachineComponent.BP_TennoStateMachineComponent_C'"}
     ],

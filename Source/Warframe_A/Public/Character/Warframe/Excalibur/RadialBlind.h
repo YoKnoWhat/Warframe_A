@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Character/AbilityObject.h"
+#include "Character/Warframe/AbilityObject.h"
 
 
 class FRadialBlind : public FAbilityObject
