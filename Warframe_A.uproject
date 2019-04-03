@@ -14,5 +14,11 @@
 				"UMG"
 			]
 		}
+	],
+	"Plugins": [
+		{
+			"Name": "CoverGenerator",
+			"Enabled": true
+		}
 	]
 }

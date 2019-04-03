@@ -8,6 +8,7 @@
         {"Type": "UMaterial", "Ref": "M_HeaderBarFill=Material'/Game/UI/Materials/M_HealthBarFill.M_HealthBarFill'"},
 
         {"Type": "UParticleSystem", "Ref": "P_StaticorExplosion=ParticleSystem'/Game/Weapons/Secondary/Staticor/P_StaticorExplosion.P_StaticorExplosion'"},
+        {"Type": "UParticleSystem", "Ref": "PS_AmmoBeam=ParticleSystem'/Game/Environment/PS_AmmoBeam.PS_AmmoBeam'"},
 
         {"Type": "UStaticMesh", "Ref": "SM_NarrowCapsule=StaticMesh'/Game/Weapons/Base/SM_NarrowCapsule.SM_NarrowCapsule'"},
 

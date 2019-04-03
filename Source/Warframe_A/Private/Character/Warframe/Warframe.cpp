@@ -24,6 +24,11 @@ AWarframe::AWarframe(const FObjectInitializer& ObjectInitializer) :
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	Abilities[0] = new FAbilityObject_Null();
+	Abilities[1] = new FAbilityObject_Null();
+	Abilities[2] = new FAbilityObject_Null();
+	Abilities[3] = new FAbilityObject_Null();
+
 	StateMachineComponent->ClearAllLayers();
 	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FLowerState_AimGliding);
 	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FLowerState_BulletJumping);

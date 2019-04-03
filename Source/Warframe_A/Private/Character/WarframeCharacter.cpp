@@ -18,6 +18,7 @@
 #include "Runtime/AIModule/Classes/Perception/AISense_Hearing.h"
 #include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
+#include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
 
 
@@ -34,6 +35,7 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 	this->AIControllerClass = FWarframeConfigSingleton::Instance().FindResourceClass("BP_WarframeCharacterAIController");
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	/** Character movement component settings. */
 	UCharacterMovementComponent* CharacterMovement = GetCharacterMovement();

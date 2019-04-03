@@ -18,6 +18,13 @@ public:
 
 	virtual void Init(EPickableObjectID ID);
 
+	// todo: for now.
+	UFUNCTION(BlueprintCallable)
+	void InitBP(uint8 ID)
+	{
+		this->Init(static_cast<EPickableObjectID>(ID));
+	}
+
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE UStaticMeshComponent* GetStaticMesh()
 	{
@@ -27,6 +34,5 @@ public:
 protected:
 	UStaticMeshComponent* StaticMesh;
 	class USphereComponent* SphereCollision;
-
-	FLinearColor BeamColor;
+	class UParticleSystemComponent* ParticleSystem;
 };

@@ -23,7 +23,7 @@ void UWarframeTargetSelectionComponent::UpdateSelectedTarget()
 		this->SelectedTarget,
 		CameraComponent->GetComponentLocation(),
 		CameraComponent->GetComponentLocation() + CameraComponent->GetForwardVector() * 10000.0f,
-		ECC_Pawn,
+		ECC_WorldDynamic,
 		RV_TraceParams) == false)
 	{
 		this->SelectedTarget.ImpactPoint = this->SelectedTarget.TraceEnd;
