@@ -4,7 +4,7 @@
 #include "Character/AISense_Sight_NoAutoRegister.h"
 #include "Character/StateMachineComponent.h"
 #include "Character/WarframeCharacterAIController.h"
-#include "Environment/PickableObject.h"
+#include "Environment/PickableObject/PickableObject.h"
 #include "Gameplay/WarframeConfigSingleton.h"
 #include "Gameplay/WarframeGameInstance.h"
 #include "Gameplay/WarframeGameMode.h"
