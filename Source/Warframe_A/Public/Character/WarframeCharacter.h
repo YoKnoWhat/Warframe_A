@@ -46,6 +46,8 @@ class WARFRAME_A_API AWarframeCharacter : public ACharacter, public IGenericTeam
 {
 	GENERATED_BODY()
 
+	friend class FCharacterFactory;
+
 public:
 	AWarframeCharacter(const FObjectInitializer &ObjectInitializer);
 
@@ -63,9 +65,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable)
-	void InitPropertiesBP(int32 CharacterID, int32 Level);
+	void InitPropertiesBP(int32 InCharacterID);
 
-	virtual void Init(ECharacterID CharacterID, uint32 Level);
+	virtual void SetLevel(uint32 InLevel);
 
 	/**
 	 * IGenericTeamAgentInterface begin
@@ -205,9 +207,11 @@ public:
 	}
 
 protected:
+	virtual void Init(ECharacterID InCharacterID);
+
 	/** todo: temporary method provided for blueprint call. */
 	UFUNCTION(BlueprintCallable)
-	AWeaponBase* CreateWeapon(int32 WeaponID);
+	AWeaponBase* CreateWeapon(int32 WeaponID, const FTransform& Transform);
 
 	float PropertyLevelScaling(float BaseValue, float BaseLevel, float Exponent, float Coefficient, float CurrentLevel);
 
@@ -259,6 +263,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	UStateMachineComponent* StateMachineComponent;
 
+	ECharacterID CharacterID;
 	uint32 Level;
 	FName Name;
 	EHealthType HealthType;

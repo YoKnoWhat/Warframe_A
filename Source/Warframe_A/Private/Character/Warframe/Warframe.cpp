@@ -3,9 +3,9 @@
 #include "Character/Warframe/Warframe.h"
 #include "Character/Warframe/AbilityObject.h"
 #include "Character/Warframe/WarframeMovementComponent.h"
-#include "Character/Warframe/StateMachine/LowerStates.h"
-#include "Character/Warframe/StateMachine/UpperStates.h"
-#include "Character/Warframe/StateMachine/AimStates.h"
+#include "Character/Warframe/StateMachine/WarframeLowerStates.h"
+#include "Character/Warframe/StateMachine/WarframeUpperStates.h"
+#include "Character/Warframe/StateMachine/WarframeAimStates.h"
 #include "Character/Warframe/StateMachine/WarframeStateMachineComponent.h"
 #include "Gameplay/WarframeGameInstance.h"
 #include "Gameplay/WarframeConfigSingleton.h"
@@ -30,23 +30,23 @@ AWarframe::AWarframe(const FObjectInitializer& ObjectInitializer) :
 	Abilities[3] = new FAbilityObject_Null();
 
 	StateMachineComponent->ClearAllLayers();
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FLowerState_AimGliding);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FLowerState_BulletJumping);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FLowerState_Crouching);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FLowerState_DoubleJumping);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FLowerState_Falling);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FLowerState_Idle);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FLowerState_Jumping);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FLowerState_Rolling);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FLowerState_Sliding);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FLowerState_Sprinting);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FUpperState_Firing);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FUpperState_Idle);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FUpperState_Ironsight);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FUpperState_Reloading);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FUpperState_WeaponSwitching);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Aim), new FAimState_Aiming);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Aim), new FAimState_Idle);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_AimGliding);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_BulletJumping);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Crouching);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_DoubleJumping);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Falling);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Idle);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Jumping);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Rolling);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Sliding);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Sprinting);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FWarframeUpperState_Firing);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FWarframeUpperState_Idle);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FWarframeUpperState_Ironsight);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FWarframeUpperState_Reloading);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FWarframeUpperState_WeaponSwitching);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Aim), new FWarframeAimState_Aiming);
+	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Aim), new FWarframeAimState_Idle);
 }
 
 AWarframe::~AWarframe()
@@ -94,16 +94,21 @@ void AWarframe::Tick(float DeltaTime)
 	}
 }
 
-// Called to bind functionality to input
-void AWarframe::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AWarframe::Init(ECharacterID InCharacterID)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	Super::Init(InCharacterID);
 
+	AbilityStrength = 1.0f;
+	AbilityRange = 1.0f;
+	AbilityEfficiency = 1.0f;
+	AbilityDuration = 1.0f;
+
+	// Apply mods.
 }
 
-void AWarframe::Init(ECharacterID CharacterID, uint32 InLevel)
+void AWarframe::SetLevel(uint32 InLevel)
 {
-	Super::Init(CharacterID, InLevel);
+	Super::SetLevel(InLevel);
 
 	UWarframeGameInstance *GameInstance = Cast<UWarframeGameInstance>(this->GetGameInstance());
 
@@ -114,18 +119,6 @@ void AWarframe::Init(ECharacterID CharacterID, uint32 InLevel)
 		this->MaxEnergy = this->CurrentEnergy = WarframeInfo->Energy + (Level - 1) * 10;
 	}
 
-	AbilityStrength = 1.0f;
-	AbilityRange = 1.0f;
-	AbilityEfficiency = 1.0f;
-	AbilityDuration = 1.0f;
-
-	// Apply mods.
-
-	this->OnLevelChanged();
-}
-
-void AWarframe::OnLevelChanged()
-{
 	// Ability 0.
 	if (Level >= 18)
 	{

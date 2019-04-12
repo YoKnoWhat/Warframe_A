@@ -4,13 +4,14 @@
 #include "Character/AISense_Sight_NoAutoRegister.h"
 #include "Character/StateMachineComponent.h"
 #include "Character/WarframeCharacterAIController.h"
-#include "Environment/PickableObject/PickableObject.h"
+#include "Gameplay/PickableObject/PickableObject.h"
 #include "Gameplay/WarframeConfigSingleton.h"
 #include "Gameplay/WarframeGameInstance.h"
 #include "Gameplay/WarframeGameMode.h"
 #include "UI/CharacterWidget.h"
 #include "UI/CharacterWidgetComponent.h"
 #include "Weapon/RoundBase.h"
+#include "Weapon/WeaponBase.h"
 #include "Weapon/WeaponFactory.h"
 
 #include "Runtime/AIModule/Classes/Perception/AIPerceptionStimuliSourceComponent.h"
@@ -198,14 +199,16 @@ void AWarframeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 }
 
-void AWarframeCharacter::InitPropertiesBP(int32 CharacterID, int32 InLevel)
+void AWarframeCharacter::InitPropertiesBP(int32 InCharacterID)
 {
-	this->Init(static_cast<ECharacterID>(CharacterID), static_cast<uint32>(InLevel));
+	this->Init(static_cast<ECharacterID>(InCharacterID));
 }
 
-void AWarframeCharacter::Init(ECharacterID CharacterID, uint32 InLevel)
+void AWarframeCharacter::Init(ECharacterID InCharacterID)
 {
-	this->Level = InLevel;
+	CharacterID = InCharacterID;
+
+	this->SetLevel(1);
 
 	UWarframeGameInstance *GameInstance = Cast<UWarframeGameInstance>(this->GetGameInstance());
 
@@ -216,12 +219,23 @@ void AWarframeCharacter::Init(ECharacterID CharacterID, uint32 InLevel)
 		this->Name = CharacterInfo->Name;
 
 		this->HealthType = CharacterInfo->HealthType;
-		this->MaxHealth = this->CurrentHealth = this->PropertyLevelScaling(CharacterInfo->Health, CharacterInfo->BaseLevel, 2.0f, 0.015f, Level);
-
 		this->ShieldType = CharacterInfo->ShieldType;
-		this->MaxShield = this->CurrentShield = this->PropertyLevelScaling(CharacterInfo->Shield, CharacterInfo->BaseLevel, 2.0f, 0.0075f, Level);
-
 		this->ArmorType = CharacterInfo->ArmorType;
+	}
+}
+
+void AWarframeCharacter::SetLevel(uint32 InLevel)
+{
+	this->Level = InLevel;
+
+	UWarframeGameInstance *GameInstance = Cast<UWarframeGameInstance>(this->GetGameInstance());
+
+	const FCharacterInfo *CharacterInfo = GameInstance->GetCharacterInfo(CharacterID);
+
+	if (CharacterInfo != nullptr)
+	{
+		this->MaxHealth = this->CurrentHealth = this->PropertyLevelScaling(CharacterInfo->Health, CharacterInfo->BaseLevel, 2.0f, 0.015f, Level);
+		this->MaxShield = this->CurrentShield = this->PropertyLevelScaling(CharacterInfo->Shield, CharacterInfo->BaseLevel, 2.0f, 0.0075f, Level);
 		this->Armor = this->PropertyLevelScaling(CharacterInfo->Armor, CharacterInfo->BaseLevel, 1.75f, 0.005f, Level);
 
 		this->Affinity = this->PropertyLevelScaling(CharacterInfo->Affinity, CharacterInfo->BaseLevel, 0.5f, 0.1425f, Level);
@@ -789,9 +803,9 @@ float AWarframeCharacter::GetStatusTime(EDamageType Type)const
 	return 0.0f;
 }
 
-AWeaponBase* AWarframeCharacter::CreateWeapon(int32 WeaponID)
+AWeaponBase* AWarframeCharacter::CreateWeapon(int32 WeaponID, const FTransform& Transform)
 {
-	return FWeaponFactory::Instance().CreateWeapon(this, static_cast<EWeaponID>(WeaponID));
+	return FWeaponFactory::Instance().SpawnWeapon<AWeaponBase>(this, static_cast<EWeaponID>(WeaponID), Transform);
 }
 
 float AWarframeCharacter::PropertyLevelScaling(float BaseValue, float BaseLevel, float Exponent, float Coefficient, float CurrentLevel)

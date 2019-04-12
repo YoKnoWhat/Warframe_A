@@ -28,22 +28,13 @@ public:
 
 	~AWarframe();
 
-protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason)override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaTime)override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	virtual void Init(ECharacterID CharacterID, uint32 Level)override;
-
-	virtual void OnLevelChanged();
+	virtual void SetLevel(uint32 InLevel)override;
 
 	void GainEnergy(float Value);
 
@@ -95,6 +86,9 @@ public:
 	{
 		return CurrentEnergy;
 	}
+
+protected:
+	virtual void Init(ECharacterID InCharacterID)override;
 
 protected:
 	uint32 MaxEnergy;

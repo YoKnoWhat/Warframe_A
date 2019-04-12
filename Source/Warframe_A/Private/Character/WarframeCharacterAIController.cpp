@@ -4,6 +4,7 @@
 #include "Character/WarframeCharacter.h"
 #include "Character/AISense_Sight_NoAutoRegister.h"
 
+#include "Runtime/AIModule/Classes/Navigation/CrowdFollowingComponent.h"
 #include "Runtime/AIModule/Classes/Perception/AIPerceptionComponent.h"
 #include "Runtime/AIModule/Classes/Perception/AISenseConfig_Hearing.h"
 #include "Runtime/AIModule/Classes/Perception/AISenseConfig_Sight.h"
@@ -11,7 +12,7 @@
 
 
 AWarframeCharacterAIController::AWarframeCharacterAIController(const FObjectInitializer& ObjectInitializer) :
-	Super(ObjectInitializer)
+	Super(ObjectInitializer.SetDefaultSubobjectClass<UCrowdFollowingComponent>("PathFollowingComponent"))
 {
 	/** Target selection component creation. */
 	TargetSelection = ObjectInitializer.CreateDefaultSubobject<UAITargetSelectionComponent>(this, "TargetSelection");

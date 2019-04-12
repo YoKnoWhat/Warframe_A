@@ -4,14 +4,17 @@
 #include "Character/TargetSelectionComponent.h"
 #include "Character/WarframeCharacter.h"
 #include "Gameplay/WarframeGameInstance.h"
+#include "Gameplay/WarframeConfigSingleton.h"
 #include "Weapon/RoundBase.h"
 #include "Weapon/TriggerModifier.h"
 
 #include "Runtime/AIModule/Classes/Perception/AISense_Hearing.h"
-#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
+#include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
+#include "Runtime/Engine/Classes/Engine/SkeletalMesh.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Kismet/KismetSystemLibrary.h"
+#include "Runtime/Engine/Classes/Particles/ParticleSystem.h"
 #include "Runtime/Engine/Public/TimerManager.h"
 
 
@@ -21,8 +24,8 @@ AWeaponBase::AWeaponBase(const FObjectInitializer& ObjectInitializer) :
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	MeshComponent = Cast<UMeshComponent>(ObjectInitializer.CreateDefaultSubobject(this, "Mesh", UMeshComponent::StaticClass(), UStaticMeshComponent::StaticClass(), true, false, false));
+	
+	MeshComponent = Cast<UMeshComponent>(ObjectInitializer.CreateDefaultSubobject(this, "Mesh", USkeletalMeshComponent::StaticClass(), USkeletalMeshComponent::StaticClass(), true, false, false));
 	MeshComponent->SetupAttachment(this->RootComponent);
 }
 
@@ -71,19 +74,15 @@ void AWeaponBase::Tick(float DeltaTime)
 	}
 }
 
-void AWeaponBase::InitBP(int32 WeaponID, int32 InLevel/*Polarities, Mods*/)
-{
-	this->Init(static_cast<EWeaponID>(WeaponID), InLevel);
-}
-
-void AWeaponBase::Init(EWeaponID WeaponID, uint32 InLevel)
+void AWeaponBase::Init(EWeaponID WeaponID)
 {
 	UWarframeGameInstance *GameInstance = Cast<UWarframeGameInstance>(this->GetGameInstance());
 
 	const FWeaponInfo *WeaponInfo = GameInstance->GetWeaponInfo(WeaponID);
 
+	this->SetLevel(1);
+
 	this->Name = WeaponInfo->Name;
-	this->Level = InLevel;
 	this->AmmoType = WeaponInfo->AmmoType;
 	this->MagazineCapacity = WeaponInfo->Magazine;
 	this->AmmoMaximum = WeaponInfo->Ammo;
@@ -230,6 +229,18 @@ void AWeaponBase::Init(EWeaponID WeaponID, uint32 InLevel)
 	this->CurrentFireMode = 0;
 
 	TimeSinceLastFire = GetFireInterval() + 1.0f;
+
+	// Set weapon appearance.
+	const FWeaponAppearance *WeaponAppearance = GameInstance->GetWeaponAppearance(WeaponID);
+
+	Cast<USkeletalMeshComponent>(this->MeshComponent)->SetSkeletalMesh(FWarframeConfigSingleton::Instance().FindResource<USkeletalMesh>(WeaponAppearance->Mesh));
+	this->FireEmitter = FWarframeConfigSingleton::Instance().FindResource<UParticleSystem>(WeaponAppearance->FireEmitter);
+	WeaponAppearance->ReloadAnim;
+}
+
+void AWeaponBase::SetLevel(uint32 InLevel)
+{
+	this->Level = InLevel;
 }
 
 UClass* AWeaponBase::GetRoundClass_Implementation()const
@@ -239,11 +250,11 @@ UClass* AWeaponBase::GetRoundClass_Implementation()const
 
 ARoundBase* AWeaponBase::OnRoundFired_Implementation(const FHitResult& CurrentTarget)
 {
-	// SpawnEmitter.
-
-	// GetSocketLocation.
 	FVector SocketLocation = MeshComponent->GetSocketLocation("Socket_Muzzle");
 
+	// SpawnEmitter.
+	UGameplayStatics::SpawnEmitterAtLocation(this, FireEmitter, SocketLocation);
+	
 	FTransform SpawnTransform(
 		(CurrentTarget.ImpactPoint - SocketLocation).ToOrientationRotator(),
 		SocketLocation,

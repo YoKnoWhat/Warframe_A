@@ -8,15 +8,8 @@
 
 
 AStaticor::AStaticor(const FObjectInitializer& ObjectInitializer) :
-	Super(ObjectInitializer.SetDefaultSubobjectClass<USkeletalMeshComponent>("Mesh"))
+	Super(ObjectInitializer)
 {}
-
-void AStaticor::Init(EWeaponID WeaponID, uint32 InLevel)
-{
-	Super::Init(WeaponID, InLevel);
-
-	// this->MaxChargedRounds = 4;
-}
 
 UClass* AStaticor::GetRoundClass_Implementation()const
 {

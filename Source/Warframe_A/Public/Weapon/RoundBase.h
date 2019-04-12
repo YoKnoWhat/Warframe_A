@@ -27,6 +27,10 @@ public:
 
 	virtual void Init(AWeaponBase* Weapon);
 
+	/**
+	 * Call this method to apply damage to target.
+	 * The round will not be destroyed.
+	 */
 	UFUNCTION(BlueprintCallable)
 	void OnHit(AActor *Target, FVector HitLocation);
 

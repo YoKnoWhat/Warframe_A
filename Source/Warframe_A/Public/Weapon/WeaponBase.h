@@ -40,6 +40,8 @@ class WARFRAME_A_API AWeaponBase : public AActor
 {
 	GENERATED_BODY()
 
+	friend class FWeaponFactory;
+
 public:	
 	// Sets default values for this actor's properties
 	AWeaponBase(const FObjectInitializer& ObjectInitializer);
@@ -53,11 +55,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION(BlueprintCallable)
-	void InitBP(int32 WeaponID, int32 Level/*Polarities, Mods*/);
-
-	/** Override this method to init the extra properties of derived weapon. */
-	virtual void Init(EWeaponID WeaponID, uint32 Level/*Polarities, Mods*/);
+	virtual void SetLevel(uint32 InLevel);
 
 	/** Override this method to provide the correct class of derived weapon. */
 	UFUNCTION(BlueprintNativeEvent)
@@ -290,6 +288,9 @@ public:
 	}
 
 protected:
+	/** Override this method to init the extra properties of derived weapon. */
+	virtual void Init(EWeaponID WeaponID/*Polarities, Mods*/);
+
 	class FTriggerModifier* InitTriggerModifier(const struct FWeaponModeInfo& ModeInfo);
 
 	void Reload();
@@ -300,8 +301,12 @@ protected:
 	}
 
 protected:
+	/** Static or skeletal mesh component instance determined by overrider. */
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	class UMeshComponent* MeshComponent;
+
+	UPROPERTY()
+	class UParticleSystem* FireEmitter;
 
 	FName Name;
 	uint32 Level;

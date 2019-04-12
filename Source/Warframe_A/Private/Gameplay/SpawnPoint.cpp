@@ -1,9 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Gameplay/SpawnPoint.h"
+#include "Character/CharacterFactory.h"
 #include "Character/WarframeCharacter.h"
-#include "Gameplay/WarframeGameMode.h"
 #include "Gameplay/WarframeGameInstance.h"
+#include "Gameplay/WarframeGameMode.h"
 
 #include "Runtime/Engine/Classes/Animation/AnimInstance.h"
 #include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
@@ -46,7 +47,9 @@ void USpawnPoint::SpawnIfAllKilled()
 
 		for (uint32 SpawnIndex = 0; SpawnIndex < SpawnInfo.Number; ++SpawnIndex)
 		{
-			AWarframeCharacter *NewCharacter = this->GetWorld()->SpawnActor<AWarframeCharacter>(this->Location, FRotator::ZeroRotator, SpawnParams);
+			FTransform CharacterTransform(FRotator::ZeroRotator, Location);
+
+			AWarframeCharacter *NewCharacter = FCharacterFactory::Instance().SpawnCharacter<AWarframeCharacter>(GameMode, SpawnInfo.CharacterID, CharacterTransform);
 			if (NewCharacter != nullptr)
 			{
 				this->SpawnedCharacters.Add(NewCharacter);
@@ -64,7 +67,7 @@ void USpawnPoint::SpawnIfAllKilled()
 				CapsuleComponent->SetCapsuleHalfHeight(CharacterAppearance->HalfHeight);
 				CapsuleComponent->SetCapsuleRadius(CharacterAppearance->Radius);
 
-				NewCharacter->Init(static_cast<ECharacterID>(SpawnInfo.CharacterID), SpawnInfo.Level);
+				NewCharacter->SetLevel(SpawnInfo.Level);
 
 				/** Bind event to ACharacter::OnDestroyed(). */
 				NewCharacter->OnDied.AddUObject(this, &USpawnPoint::OnCharacterDied);

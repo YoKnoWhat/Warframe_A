@@ -17,10 +17,8 @@ public:
 
 	virtual void Tick(float DeltaTime)override;
 
-	virtual void Init(ECharacterID CharacterID, uint32 Level)override;
-
-	virtual void OnLevelChanged()override;
+	virtual void SetLevel(uint32 InLevel)override;
 
 protected:
-
+	virtual void Init(ECharacterID InCharacterID)override;
 };

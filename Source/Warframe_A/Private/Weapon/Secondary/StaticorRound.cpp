@@ -53,7 +53,7 @@ void AStaticorRound::NotifyActorBeginOverlap(AActor* OtherActor)
 			this->OnHit(Actor, Actor->GetActorLocation());
 		}
 
-		UParticleSystem* ParticleSystem = FWarframeConfigSingleton::Instance().FindResource<UParticleSystem>("P_StaticorExplosion");
+		UParticleSystem* ParticleSystem = FWarframeConfigSingleton::Instance().FindResource<UParticleSystem>("PS_StaticorExplosion");
 
 		UGameplayStatics::SpawnEmitterAtLocation(this, ParticleSystem, GetActorLocation());
 

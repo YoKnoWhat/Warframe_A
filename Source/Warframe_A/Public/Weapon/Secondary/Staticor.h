@@ -13,8 +13,6 @@ class WARFRAME_A_API AStaticor : public AWeaponBase
 public:
 	AStaticor(const FObjectInitializer& ObjectInitializer);
 
-	virtual void Init(EWeaponID WeaponID, uint32 Level/*Polarities, Mods*/)override;
-
 	virtual UClass* GetRoundClass_Implementation()const override;
 
 	bool IsFullCharged()const;

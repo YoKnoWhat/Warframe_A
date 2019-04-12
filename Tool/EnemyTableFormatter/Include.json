@@ -336,6 +336,30 @@
             ]
         },
         {
+            "Name": "WeaponMesh",
+            "Type": "uint32",
+            "Definition":
+            [
+                "SKM_AK"
+            ]
+        },
+        {
+            "Name": "FireEmitter",
+            "Type": "uint32",
+            "Definition":
+            [
+                "PS_ChickenMaster_MuzzleFlash"
+            ]
+        },
+        {
+            "Name": "ReloadAnim",
+            "Type": "uint32",
+            "Definition":
+            [
+                "None"
+            ]
+        },
+        {
             "Name": "PickableObjectMesh",
             "Type": "uint32",
             "Definition":

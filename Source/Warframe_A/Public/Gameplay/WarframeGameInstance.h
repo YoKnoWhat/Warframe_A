@@ -100,6 +100,13 @@ struct FWeaponInfo
 	EAmmoType AmmoType;
 };
 
+struct FWeaponAppearance
+{
+	FName		Mesh;
+	FName		FireEmitter;
+	FName		ReloadAnim;
+};
+
 struct FPickableObjectInfo
 {
 	FLinearColor	BeamColor;
@@ -131,6 +138,8 @@ public:
 
 	const FWeaponInfo* GetWeaponInfo(EWeaponID WeaponID)const;
 
+	const FWeaponAppearance* GetWeaponAppearance(EWeaponID WeaponID)const;
+
 	const FPickableObjectInfo* GetPickableObjectInfo(EPickableObjectID PickableObjectID)const;
 
 protected:
@@ -146,6 +155,8 @@ protected:
 
 	void ReadInWeaponTable(const char* Begin, const char* End);
 
+	void ReadInWeaponAppearanceTable(const char* Begin, const char* End);
+
 	void ReadInPickableObjectTable(const char* Begin, const char* End);
 
 protected:
@@ -158,6 +169,8 @@ protected:
 	TArray<FWarframeInfo> WarframeInfoArray;
 
 	TArray<FWeaponInfo> WeaponInfoArray;
+
+	TArray<FWeaponAppearance> WeaponAppearanceArray;
 
 	TArray<FPickableObjectInfo> PickableObjectInfoArray;
 };

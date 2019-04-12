@@ -60,7 +60,7 @@ const FEnemyInfo* UWarframeGameInstance::GetEnemyInfo(ECharacterID CharacterID)c
 const FWarframeInfo* UWarframeGameInstance::GetWarframeInfo(ECharacterID CharacterID)const
 {
 	// Mapping character id to warframe id.
-	int32 WarframeID = CastToUnderlyingType(CharacterID) - CastToUnderlyingType(ECharacterID::EndEnemy) - 1;
+	int32 WarframeID = CastToUnderlyingType(CharacterID) - CastToUnderlyingType(ECharacterID::Enemy_End) - 1;
 	
 	return &WarframeInfoArray[WarframeID];
 }
@@ -68,6 +68,11 @@ const FWarframeInfo* UWarframeGameInstance::GetWarframeInfo(ECharacterID Charact
 const FWeaponInfo* UWarframeGameInstance::GetWeaponInfo(EWeaponID WeaponID)const
 {
 	return &WeaponInfoArray[static_cast<int32>(WeaponID)];
+}
+
+const FWeaponAppearance* UWarframeGameInstance::GetWeaponAppearance(EWeaponID WeaponID)const
+{
+	return &WeaponAppearanceArray[static_cast<int32>(WeaponID)];
 }
 
 const FPickableObjectInfo* UWarframeGameInstance::GetPickableObjectInfo(EPickableObjectID PickableObjectID)const
@@ -136,6 +141,18 @@ void UWarframeGameInstance::ReadInDataTables()
 		if (Warframe::GetFileContent(FilePath, Begin, End))
 		{
 			this->ReadInWeaponTable(Begin, End);
+
+			delete Begin;
+		}
+	}
+
+	// Read in weapon appearance table.
+	{
+		FilePath = FPaths::ProjectContentDir() + TEXT("DataTable/WeaponAppearanceTable.dt");
+
+		if (Warframe::GetFileContent(FilePath, Begin, End))
+		{
+			this->ReadInWeaponAppearanceTable(Begin, End);
 
 			delete Begin;
 		}
@@ -272,7 +289,7 @@ void UWarframeGameInstance::ReadInCharacterAppearanceTable(const char* Begin, co
 void UWarframeGameInstance::ReadInEnemyTable(const char* Begin, const char* End)
 {
 	// Reserve space for all enemy info
-	EnemyInfoArray.SetNum(static_cast<int32>(CastToUnderlyingType(ECharacterID::EndEnemy) - CastToUnderlyingType(ECharacterID::Begin) + 1));
+	EnemyInfoArray.SetNum(static_cast<int32>(CastToUnderlyingType(ECharacterID::Enemy_End) - CastToUnderlyingType(ECharacterID::Begin) + 1));
 
 	// Read in warframe info.
 	ECharacterID EnemyID;
@@ -293,7 +310,7 @@ void UWarframeGameInstance::ReadInEnemyTable(const char* Begin, const char* End)
 void UWarframeGameInstance::ReadInWarframeTable(const char* Begin, const char* End)
 {
 	// Reserve space for all warframe info
-	WarframeInfoArray.SetNum(static_cast<int32>(CastToUnderlyingType(ECharacterID::End) - CastToUnderlyingType(ECharacterID::EndEnemy)));
+	WarframeInfoArray.SetNum(static_cast<int32>(CastToUnderlyingType(ECharacterID::End) - CastToUnderlyingType(ECharacterID::Enemy_End)));
 
 	// Read in warframe info.
 	ECharacterID CharacterID;
@@ -303,7 +320,7 @@ void UWarframeGameInstance::ReadInWarframeTable(const char* Begin, const char* E
 		CharacterID = *reinterpret_cast<const ECharacterID*>(Begin);
 		Begin += sizeof(CharacterID);
 
-		int32 WarframeID = CastToUnderlyingType(CharacterID) - CastToUnderlyingType(ECharacterID::EndEnemy) - 1;
+		int32 WarframeID = CastToUnderlyingType(CharacterID) - CastToUnderlyingType(ECharacterID::Enemy_End) - 1;
 
 		FWarframeInfo& NewWarframeInfo = WarframeInfoArray[static_cast<int32>(WarframeID)];
 
@@ -391,6 +408,93 @@ void UWarframeGameInstance::ReadInWeaponTable(const char* Begin, const char* End
 		Warframe::ReadIn(CurrentWeaponMode.Magnetic, Begin);
 		Warframe::ReadIn(CurrentWeaponMode.Viral, Begin);
 		Warframe::ReadIn(CurrentWeaponMode.Corrosive, Begin);
+	}
+}
+
+void UWarframeGameInstance::ReadInWeaponAppearanceTable(const char* Begin, const char* End)
+{	
+	// Reserve space for all weapon appearances.
+	WeaponAppearanceArray.SetNum(static_cast<int32>(CastToUnderlyingType(EWeaponID::End) - CastToUnderlyingType(EWeaponID::Begin) + 1));
+
+	TArray<FName> MeshArray;
+
+	// Read in mesh list.
+	{
+		uint32 MeshCount;
+		MeshCount = *reinterpret_cast<const uint32*>(Begin);
+		Begin += sizeof(MeshCount);
+
+		MeshArray.SetNum(MeshCount);
+
+		uint32 WordLength;
+
+		for (uint32 i = 0; i < MeshCount; ++i)
+		{
+			FName NewMesh = Warframe::GetWord(Begin, '\0', WordLength);
+			MeshArray[i] = NewMesh;
+			Begin += WordLength + 1;
+		}
+	}
+
+	TArray<FName> FireEmitterArray;
+
+	// Read in mesh list.
+	{
+		uint32 FireEmitterCount;
+		FireEmitterCount = *reinterpret_cast<const uint32*>(Begin);
+		Begin += sizeof(FireEmitterCount);
+
+		FireEmitterArray.SetNum(FireEmitterCount);
+
+		uint32 WordLength;
+
+		for (uint32 i = 0; i < FireEmitterCount; ++i)
+		{
+			FName NewMesh = Warframe::GetWord(Begin, '\0', WordLength);
+			FireEmitterArray[i] = NewMesh;
+			Begin += WordLength + 1;
+		}
+	}
+
+	TArray<FName> ReloadAnimArray;
+
+	// Read in reload anim list.
+	{
+		uint32 ReloadAnimCount;
+		ReloadAnimCount = *reinterpret_cast<const uint32*>(Begin);
+		Begin += sizeof(ReloadAnimCount);
+
+		ReloadAnimArray.SetNum(ReloadAnimCount);
+
+		uint32 WordLength;
+
+		for (uint32 i = 0; i < ReloadAnimCount; ++i)
+		{
+			FName NewReloadAnim = Warframe::GetWord(Begin, '\0', WordLength);
+			ReloadAnimArray[i] = NewReloadAnim;
+			Begin += WordLength + 1;
+		}
+	}
+
+	// Read in weapon appearances.
+	{
+		EWeaponID WeaponID;
+		uint32 tempUint32;
+
+		while (Begin != End)
+		{
+			WeaponID = *reinterpret_cast<const EWeaponID*>(Begin);
+			Begin += sizeof(WeaponID);
+
+			FWeaponAppearance& NewAppearance = WeaponAppearanceArray[static_cast<int32>(WeaponID)];
+
+			Warframe::ReadIn(tempUint32, Begin);
+			NewAppearance.Mesh = MeshArray[tempUint32];
+			Warframe::ReadIn(tempUint32, Begin);
+			NewAppearance.FireEmitter = MeshArray[tempUint32];
+			Warframe::ReadIn(tempUint32, Begin);
+			NewAppearance.ReloadAnim = ReloadAnimArray[tempUint32];
+		}
 	}
 }
 

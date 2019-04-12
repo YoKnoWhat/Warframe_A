@@ -25,12 +25,12 @@ void AExcalibur::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AExcalibur::Init(ECharacterID CharacterID, uint32 InLevel)
+void AExcalibur::Init(ECharacterID InCharacterID)
 {
-	Super::Init(CharacterID, InLevel);
+	Super::Init(InCharacterID);
 }
 
-void AExcalibur::OnLevelChanged()
+void AExcalibur::SetLevel(uint32 InLevel)
 {
-	Super::OnLevelChanged();
+	Super::SetLevel(InLevel);
 }

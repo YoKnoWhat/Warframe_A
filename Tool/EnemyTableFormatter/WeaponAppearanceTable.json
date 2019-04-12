@@ -1,0 +1,17 @@
+{
+    "SrcFilePath": "C:/Users/aer/Desktop/WeaponAppearanceTable.csv",
+    "DstFilePath": "C:/Users/aer/Desktop/WeaponAppearanceTable.dt",
+    "OutputCustomType":
+    [
+        "WeaponMesh",
+        "FireEmitter",
+        "ReloadAnim"
+    ],
+    "ColumnType":
+    [
+        "WeaponID",
+        "WeaponMesh",
+        "FireEmitter",
+        "ReloadAnim"
+    ]
+}

@@ -7,10 +7,13 @@
     "ResourceRefs": [
         {"Type": "UMaterial", "Ref": "M_HeaderBarFill=Material'/Game/UI/Materials/M_HealthBarFill.M_HealthBarFill'"},
 
-        {"Type": "UParticleSystem", "Ref": "P_StaticorExplosion=ParticleSystem'/Game/Weapons/Secondary/Staticor/P_StaticorExplosion.P_StaticorExplosion'"},
         {"Type": "UParticleSystem", "Ref": "PS_AmmoBeam=ParticleSystem'/Game/Environment/PS_AmmoBeam.PS_AmmoBeam'"},
+        {"Type": "UParticleSystem", "Ref": "PS_ChickenMaster_MuzzleFlash=ParticleSystem'/Game/InfinityBladeEffects/Effects/FX_Monsters/FX_Monster_Chicken/P_ChickenMaster_MuzzleFlash_01.P_ChickenMaster_MuzzleFlash_01'"},
+        {"Type": "UParticleSystem", "Ref": "PS_StaticorExplosion=ParticleSystem'/Game/Weapons/Secondary/Staticor/P_StaticorExplosion.P_StaticorExplosion'"},
 
         {"Type": "UStaticMesh", "Ref": "SM_NarrowCapsule=StaticMesh'/Game/Weapons/Base/SM_NarrowCapsule.SM_NarrowCapsule'"},
+        
+        {"Type": "USkeletalMesh", "Ref": "SKM_AK=SkeletalMesh'/Game/Weapons/AK47/AK.AK'"},
 
         {"Type": "UTexture2D", "Ref": "T_Slash_Small=Texture2D'/Game/UI/Textures/Status/T_Slash_Small.T_Slash_Small'"},
         {"Type": "UTexture2D", "Ref": "T_Impact_Small=Texture2D'/Game/UI/Textures/Status/T_Impact_Small.T_Impact_Small'"},

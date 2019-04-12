@@ -1,5 +1,7 @@
 
 #include "Weapon/WeaponFactory.h"
+#include "Character/WarframeCharacter.h"
+#include "Weapon/Primary/BratonPrime.h"
 #include "Weapon/Secondary/Staticor.h"
 
 #include "Runtime/Engine/Classes/Engine/World.h"
@@ -11,23 +13,38 @@ FWeaponFactory& FWeaponFactory::Instance()
 	return Inst;
 }
 
-AWeaponBase* FWeaponFactory::CreateWeapon(UObject* Outer, EWeaponID WeaponID)
+AWeaponBase* FWeaponFactory::SpawnWeaponImpl(AActor* Owner, EWeaponID WeaponID, const FTransform& Transform)
 {
+	AWeaponBase* Weapon;
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = Owner;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
 	UClass** Result = OverrideClasses.Find(WeaponID);
 	if (Result != nullptr)
 	{
-		return NewObject<AWeaponBase>(Outer, *Result);
+		Weapon = Owner->GetWorld()->SpawnActor<AWeaponBase>(*Result, Transform, SpawnParams);
 	}
 	else
 	{
 		switch (WeaponID)
 		{
+		case EWeaponID::BratonPrime:
+			Weapon = Owner->GetWorld()->SpawnActor<AWeaponBase>(ABratonPrime::StaticClass(), Transform, SpawnParams);
+			break;
 		case EWeaponID::Staticor:
-			return NewObject<AStaticor>(Outer);
+			Weapon = Owner->GetWorld()->SpawnActor<AWeaponBase>(AStaticor::StaticClass(), Transform, SpawnParams);
+			break;
 		default:
-			return NewObject<AWeaponBase>(Outer);
+			Weapon = Owner->GetWorld()->SpawnActor<AWeaponBase>(AWeaponBase::StaticClass(), Transform, SpawnParams);
+			break;
 		}
 	}
+
+	Weapon->Init(WeaponID);
+	Weapon->Instigator = Cast<AWarframeCharacter>(Owner);
+	return Weapon;
 }
 
 void FWeaponFactory::SetOverride(EWeaponID WeaponID, UClass* OverrideClass)

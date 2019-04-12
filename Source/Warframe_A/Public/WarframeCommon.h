@@ -114,8 +114,11 @@ enum class ECharacterID : uint16
 
 	None = Begin,
 
+	// Grineer begin
+	Grineer_Begin,
+
 	// Light Grineer units
-	Butcher,
+	Butcher = Grineer_Begin,
 	Flameblade,
 	Guardsman,
 	Powerfist,
@@ -143,10 +146,17 @@ enum class ECharacterID : uint16
 	Napalm,
 	Nox,
 
+	Grineer_End = Nox,
+
+	// Grineer end
+
 	// ...
 
+	// Corpus begin
+	Corpus_Begin,
+
 	// Corpus crewmen
-	Crewman,
+	Crewman = Corpus_Begin,
 	DetronCrewman,
 	SniperCrewman,
 	EliteCrewman,
@@ -175,10 +185,15 @@ enum class ECharacterID : uint16
 	AttackDrone,
 	ScavengerDrone,
 
-	EndEnemy = ScavengerDrone,
+	// Corpus end
+	Corpus_End = ScavengerDrone,
 
-	// Warframes
-	Ash,
+	Enemy_End = Corpus_End,
+
+	// Warframe begin
+	Warframe_Begin,
+
+	Ash = Warframe_Begin,
 	AshPrime,
 	Atlas,
 	Banshee,
@@ -241,7 +256,10 @@ enum class ECharacterID : uint16
 	Zephyr,
 	ZephyrPrime,
 
-	End = ZephyrPrime,
+	// Warframe end
+	Warframe_End = ZephyrPrime,
+
+	End = Warframe_End,
 };
 
 enum class EWeaponID : uint16
