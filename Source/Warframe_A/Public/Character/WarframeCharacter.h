@@ -67,6 +67,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void InitPropertiesBP(int32 InCharacterID);
 
+	UFUNCTION(BlueprintCallable)
+	void SetLevelBP(int32 InLevel)
+	{
+		this->SetLevel(static_cast<uint32>(InLevel));
+	}
+	
 	virtual void SetLevel(uint32 InLevel);
 
 	/**

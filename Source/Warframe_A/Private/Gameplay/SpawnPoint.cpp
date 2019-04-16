@@ -3,8 +3,11 @@
 #include "Gameplay/SpawnPoint.h"
 #include "Character/CharacterFactory.h"
 #include "Character/WarframeCharacter.h"
+#include "Gameplay/WarframeConfigSingleton.h"
 #include "Gameplay/WarframeGameInstance.h"
 #include "Gameplay/WarframeGameMode.h"
+#include "Weapon/WeaponBase.h"
+#include "Weapon/WeaponFactory.h"
 
 #include "Runtime/Engine/Classes/Animation/AnimInstance.h"
 #include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
@@ -54,20 +57,40 @@ void USpawnPoint::SpawnIfAllKilled()
 			{
 				this->SpawnedCharacters.Add(NewCharacter);
 
+				NewCharacter->SetLevel(SpawnInfo.Level);
+
 				/** Set character appearance. */
-				const FCharacterAppearance* CharacterAppearance = GameInstance->GetCharacterAppearance(static_cast<ECharacterID>(SpawnInfo.CharacterID));
+				const FCharacterAppearance* CharacterAppearance = GameInstance->GetCharacterAppearance(SpawnInfo.CharacterID);
 
 				USkeletalMeshComponent *SkeletalMeshComponent = Cast<USkeletalMeshComponent>(NewCharacter->GetComponentByClass(USkeletalMeshComponent::StaticClass()));
-				SkeletalMeshComponent->SetSkeletalMesh(LoadObject<USkeletalMesh>(nullptr, *CharacterAppearance->Mesh.ToString()));
+				SkeletalMeshComponent->SetSkeletalMesh(FWarframeConfigSingleton::Instance().FindResource<USkeletalMesh>(*CharacterAppearance->Mesh.ToString()));
 				SkeletalMeshComponent->SetRelativeLocation(CharacterAppearance->RelativeLocation);
 				SkeletalMeshComponent->SetRelativeRotation(CharacterAppearance->RelativeRotation);
-				SkeletalMeshComponent->SetAnimInstanceClass(LoadClass<UAnimInstance>(nullptr, *CharacterAppearance->AnimClass.ToString()));
+				SkeletalMeshComponent->SetAnimInstanceClass(FWarframeConfigSingleton::Instance().FindResourceClass(*CharacterAppearance->AnimClass.ToString()));
 
 				UCapsuleComponent* CapsuleComponent = NewCharacter->GetCapsuleComponent();
 				CapsuleComponent->SetCapsuleHalfHeight(CharacterAppearance->HalfHeight);
 				CapsuleComponent->SetCapsuleRadius(CharacterAppearance->Radius);
 
-				NewCharacter->SetLevel(SpawnInfo.Level);
+				/** Set character weapons. */
+				const FEnemyInfo* EnemyInfo = GameInstance->GetEnemyInfo(SpawnInfo.CharacterID);
+				EnemyInfo->Faction;
+
+				AWeaponBase* Weapon1 = FWeaponFactory::Instance().SpawnWeapon<AWeaponBase>(NewCharacter, EnemyInfo->Weapon1, FTransform());
+				if (Weapon1 != nullptr)
+				{
+					NewCharacter->SetWeapon(EWeaponSlotType::Primary, Weapon1);
+					Weapon1->AttachToComponent(NewCharacter->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "Socket_RightHand");
+				}
+
+				AWeaponBase* Weapon2 = FWeaponFactory::Instance().SpawnWeapon<AWeaponBase>(NewCharacter, EnemyInfo->Weapon2, FTransform());
+				if (Weapon2 != nullptr)
+				{
+					NewCharacter->SetWeapon(EWeaponSlotType::Secondary, Weapon2);
+					Weapon2->AttachToComponent(NewCharacter->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "Socket_RightHand");
+				}
+
+				NewCharacter->SwitchToRangedWeapon();
 
 				/** Bind event to ACharacter::OnDestroyed(). */
 				NewCharacter->OnDied.AddUObject(this, &USpawnPoint::OnCharacterDied);

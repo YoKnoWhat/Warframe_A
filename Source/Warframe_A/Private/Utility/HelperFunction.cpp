@@ -5,13 +5,16 @@
 #include "UI/CharacterHeaderPanel.h"
 
 #include "Editor/UMGEditor/Public/WidgetBlueprint.h"
+#include "Runtime/AIModule/Classes/BehaviorTree/BehaviorTree.h"
+#include "Runtime/AIModule/Classes/BehaviorTree/BlackboardData.h"
 #include "Runtime/Core/Public/Misc/Paths.h"
 #include "Runtime/Core/Public/HAL/PlatformFilemanager.h"
 #include "Runtime/Core/Public/GenericPlatform/GenericPlatformFile.h"
+#include "Runtime/Engine/Classes/Engine/SkeletalMesh.h"
+#include "Runtime/Engine/Classes/Engine/StaticMesh.h"
 #include "Runtime/Engine/Classes/Engine/Texture2D.h"
 #include "Runtime/Engine/Classes/Materials/Material.h"
 #include "Runtime/Engine/Classes/Particles/ParticleSystem.h"
-#include "Runtime/Engine/Classes/Engine/StaticMesh.h"
 
 
 namespace Warframe
@@ -88,6 +91,14 @@ namespace Warframe
 		}
 
 		// ResourceRefs
+		if (Name == "UBehaviorTree")
+		{
+			return UBehaviorTree::StaticClass();
+		}
+		if (Name == "UBlackboardData")
+		{
+			return UBlackboardData::StaticClass();
+		}
 		if (Name == "UMaterial")
 		{
 			return UMaterial::StaticClass();
@@ -95,6 +106,10 @@ namespace Warframe
 		if (Name == "UParticleSystem")
 		{
 			return UParticleSystem::StaticClass();
+		}
+		if (Name == "USkeletalMesh")
+		{
+			return USkeletalMesh::StaticClass();
 		}
 		if (Name == "UStaticMesh")
 		{

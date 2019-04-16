@@ -1,2 +1,5 @@
+[Character]
+Socket_RightHand
+
 [Weapon]
 Socket_Muzzle

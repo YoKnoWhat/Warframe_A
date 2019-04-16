@@ -36,6 +36,8 @@ AWeaponBase* FWeaponFactory::SpawnWeaponImpl(AActor* Owner, EWeaponID WeaponID, 
 		case EWeaponID::Staticor:
 			Weapon = Owner->GetWorld()->SpawnActor<AWeaponBase>(AStaticor::StaticClass(), Transform, SpawnParams);
 			break;
+		case EWeaponID::None:
+			return nullptr;
 		default:
 			Weapon = Owner->GetWorld()->SpawnActor<AWeaponBase>(AWeaponBase::StaticClass(), Transform, SpawnParams);
 			break;

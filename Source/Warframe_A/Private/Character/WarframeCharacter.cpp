@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/WarframeCharacter.h"
-#include "Character/AISense_Sight_NoAutoRegister.h"
 #include "Character/StateMachineComponent.h"
 #include "Character/WarframeCharacterAIController.h"
 #include "Gameplay/PickableObject/PickableObject.h"
@@ -17,6 +16,7 @@
 #include "Runtime/AIModule/Classes/Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Runtime/AIModule/Classes/Perception/AIPerceptionSystem.h"
 #include "Runtime/AIModule/Classes/Perception/AISense_Hearing.h"
+#include "Runtime/AIModule/Classes/Perception/AISense_Sight.h"
 #include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
@@ -33,7 +33,7 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 	PrimaryActorTick.bCanEverTick = true;
 
 	this->AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
-	this->AIControllerClass = FWarframeConfigSingleton::Instance().FindResourceClass("BP_WarframeCharacterAIController");
+	// this->AIControllerClass = FWarframeConfigSingleton::Instance().FindResourceClass("BP_WarframeCharacterAIController");
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -56,7 +56,7 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 	if (PerceptionSystem)
 	{
 		PerceptionSystem->RegisterSourceForSenseClass(UAISense_Hearing::StaticClass(), *this);
-		PerceptionSystem->RegisterSourceForSenseClass(UAISense_Sight_NoAutoRegister::StaticClass(), *this);
+		PerceptionSystem->RegisterSourceForSenseClass(UAISense_Sight::StaticClass(), *this);
 	}
 
 	this->SetGenericTeamId(FGenericTeamId::NoTeam);
@@ -76,9 +76,18 @@ void AWarframeCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 
-	PrimaryWeapon = nullptr;
-	SecondaryWeapon = nullptr;
-	MeleeWeapon = nullptr;
+	if (PrimaryWeapon != nullptr)
+	{
+		PrimaryWeapon->Destroy();
+	}
+	if (SecondaryWeapon != nullptr)
+	{
+		SecondaryWeapon->Destroy();
+	}
+	if (MeleeWeapon != nullptr)
+	{
+		MeleeWeapon->Destroy();
+	}
 
 	FStatusEffectData* Data;
 
@@ -202,26 +211,6 @@ void AWarframeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 void AWarframeCharacter::InitPropertiesBP(int32 InCharacterID)
 {
 	this->Init(static_cast<ECharacterID>(InCharacterID));
-}
-
-void AWarframeCharacter::Init(ECharacterID InCharacterID)
-{
-	CharacterID = InCharacterID;
-
-	this->SetLevel(1);
-
-	UWarframeGameInstance *GameInstance = Cast<UWarframeGameInstance>(this->GetGameInstance());
-
-	const FCharacterInfo *CharacterInfo = GameInstance->GetCharacterInfo(CharacterID);
-	
-	if (CharacterInfo != nullptr)
-	{
-		this->Name = CharacterInfo->Name;
-
-		this->HealthType = CharacterInfo->HealthType;
-		this->ShieldType = CharacterInfo->ShieldType;
-		this->ArmorType = CharacterInfo->ArmorType;
-	}
 }
 
 void AWarframeCharacter::SetLevel(uint32 InLevel)
@@ -801,6 +790,26 @@ float AWarframeCharacter::GetStatusTime(EDamageType Type)const
 		return Data->TickTime - InternalTime + Data->TickCount /* * 1.0f */;
 	}
 	return 0.0f;
+}
+
+void AWarframeCharacter::Init(ECharacterID InCharacterID)
+{
+	CharacterID = InCharacterID;
+
+	this->SetLevel(1);
+
+	UWarframeGameInstance *GameInstance = Cast<UWarframeGameInstance>(this->GetGameInstance());
+
+	const FCharacterInfo *CharacterInfo = GameInstance->GetCharacterInfo(CharacterID);
+
+	if (CharacterInfo != nullptr)
+	{
+		this->Name = CharacterInfo->Name;
+
+		this->HealthType = CharacterInfo->HealthType;
+		this->ShieldType = CharacterInfo->ShieldType;
+		this->ArmorType = CharacterInfo->ArmorType;
+	}
 }
 
 AWeaponBase* AWarframeCharacter::CreateWeapon(int32 WeaponID, const FTransform& Transform)

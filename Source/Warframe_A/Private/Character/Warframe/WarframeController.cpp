@@ -59,5 +59,8 @@ void AWarframeController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 
-	TargetSelection->UpdateSelectedTarget();
+	if (GetPawn() != nullptr)
+	{
+		TargetSelection->UpdateSelectedTarget();
+	}
 }

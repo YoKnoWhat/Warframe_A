@@ -68,13 +68,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Cover")
 	bool bRightCoverCrouched;
 
-	/** Is it a Right cover (can lean on Right) */
+	/** Can shoot from front crouched (can lean on Right) */
 	UPROPERTY(BlueprintReadWrite, Category = "Cover")
 	bool bFrontCoverCrouched;
-
-	/** Is it a cover requiring crouch */
-	UPROPERTY(BlueprintReadWrite, Category = "Cover")
-	bool bCrouchedCover;
 
 	/** Character to which this point has been given */
 	UPROPERTY()

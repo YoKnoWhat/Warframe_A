@@ -86,7 +86,7 @@ void UWarframeGameInstance::ReadInDataTables()
 	const char *Begin;
 	const char *End;
 
-	// Read in enemy table.
+	// Read in character table.
 	{
 		FilePath = FPaths::ProjectContentDir() + TEXT("DataTable/CharacterTable.dt");
 
@@ -438,7 +438,7 @@ void UWarframeGameInstance::ReadInWeaponAppearanceTable(const char* Begin, const
 
 	TArray<FName> FireEmitterArray;
 
-	// Read in mesh list.
+	// Read in fire emitter list.
 	{
 		uint32 FireEmitterCount;
 		FireEmitterCount = *reinterpret_cast<const uint32*>(Begin);
@@ -491,7 +491,7 @@ void UWarframeGameInstance::ReadInWeaponAppearanceTable(const char* Begin, const
 			Warframe::ReadIn(tempUint32, Begin);
 			NewAppearance.Mesh = MeshArray[tempUint32];
 			Warframe::ReadIn(tempUint32, Begin);
-			NewAppearance.FireEmitter = MeshArray[tempUint32];
+			NewAppearance.FireEmitter = FireEmitterArray[tempUint32];
 			Warframe::ReadIn(tempUint32, Begin);
 			NewAppearance.ReloadAnim = ReloadAnimArray[tempUint32];
 		}

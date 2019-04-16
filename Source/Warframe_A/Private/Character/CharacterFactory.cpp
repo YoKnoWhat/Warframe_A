@@ -1,6 +1,6 @@
 
 #include "Character/CharacterFactory.h"
-#include "Character/Grineer/Grineer.h"
+#include "Character/Corpus/Corpus.h"
 #include "Character/Warframe/Warframe.h"
 
 #include "Runtime/Engine/Classes/Engine/World.h"
@@ -29,12 +29,12 @@ AWarframeCharacter* FCharacterFactory::SpawnCharacterImpl(AActor* Owner, ECharac
 	{
 		if (ECharacterID::Grineer_Begin <= CharacterID && CharacterID <= ECharacterID::Grineer_End)
 		{
-			Character = Owner->GetWorld()->SpawnActor<AWarframeCharacter>(AGrineer::StaticClass(), Transform, SpawnParams);
+			// todo: you know
+			Character = Owner->GetWorld()->SpawnActor<AWarframeCharacter>(AWarframeCharacter::StaticClass(), Transform, SpawnParams);
 		}
 		else if (ECharacterID::Corpus_Begin <= CharacterID && CharacterID <= ECharacterID::Corpus_End)
 		{
-			// todo: you know
-			Character = Owner->GetWorld()->SpawnActor<AWarframeCharacter>(AWarframeCharacter::StaticClass(), Transform, SpawnParams);
+			Character = Owner->GetWorld()->SpawnActor<AWarframeCharacter>(ACorpus::StaticClass(), Transform, SpawnParams);
 		}
 		else if (ECharacterID::Warframe_Begin <= CharacterID && CharacterID <= ECharacterID::Warframe_End)
 		{

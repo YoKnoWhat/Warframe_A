@@ -3,13 +3,13 @@
     "DstFilePath": "C:/Users/aer/Desktop/CharacterAppearanceTable.dt",
     "OutputCustomType":
     [
-        "Mesh",
+        "CharacterMesh",
         "AnimClass"
     ],
     "ColumnType":
     [
         "CharacterID",
-        "Mesh",
+        "CharacterMesh",
         "AnimClass",
         "float",
         "float",

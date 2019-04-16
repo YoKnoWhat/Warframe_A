@@ -1,19 +1,29 @@
 {
     "ClassRefs": [
+        {"Type": "UAnimInstance", "Ref": "ABP_Warframe=AnimBlueprint'/Game/Characters/Tenno/ABP_Mannequin.ABP_Mannequin_C'"},
+        {"Type": "UAnimInstance", "Ref": "ABP_Corpus=AnimBlueprint'/Game/Characters/Corpus/ABP_Corpus.ABP_Corpus_C'"},
+        
         {"Type": "AWarframeCharacterAIController", "Ref": "BP_WarframeCharacterAIController=Blueprint'/Game/Characters/AI/BP_WarframeCharacterAIController.BP_WarframeCharacterAIController_C'"},
+
         {"Type": "UCharacterHeaderPanel", "Ref": "UI_CharacterHeaderPanel=WidgetBlueprint'/Game/UI/UI_CharacterHeaderPanel.UI_CharacterHeaderPanel_C'"},
+
         {"Type": "UStateMachineComponent", "Ref": "BP_TennoStateMachineComponent=Blueprint'/Game/Characters/Tenno/States/BP_TennoStateMachineComponent.BP_TennoStateMachineComponent_C'"}
     ],
     "ResourceRefs": [
+        {"Type": "UBehaviorTree", "Ref": "BT_CorpusBehaviorTree=BehaviorTree'/Game/Characters/Corpus/BT_CorpusBehaviorTree.BT_CorpusBehaviorTree'"},
+
+        {"Type": "UBlackboardData", "Ref": "BB_CorpusBlackboard=BlackboardData'/Game/Characters/Corpus/BB_CorpusBlackboard.BB_CorpusBlackboard'"},
+
         {"Type": "UMaterial", "Ref": "M_HeaderBarFill=Material'/Game/UI/Materials/M_HealthBarFill.M_HealthBarFill'"},
 
         {"Type": "UParticleSystem", "Ref": "PS_AmmoBeam=ParticleSystem'/Game/Environment/PS_AmmoBeam.PS_AmmoBeam'"},
-        {"Type": "UParticleSystem", "Ref": "PS_ChickenMaster_MuzzleFlash=ParticleSystem'/Game/InfinityBladeEffects/Effects/FX_Monsters/FX_Monster_Chicken/P_ChickenMaster_MuzzleFlash_01.P_ChickenMaster_MuzzleFlash_01'"},
+        {"Type": "UParticleSystem", "Ref": "PS_ChickenMaster_MuzzleFlash=ParticleSystem'/Game/Weapons/Primary/P_ChickenMaster_MuzzleFlash_02.P_ChickenMaster_MuzzleFlash_02'"},
         {"Type": "UParticleSystem", "Ref": "PS_StaticorExplosion=ParticleSystem'/Game/Weapons/Secondary/Staticor/P_StaticorExplosion.P_StaticorExplosion'"},
 
-        {"Type": "UStaticMesh", "Ref": "SM_NarrowCapsule=StaticMesh'/Game/Weapons/Base/SM_NarrowCapsule.SM_NarrowCapsule'"},
-        
         {"Type": "USkeletalMesh", "Ref": "SKM_AK=SkeletalMesh'/Game/Weapons/AK47/AK.AK'"},
+        {"Type": "USkeletalMesh", "Ref": "SKM_Mannequin=SkeletalMesh'/Game/AnimStarterPack/UE4_Mannequin/Mesh/SK_Mannequin.SK_Mannequin'"},
+        
+        {"Type": "UStaticMesh", "Ref": "SM_NarrowCapsule=StaticMesh'/Game/Weapons/Base/SM_NarrowCapsule.SM_NarrowCapsule'"},
 
         {"Type": "UTexture2D", "Ref": "T_Slash_Small=Texture2D'/Game/UI/Textures/Status/T_Slash_Small.T_Slash_Small'"},
         {"Type": "UTexture2D", "Ref": "T_Impact_Small=Texture2D'/Game/UI/Textures/Status/T_Impact_Small.T_Impact_Small'"},

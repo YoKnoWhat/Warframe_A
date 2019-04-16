@@ -13,9 +13,18 @@ class WARFRAME_A_API AWarframeCharacterAIController : public AAIController
 public:
 	AWarframeCharacterAIController(const FObjectInitializer& ObjectInitializer);
 
-	virtual void Possess(APawn* Pawn)override;
+	virtual void Possess(APawn* InPawn)override;
 
 	virtual void Tick(float DeltaTime)override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void BeginFire();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void StopFire();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void Reload();
 
 protected:
 	UPROPERTY()

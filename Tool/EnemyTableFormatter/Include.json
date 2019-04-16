@@ -328,11 +328,11 @@
             ]
         },
         {
-            "Name": "Mesh",
+            "Name": "CharacterMesh",
             "Type": "uint32",
             "Definition":
             [
-                "SkeletalMesh'/Game/AnimStarterPack/UE4_Mannequin/Mesh/SK_Mannequin.SK_Mannequin'"
+                "SKM_Mannequin"
             ]
         },
         {
@@ -372,7 +372,8 @@
             "Type": "uint32",
             "Definition":
             [
-                "AnimBlueprint'/Game/Characters/ABP_Mannequin.ABP_Mannequin_C'"
+                "ABP_Corpus",
+                "ABP_Warframe"
             ]
         }
     ]

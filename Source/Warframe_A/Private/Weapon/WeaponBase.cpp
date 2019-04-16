@@ -253,8 +253,8 @@ ARoundBase* AWeaponBase::OnRoundFired_Implementation(const FHitResult& CurrentTa
 	FVector SocketLocation = MeshComponent->GetSocketLocation("Socket_Muzzle");
 
 	// SpawnEmitter.
-	UGameplayStatics::SpawnEmitterAtLocation(this, FireEmitter, SocketLocation);
-	
+	UGameplayStatics::SpawnEmitterAttached(FireEmitter, this->MeshComponent, "Socket_Muzzle", FVector::ZeroVector, FRotator::ZeroRotator);
+
 	FTransform SpawnTransform(
 		(CurrentTarget.ImpactPoint - SocketLocation).ToOrientationRotator(),
 		SocketLocation,
