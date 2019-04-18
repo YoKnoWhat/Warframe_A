@@ -1,6 +1,5 @@
 
 #include "Utility/HelperFunction.h"
-#include "Character/StateMachineComponent.h"
 #include "Character/WarframeCharacterAIController.h"
 #include "UI/CharacterHeaderPanel.h"
 
@@ -80,10 +79,6 @@ namespace Warframe
 		if (Name == "AWarframeCharacterAIController")
 		{
 			return AWarframeCharacterAIController::StaticClass();
-		}
-		if (Name == "UStateMachineComponent")
-		{
-			return UStateMachineComponent::StaticClass();
 		}
 		if (Name == "UCharacterHeaderPanel")
 		{

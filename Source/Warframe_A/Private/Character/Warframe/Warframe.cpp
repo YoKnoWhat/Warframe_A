@@ -19,7 +19,7 @@
 
 AWarframe::AWarframe(const FObjectInitializer& ObjectInitializer) :
 	Super(ObjectInitializer.SetDefaultSubobjectClass<UWarframeMovementComponent>(ACharacter::CharacterMovementComponentName)
-			.SetDefaultSubobjectClass<UWarframeStateMachineComponent>("StateMachine"))
+							.SetDefaultSubobjectClass<UWarframeStateMachineComponent>(AWarframeCharacter::StateMachineName))
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -28,25 +28,6 @@ AWarframe::AWarframe(const FObjectInitializer& ObjectInitializer) :
 	Abilities[1] = new FAbilityObject_Null();
 	Abilities[2] = new FAbilityObject_Null();
 	Abilities[3] = new FAbilityObject_Null();
-
-	StateMachineComponent->ClearAllLayers();
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_AimGliding);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_BulletJumping);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Crouching);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_DoubleJumping);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Falling);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Idle);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Jumping);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Rolling);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Sliding);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Lower), new FWarframeLowerState_Sprinting);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FWarframeUpperState_Firing);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FWarframeUpperState_Idle);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FWarframeUpperState_Ironsight);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FWarframeUpperState_Reloading);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Upper), new FWarframeUpperState_WeaponSwitching);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Aim), new FWarframeAimState_Aiming);
-	StateMachineComponent->AddStateObject(CastToUnderlyingType(EWarframeStateLayer::Aim), new FWarframeAimState_Idle);
 }
 
 AWarframe::~AWarframe()
@@ -61,14 +42,6 @@ AWarframe::~AWarframe()
 void AWarframe::BeginPlay()
 {
 	Super::BeginPlay();
-
-	TMap<int32, int32> InitStateIDs = {
-		{ CastToUnderlyingType(EWarframeStateLayer::Lower), CastToUnderlyingType(EWarframeLowerState::Idle) },
-		{ CastToUnderlyingType(EWarframeStateLayer::Upper), CastToUnderlyingType(EWarframeUpperState::Idle) },
-		{ CastToUnderlyingType(EWarframeStateLayer::Aim), CastToUnderlyingType(EWarframeAimState::Idle) }
-	};
-
-	this->StateMachineComponent->Init(InitStateIDs);
 }
 
 void AWarframe::EndPlay(const EEndPlayReason::Type EndPlayReason)

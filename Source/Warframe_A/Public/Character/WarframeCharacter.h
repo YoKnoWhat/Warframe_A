@@ -57,6 +57,9 @@ protected:
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason)override;
 
+	/** Called once this actor has been deleted */
+	virtual void Destroyed()override;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -125,7 +128,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE UStateMachineComponent* GetStateMachine()const
 	{
-		return this->StateMachineComponent;
+		return this->StateMachine;
 	}
 
 	UFUNCTION(BlueprintCallable)
@@ -266,8 +269,10 @@ protected:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	UCharacterWidgetComponent* CharacterWidgetComponent;
 
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-	UStateMachineComponent* StateMachineComponent;
+	static FName StateMachineName;
+
+	UPROPERTY(VisibleAnywhere)
+	UStateMachineComponent* StateMachine;
 
 	ECharacterID CharacterID;
 	uint32 Level;

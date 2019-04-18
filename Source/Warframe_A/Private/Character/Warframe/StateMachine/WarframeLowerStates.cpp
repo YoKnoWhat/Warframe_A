@@ -10,45 +10,45 @@ int32 FWarframeLowerState_AimGliding::GetID()const
 	return CastToUnderlyingType(EWarframeLowerState::AimGliding);
 }
 
-int32 FWarframeLowerState_AimGliding::OnUpdate(float DeltaTime)
+FStateObject* FWarframeLowerState_AimGliding::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
-	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(WarframeStateMachine->GetCharacter()->GetCharacterMovement());
 
 	if (CharacterMovement->IsFalling() == false)
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Idle);
+		return WarframeStateMachine->LowerLayer->IdleState;
 	}
-	else if (StateMachine->IsAiming == false)
+	else if (WarframeStateMachine->IsAiming == false)
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Falling);
+		return WarframeStateMachine->LowerLayer->FallingState;
 	}
 	else
 	{
-		StateMachine->GlideTimer -= DeltaTime;
+		WarframeStateMachine->GlideTimer -= DeltaTime;
 		
-		if (StateMachine->GlideTimer > 0.0f)
+		if (WarframeStateMachine->GlideTimer > 0.0f)
 		{
-			return this->GetID();
+			return this;
 		}
 		else
 		{
-			return CastToUnderlyingType(EWarframeLowerState::Falling);
+			return WarframeStateMachine->LowerLayer->FallingState;
 		}
 	}
 }
 
-void FWarframeLowerState_AimGliding::OnEnter(int32 StateFromID)
+void FWarframeLowerState_AimGliding::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {
-	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(Character->GetMovementComponent());
+	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(StateMachine->GetCharacter()->GetMovementComponent());
 
 	CharacterMovement->GravityScale = 0.05f;
 	CharacterMovement->SetMovementMode(EMovementMode::MOVE_Custom, CastToUnderlyingType(EWarframeMovementMode::AirGliding));
 }
 
-void FWarframeLowerState_AimGliding::OnExit()
+void FWarframeLowerState_AimGliding::OnExit(UStateMachineComponent* StateMachine)
 {
-	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(Character->GetMovementComponent());
+	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(StateMachine->GetCharacter()->GetMovementComponent());
 
 	if (CharacterMovement->IsFalling())
 	{
@@ -61,21 +61,23 @@ void FWarframeLowerState_AimGliding::OnExit()
 	CharacterMovement->GravityScale = 1.0f;
 }
 
-int32 FWarframeLowerState_AimGliding::OnCustomEvent(int32 EventID)
+FStateObject* FWarframeLowerState_AimGliding::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
 	switch (static_cast<EWarframeActionEvent>(EventID))
 	{
 	case EWarframeActionEvent::Jump:
-		if (Cast<UWarframeStateMachineComponent>(Character->GetStateMachine())->HasDoubleJumped)
+		if (Cast<UWarframeStateMachineComponent>(WarframeStateMachine->GetCharacter()->GetStateMachine())->HasDoubleJumped)
 		{
-			return this->GetID();
+			return this;
 		}
 		else
 		{
-			return CastToUnderlyingType(EWarframeLowerState::DoubleJumping);
+			return WarframeStateMachine->LowerLayer->DoubleJumpingState;
 		}
 	default:
-		return this->GetID();
+		return this;
 	}
 }
 
@@ -86,30 +88,34 @@ int32 FWarframeLowerState_BulletJumping::GetID()const
 	return CastToUnderlyingType(EWarframeLowerState::BulletJumping);
 }
 
-int32 FWarframeLowerState_BulletJumping::OnUpdate(float DeltaTime)
+FStateObject* FWarframeLowerState_BulletJumping::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	Time += DeltaTime;
-	if (Time > 0.5f)
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
+	WarframeStateMachine->BulletJumpingTimer += DeltaTime;
+	if (WarframeStateMachine->BulletJumpingTimer > 0.5f)
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Falling);
+		return WarframeStateMachine->LowerLayer->FallingState;
 	}
 	else
 	{
-		return this->GetID();
+		return this;
 	}
 }
 
-void FWarframeLowerState_BulletJumping::OnEnter(int32 StateFromID)
+void FWarframeLowerState_BulletJumping::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {
-	Time = 0.0f;
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
+	WarframeStateMachine->BulletJumpingTimer = 0.0f;
 }
 
-void FWarframeLowerState_BulletJumping::OnExit()
+void FWarframeLowerState_BulletJumping::OnExit(UStateMachineComponent* StateMachine)
 {}
 
-int32 FWarframeLowerState_BulletJumping::OnCustomEvent(int32 EventID)
+FStateObject* FWarframeLowerState_BulletJumping::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
-	return this->GetID();
+	return this;
 }
 
 
@@ -119,44 +125,46 @@ int32 FWarframeLowerState_Crouching::GetID()const
 	return CastToUnderlyingType(EWarframeLowerState::Crouching);
 }
 
-int32 FWarframeLowerState_Crouching::OnUpdate(float DeltaTime)
+FStateObject* FWarframeLowerState_Crouching::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
 
-	if (StateMachine->IsSprinting)
+	if (WarframeStateMachine->IsSprinting)
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Sprinting);
+		return WarframeStateMachine->LowerLayer->SprintingState;
 	}
-	else if (StateMachine->IsCrouching)
+	else if (WarframeStateMachine->IsCrouching)
 	{
-		return this->GetID();
+		return this;
 	}
 	else
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Idle);
+		return WarframeStateMachine->LowerLayer->IdleState;
 	}
 }
 
-void FWarframeLowerState_Crouching::OnEnter(int32 StateFromID)
+void FWarframeLowerState_Crouching::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {
-	Character->Crouch();
+	StateMachine->GetCharacter()->Crouch();
 }
 
-void FWarframeLowerState_Crouching::OnExit()
+void FWarframeLowerState_Crouching::OnExit(UStateMachineComponent* StateMachine)
 {
-	Character->UnCrouch();
+	StateMachine->GetCharacter()->UnCrouch();
 }
 
-int32 FWarframeLowerState_Crouching::OnCustomEvent(int32 EventID)
+FStateObject* FWarframeLowerState_Crouching::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
 	switch (static_cast<EWarframeActionEvent>(EventID))
 	{
 	case EWarframeActionEvent::Jump:
-		return CastToUnderlyingType(EWarframeLowerState::BulletJumping);
+		return WarframeStateMachine->LowerLayer->BulletJumpingState;
 	case EWarframeActionEvent::Roll:
-		return CastToUnderlyingType(EWarframeLowerState::Rolling);
+		return WarframeStateMachine->LowerLayer->RollingState;
 	default:
-		return this->GetID();
+		return this;
 	}
 }
 
@@ -167,35 +175,37 @@ int32 FWarframeLowerState_DoubleJumping::GetID()const
 	return CastToUnderlyingType(EWarframeLowerState::DoubleJumping);
 }
 
-int32 FWarframeLowerState_DoubleJumping::OnUpdate(float DeltaTime)
+FStateObject* FWarframeLowerState_DoubleJumping::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	Time += DeltaTime;
-	if (Time > 0.5f)
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
+	WarframeStateMachine->DoubleJumpingTimer += DeltaTime;
+	if (WarframeStateMachine->DoubleJumpingTimer > 0.5f)
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Falling);
+		return WarframeStateMachine->LowerLayer->FallingState;
 	}
 	else
 	{
-		return this->GetID();
+		return this;
 	}
 }
 
-void FWarframeLowerState_DoubleJumping::OnEnter(int32 StateFromID)
+void FWarframeLowerState_DoubleJumping::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {
-	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
-	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(Character->GetMovementComponent());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(WarframeStateMachine->GetCharacter()->GetMovementComponent());
 
-	Time = 0.0f;
+	WarframeStateMachine->DoubleJumpingTimer = 0.0f;
 
-	Character->Jump();
-	StateMachine->HasDoubleJumped = true;
+	WarframeStateMachine->GetCharacter()->Jump();
+	WarframeStateMachine->HasDoubleJumped = true;
 
 	CharacterMovement->SetMovementMode(EMovementMode::MOVE_Custom, CastToUnderlyingType(EWarframeMovementMode::DoubleJumping));
 }
 
-void FWarframeLowerState_DoubleJumping::OnExit()
+void FWarframeLowerState_DoubleJumping::OnExit(UStateMachineComponent* StateMachine)
 {
-	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(Character->GetMovementComponent());
+	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(StateMachine->GetCharacter()->GetMovementComponent());
 
 	if (CharacterMovement->IsFalling())
 	{
@@ -207,9 +217,9 @@ void FWarframeLowerState_DoubleJumping::OnExit()
 	// }
 }
 
-int32 FWarframeLowerState_DoubleJumping::OnCustomEvent(int32 EventID)
+FStateObject* FWarframeLowerState_DoubleJumping::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
-	return this->GetID();
+	return this;
 }
 
 
@@ -219,49 +229,51 @@ int32 FWarframeLowerState_Falling::GetID()const
 	return CastToUnderlyingType(EWarframeLowerState::Falling);
 }
 
-int32 FWarframeLowerState_Falling::OnUpdate(float DeltaTime)
+FStateObject* FWarframeLowerState_Falling::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
-	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(WarframeStateMachine->GetCharacter()->GetCharacterMovement());
 
 	if (CharacterMovement->IsFalling())
 	{
-		if (StateMachine->IsAiming && StateMachine->GlideTimer > 0.0f)
+		if (WarframeStateMachine->IsAiming && WarframeStateMachine->GlideTimer > 0.0f)
 		{
-			return CastToUnderlyingType(EWarframeLowerState::AimGliding);
+			return WarframeStateMachine->LowerLayer->AimGlidingState;
 		}
 		else
 		{
-			return this->GetID();
+			return this;
 		}
 	}
 	else
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Idle);
+		return WarframeStateMachine->LowerLayer->IdleState;
 	}
 }
 
-void FWarframeLowerState_Falling::OnEnter(int32 StateFromID)
+void FWarframeLowerState_Falling::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {}
 
-void FWarframeLowerState_Falling::OnExit()
+void FWarframeLowerState_Falling::OnExit(UStateMachineComponent* StateMachine)
 {}
 
-int32 FWarframeLowerState_Falling::OnCustomEvent(int32 EventID)
+FStateObject* FWarframeLowerState_Falling::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
 	switch (static_cast<EWarframeActionEvent>(EventID))
 	{
 	case EWarframeActionEvent::Jump:
-		if (Cast<UWarframeStateMachineComponent>(Character->GetStateMachine())->HasDoubleJumped)
+		if (Cast<UWarframeStateMachineComponent>(WarframeStateMachine->GetCharacter()->GetStateMachine())->HasDoubleJumped)
 		{
-			return this->GetID();
+			return this;
 		}
 		else
 		{
-			return CastToUnderlyingType(EWarframeLowerState::DoubleJumping);
+			return WarframeStateMachine->LowerLayer->DoubleJumpingState;
 		}
 	default:
-		return this->GetID();
+		return this;
 	}
 }
 
@@ -272,61 +284,63 @@ int32 FWarframeLowerState_Idle::GetID()const
 	return CastToUnderlyingType(EWarframeLowerState::Idle);
 }
 
-int32 FWarframeLowerState_Idle::OnUpdate(float DeltaTime)
+FStateObject* FWarframeLowerState_Idle::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
-	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(WarframeStateMachine->GetCharacter()->GetCharacterMovement());
 
 	if (CharacterMovement->IsFalling())
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Falling);
+		return WarframeStateMachine->LowerLayer->FallingState;
 	}
-	else if (StateMachine->IsCrouching)
+	else if (WarframeStateMachine->IsCrouching)
 	{
-		if (Character->GetVelocity().Size2D() > 200.0f)
+		if (WarframeStateMachine->GetCharacter()->GetVelocity().Size2D() > 200.0f)
 		{
-			return CastToUnderlyingType(EWarframeLowerState::Sliding);
+			return WarframeStateMachine->LowerLayer->SlidingState;
 		}
 		else
 		{
-			return CastToUnderlyingType(EWarframeLowerState::Crouching);
+			return WarframeStateMachine->LowerLayer->CrouchingState;
 		}
 	}
-	else if (StateMachine->IsSprinting && Character->GetVelocity().Size2D() > 0.0f)
+	else if (WarframeStateMachine->IsSprinting && WarframeStateMachine->GetCharacter()->GetVelocity().Size2D() > 0.0f)
 	{
-		if (StateMachine->IsAiming == false)
+		if (WarframeStateMachine->IsAiming == false)
 		{
-			return CastToUnderlyingType(EWarframeLowerState::Sprinting);
+			return WarframeStateMachine->LowerLayer->SprintingState;
 		}
 		else
 		{
-			return this->GetID();
+			return this;
 		}
 	}
 	else
 	{
-		return this->GetID();
+		return this;
 	}
 }
 
-void FWarframeLowerState_Idle::OnEnter(int32 StateFromID)
+void FWarframeLowerState_Idle::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {
-	Cast<UWarframeStateMachineComponent>(Character->GetStateMachine())->HasDoubleJumped = false;
+	Cast<UWarframeStateMachineComponent>(StateMachine->GetCharacter()->GetStateMachine())->HasDoubleJumped = false;
 }
 
-void FWarframeLowerState_Idle::OnExit()
+void FWarframeLowerState_Idle::OnExit(UStateMachineComponent* StateMachine)
 {}
 
-int32 FWarframeLowerState_Idle::OnCustomEvent(int32 EventID)
+FStateObject* FWarframeLowerState_Idle::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
 	switch (static_cast<EWarframeActionEvent>(EventID))
 	{
 	case EWarframeActionEvent::Jump:
-		return CastToUnderlyingType(EWarframeLowerState::Jumping);
+		return WarframeStateMachine->LowerLayer->JumpingState;
 	case EWarframeActionEvent::Roll:
-		return CastToUnderlyingType(EWarframeLowerState::Rolling);
+		return WarframeStateMachine->LowerLayer->RollingState;
 	default:
-		return this->GetID();
+		return this;
 	}
 }
 
@@ -337,48 +351,52 @@ int32 FWarframeLowerState_Jumping::GetID()const
 	return CastToUnderlyingType(EWarframeLowerState::Jumping);
 }
 
-int32 FWarframeLowerState_Jumping::OnUpdate(float DeltaTime)
+FStateObject* FWarframeLowerState_Jumping::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	Time += DeltaTime;
-	if (Time > 0.5f)
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
+	WarframeStateMachine->JumpingTimer += DeltaTime;
+	if (WarframeStateMachine->JumpingTimer > 0.5f)
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Falling);
+		return WarframeStateMachine->LowerLayer->FallingState;
 	}
 	else
 	{
-		return this->GetID();
+		return this;
 	}
 }
 
-void FWarframeLowerState_Jumping::OnEnter(int32 StateFromID)
+void FWarframeLowerState_Jumping::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {
-	Time = 0.0f;
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
 
-	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
+	WarframeStateMachine->JumpingTimer += 0.0f;
 
-	StateMachine->IsAiming = false;
+	WarframeStateMachine->IsAiming = false;
 
-	Character->Jump();
+	WarframeStateMachine->GetCharacter()->Jump();
 }
 
-void FWarframeLowerState_Jumping::OnExit()
+void FWarframeLowerState_Jumping::OnExit(UStateMachineComponent* StateMachine)
 {}
 
-int32 FWarframeLowerState_Jumping::OnCustomEvent(int32 EventID)
+FStateObject* FWarframeLowerState_Jumping::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
 	switch (static_cast<EWarframeActionEvent>(EventID))
 	{
 	case EWarframeActionEvent::Jump:
-		if (Cast<UWarframeStateMachineComponent>(Character->GetStateMachine())->HasDoubleJumped == false)
+		if (Cast<UWarframeStateMachineComponent>(WarframeStateMachine->GetCharacter()->GetStateMachine())->HasDoubleJumped == false)
 		{
-			return CastToUnderlyingType(EWarframeLowerState::DoubleJumping);
+			return WarframeStateMachine->LowerLayer->DoubleJumpingState;
 		}
 		else
 		{
-			return this->GetID();
+			return this;
 		}
 	default:
-		return this->GetID();
+		return this;
 	}
 }
 
@@ -389,30 +407,34 @@ int32 FWarframeLowerState_Rolling::GetID()const
 	return CastToUnderlyingType(EWarframeLowerState::Rolling);
 }
 
-int32 FWarframeLowerState_Rolling::OnUpdate(float DeltaTime)
+FStateObject* FWarframeLowerState_Rolling::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	Time += DeltaTime;
-	if (Time > 0.5f)
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
+	WarframeStateMachine->RollingTimer += DeltaTime;
+	if (WarframeStateMachine->RollingTimer > 0.5f)
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Idle);
+		return WarframeStateMachine->LowerLayer->IdleState;
 	}
 	else
 	{
-		return this->GetID();
+		return this;
 	}
 }
 
-void FWarframeLowerState_Rolling::OnEnter(int32 StateFromID)
+void FWarframeLowerState_Rolling::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {
-	Time = 0.0f;
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
+	WarframeStateMachine->RollingTimer = 0.0f;
 }
 
-void FWarframeLowerState_Rolling::OnExit()
+void FWarframeLowerState_Rolling::OnExit(UStateMachineComponent* StateMachine)
 {}
 
-int32 FWarframeLowerState_Rolling::OnCustomEvent(int32 EventID)
+FStateObject* FWarframeLowerState_Rolling::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
-	return this->GetID();
+	return this;
 }
 
 
@@ -422,63 +444,66 @@ int32 FWarframeLowerState_Sliding::GetID()const
 	return CastToUnderlyingType(EWarframeLowerState::Sliding);
 }
 
-int32 FWarframeLowerState_Sliding::OnUpdate(float DeltaTime)
+FStateObject* FWarframeLowerState_Sliding::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
 
-	if (Character->GetVelocity().Size2D() < 10.0f)
+	if (WarframeStateMachine->GetCharacter()->GetVelocity().Size2D() < 10.0f)
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Crouching);
+		return WarframeStateMachine->LowerLayer->CrouchingState;
 	}
-	else if (StateMachine->IsCrouching)
+	else if (WarframeStateMachine->IsCrouching)
 	{
-		return this->GetID();
+		return this;
 	}
 	else
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Idle);
+		return WarframeStateMachine->LowerLayer->IdleState;
 	}
 }
 
-void FWarframeLowerState_Sliding::OnEnter(int32 StateFromID)
+void FWarframeLowerState_Sliding::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {
-	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
-	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(WarframeStateMachine->GetCharacter()->GetCharacterMovement());
 
-	StateMachine->HasDoubleJumped = false;
+	WarframeStateMachine->HasDoubleJumped = false;
 
 	CharacterMovement->SetMovementMode(EMovementMode::MOVE_Custom, CastToUnderlyingType(EWarframeMovementMode::Sliding));
-	MaxCustomMovementSpeedBefore = CharacterMovement->MaxCustomMovementSpeed;
+	WarframeStateMachine->MaxCustomMovementSpeedBefore = CharacterMovement->MaxCustomMovementSpeed;
 	CharacterMovement->MaxCustomMovementSpeed = 2000.0f;
 	CharacterMovement->GroundFriction = 1.0f;
 	CharacterMovement->StandToSlideDuration = 0.0f;
 	CharacterMovement->StandToSlideTime = 0.3f;
 	CharacterMovement->StandToSlideDeltaSpeed = 450.0f;
 
-	Character->Crouch();
+	WarframeStateMachine->GetCharacter()->Crouch();
 }
 
-void FWarframeLowerState_Sliding::OnExit()
+void FWarframeLowerState_Sliding::OnExit(UStateMachineComponent* StateMachine)
 {
-	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(WarframeStateMachine->GetCharacter()->GetCharacterMovement());
 
-	Character->UnCrouch();
+	StateMachine->GetCharacter()->UnCrouch();
 
 	CharacterMovement->SetMovementMode(EMovementMode::MOVE_Walking);
-	CharacterMovement->MaxCustomMovementSpeed = MaxCustomMovementSpeedBefore;
+	CharacterMovement->MaxCustomMovementSpeed = WarframeStateMachine->MaxCustomMovementSpeedBefore;
 	CharacterMovement->GroundFriction = 8.0f;
 }
 
-int32 FWarframeLowerState_Sliding::OnCustomEvent(int32 EventID)
+FStateObject* FWarframeLowerState_Sliding::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
 	switch (static_cast<EWarframeActionEvent>(EventID))
 	{
 	case EWarframeActionEvent::Jump:
-		return CastToUnderlyingType(EWarframeLowerState::BulletJumping);
+		return WarframeStateMachine->LowerLayer->BulletJumpingState;
 	case EWarframeActionEvent::Roll:
-		return CastToUnderlyingType(EWarframeLowerState::Rolling);
+		return WarframeStateMachine->LowerLayer->RollingState;
 	default:
-		return this->GetID();
+		return this;
 	}
 }
 
@@ -489,53 +514,57 @@ int32 FWarframeLowerState_Sprinting::GetID()const
 	return CastToUnderlyingType(EWarframeLowerState::Sprinting);
 }
 
-int32 FWarframeLowerState_Sprinting::OnUpdate(float DeltaTime)
+FStateObject* FWarframeLowerState_Sprinting::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
-	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(WarframeStateMachine->GetCharacter()->GetCharacterMovement());
 
 	if (CharacterMovement->IsFalling())
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Falling);
+		return WarframeStateMachine->LowerLayer->FallingState;
 	}
-	else if (StateMachine->IsCrouching)
+	else if (WarframeStateMachine->IsCrouching)
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Sliding);
+		return WarframeStateMachine->LowerLayer->SlidingState;
 	}
-	else if (StateMachine->IsAiming || StateMachine->IsSprinting == false || Character->GetVelocity().Size2D() == 0.0f)
+	else if (WarframeStateMachine->IsAiming || WarframeStateMachine->IsSprinting == false || WarframeStateMachine->GetCharacter()->GetVelocity().Size2D() == 0.0f)
 	{
-		return CastToUnderlyingType(EWarframeLowerState::Idle);
+		return WarframeStateMachine->LowerLayer->IdleState;
 	}
 	else
 	{
-		return this->GetID();
+		return this;
 	}
 }
 
-void FWarframeLowerState_Sprinting::OnEnter(int32 StateFromID)
+void FWarframeLowerState_Sprinting::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {
-	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(WarframeStateMachine->GetCharacter()->GetCharacterMovement());
 
-	this->MaxWalkSpeedBerore = CharacterMovement->MaxWalkSpeed;
+	WarframeStateMachine->MaxWalkSpeedBefore = CharacterMovement->MaxWalkSpeed;
 	CharacterMovement->MaxWalkSpeed = 800.0f;
 }
 
-void FWarframeLowerState_Sprinting::OnExit()
+void FWarframeLowerState_Sprinting::OnExit(UStateMachineComponent* StateMachine)
 {
-	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(WarframeStateMachine->GetCharacter()->GetCharacterMovement());
 
-	CharacterMovement->MaxWalkSpeed = this->MaxWalkSpeedBerore;
+	CharacterMovement->MaxWalkSpeed = WarframeStateMachine->MaxWalkSpeedBefore;
 }
 
-int32 FWarframeLowerState_Sprinting::OnCustomEvent(int32 EventID)
+FStateObject* FWarframeLowerState_Sprinting::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
 	switch (static_cast<EWarframeActionEvent>(EventID))
 	{
 	case EWarframeActionEvent::Jump:
-		return CastToUnderlyingType(EWarframeLowerState::Jumping);
+		return WarframeStateMachine->LowerLayer->JumpingState;
 	case EWarframeActionEvent::Roll:
-		return CastToUnderlyingType(EWarframeLowerState::Rolling);
+		return WarframeStateMachine->LowerLayer->RollingState;
 	default:
-		return this->GetID();
+		return this;
 	}
 }

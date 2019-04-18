@@ -1,7 +1,9 @@
 
 #pragma once
 
-#include "Character/StateMachineComponent.h"
+#include "Character/StateMachine/WarframeCharacterStateMachineComponent.h"
+#include "Character/Corpus/StateMachine/CorpusLowerStates.h"
+#include "Character/Corpus/StateMachine/CorpusUpperStates.h"
 #include "CorpusStateMachineComponent.generated.h"
 
 
@@ -28,6 +30,7 @@ enum class ECorpusUpperState : uint8
 	Idle,
 	Reloading,
 	Firing,
+	WeaponSwitching,
 	Ironsight,
 };
 
@@ -36,27 +39,21 @@ enum class ECorpusActionEvent : uint8
 {
 	Jump,
 	Reload,
+	SwitchWeapon,
 };
 
-UCLASS(Blueprintable, meta = (BlueprintSpawnableComponent))
-class WARFRAME_A_API UCorpusStateMachineComponent : public UStateMachineComponent
+UCLASS()
+class WARFRAME_A_API UCorpusStateMachineComponent : public UWarframeCharacterStateMachineComponent
 {
 	GENERATED_BODY()
 
 public:
 	UCorpusStateMachineComponent();
 
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void Init(AWarframeCharacter* InCharacter, FStateMachineLayerInitializer& LayerInitializer)override;
 
-public:
-	UPROPERTY(BlueprintReadWrite)
-	bool IsSprinting;
+	virtual void ReInit()override;
 
-	UPROPERTY(BlueprintReadWrite)
-	bool IsCrouching;
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)override;
 
-	UPROPERTY(BlueprintReadWrite)
-	bool IsFiring;
-
-	float TimeSinceLastFired;
 };

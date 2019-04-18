@@ -4,11 +4,20 @@
 
 
 UCorpusStateMachineComponent::UCorpusStateMachineComponent() :
-	Super(),
-	TimeSinceLastFired(99999.0f)
+	Super()
 {}
 
-void UCorpusStateMachineComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UCorpusStateMachineComponent::Init(AWarframeCharacter* InCharacter, FStateMachineLayerInitializer& LayerInitializer)
+{
+	Super::Init(InCharacter, LayerInitializer);
+}
+
+void UCorpusStateMachineComponent::ReInit()
+{
+	Super::ReInit();
+}
+
+void UCorpusStateMachineComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 

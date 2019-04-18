@@ -4,7 +4,7 @@
 #include "WarframeCommon.h"
 
 
-class FAbilityObject
+class WARFRAME_A_API FAbilityObject
 {
 public:
 	FAbilityObject(AWarframe* Warframe, bool CanCastInAir, bool CanRecast, float PreCastTime, float PostCastTime);
@@ -23,8 +23,6 @@ public:
 
 	/** Get ability remaining duration in second. */
 	virtual float GetDuration()const;
-
-	
 
 	FORCEINLINE bool CanCastInAir()const
 	{

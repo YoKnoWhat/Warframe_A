@@ -1,7 +1,10 @@
 
 #pragma once
 
-#include "Character/StateMachineComponent.h"
+#include "Character/StateMachine/WarframeCharacterStateMachineComponent.h"
+#include "Character/Warframe/StateMachine/WarframeLowerStates.h"
+#include "Character/Warframe/StateMachine/WarframeUpperStates.h"
+#include "Character/Warframe/StateMachine/WarframeAimStates.h"
 #include "WarframeStateMachineComponent.generated.h"
 
 
@@ -17,16 +20,17 @@ enum class EWarframeStateLayer : uint8
 UENUM(BlueprintType)
 enum class EWarframeLowerState : uint8
 {
-	AimGliding,
-	BulletJumping,
 	Crouching,
-	DoubleJumping,
 	Falling,
 	Idle,
 	Jumping,
+	Sprinting,
+
+	AimGliding,
+	BulletJumping,
+	DoubleJumping,
 	Rolling,
 	Sliding,
-	Sprinting,
 };
 
 UENUM(BlueprintType)
@@ -37,6 +41,7 @@ enum class EWarframeUpperState : uint8
 	Firing,
 	WeaponSwitching,
 	Ironsight,
+
 };
 
 UENUM(BlueprintType)
@@ -50,35 +55,73 @@ UENUM(BlueprintType)
 enum class EWarframeActionEvent : uint8
 {
 	Jump,
-	Roll,
 	Reload,
 	SwitchWeapon,
+
+	Roll,
 };
 
-UCLASS(Blueprintable, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class WARFRAME_A_API UWarframeStateMachineComponent : public UStateMachineComponent
+struct FWarframeStateMachineLayer_Lower : public FWarframeCharacterStateMachineLayer_Lower
+{
+	FStateObject* AimGlidingState;
+	FStateObject* BulletJumpingState;
+	FStateObject* DoubleJumpingState;
+	FStateObject* RollingState;
+	FStateObject* SlidingState;
+};
+
+struct FWarframeStateMachineLayer_Aim : public FStateMachineLayer
+{
+	FStateObject* AimingState;
+	FStateObject* IdleState;
+};
+
+UCLASS()
+class WARFRAME_A_API UWarframeStateMachineComponent : public UWarframeCharacterStateMachineComponent
 {
 	GENERATED_BODY()
 
 public:
 	UWarframeStateMachineComponent();
 
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void Init(AWarframeCharacter* InCharacter, FStateMachineLayerInitializer& LayerInitializer)override;
+
+	virtual void ReInit()override;
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)override;
 
 public:
+	FWarframeStateMachineLayer_Lower* LowerLayer;
+	FWarframeStateMachineLayer_Aim* AimLayer;
+
 	UPROPERTY(BlueprintReadWrite)
 	bool IsAiming;
 
-	UPROPERTY(BlueprintReadWrite)
-	bool IsSprinting;
+	// todo: lower layer for now.
+	float BulletJumpingTimer;
+	float DoubleJumpingTimer;
+	float RollingTimer;
+	float MaxCustomMovementSpeedBefore;
 
-	UPROPERTY(BlueprintReadWrite)
-	bool IsCrouching;
-
-	UPROPERTY(BlueprintReadWrite)
-	bool IsFiring;
-
+	// todo: upper layer for now.
+	float FOVZoomTo;
+	float CurveTime;
+	bool Cache_IsAiming;
 	bool HasDoubleJumped;
 	float GlideTimer;
-	float TimeSinceLastFired;
+
+private:
+	static FWarframeLowerState_AimGliding		LowerAimGlidingState;
+	static FWarframeLowerState_BulletJumping	LowerBulletJumpingState;
+	static FWarframeLowerState_Crouching		LowerCrouchingState;
+	static FWarframeLowerState_DoubleJumping	LowerDoubleJumpingState;
+	static FWarframeLowerState_Falling			LowerFallingState;
+	static FWarframeLowerState_Idle				LowerIdleState;
+	static FWarframeLowerState_Jumping			LowerJumpingState;
+	static FWarframeLowerState_Rolling			LowerRollingState;
+	static FWarframeLowerState_Sliding			LowerSlidingState;
+	static FWarframeLowerState_Sprinting		LowerSprintingState;
+
+	static FWarframeAimState_Aiming	AimAimingState;
+	static FWarframeAimState_Idle	AimIdleState;
 };

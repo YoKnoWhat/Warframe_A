@@ -15,66 +15,72 @@ int32 FWarframeAimState_Aiming::GetID()const
 	return CastToUnderlyingType(EWarframeAimState::Aiming);
 }
 
-int32 FWarframeAimState_Aiming::OnUpdate(float DeltaTime)
+FStateObject* FWarframeAimState_Aiming::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
-	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(WarframeStateMachine->GetCharacter()->GetCharacterMovement());
 
-	if (StateMachine->IsAiming)
+	if (WarframeStateMachine->IsAiming)
 	{
-		CurveTime = FMath::Clamp(CurveTime + DeltaTime, 0.0f, 0.1f);
+		WarframeStateMachine->CurveTime = FMath::Clamp(WarframeStateMachine->CurveTime + DeltaTime, 0.0f, 0.1f);
 	}
 	else
 	{
-		CurveTime = FMath::Clamp(CurveTime - DeltaTime, 0.0f, 0.1f);
+		WarframeStateMachine->CurveTime = FMath::Clamp(WarframeStateMachine->CurveTime - DeltaTime, 0.0f, 0.1f);
 	}
 
-	UCameraComponent* Camera = Cast<UCameraComponent>(Character->GetComponentByClass(UCameraComponent::StaticClass()));
+	UCameraComponent* Camera = Cast<UCameraComponent>(WarframeStateMachine->GetCharacter()->GetComponentByClass(UCameraComponent::StaticClass()));
 	if (Camera != nullptr)
 	{
-		Camera->FieldOfView = FMath::Lerp(FWarframeConfigSingleton::Instance().FieldOfView, FOVZoomTo, CurveTime * 10.0f);
+		Camera->FieldOfView = FMath::Lerp(FWarframeConfigSingleton::Instance().FieldOfView, WarframeStateMachine->FOVZoomTo, WarframeStateMachine->CurveTime * 10.0f);
 	}
 
-	if (CurveTime == 0.0f && StateMachine->IsAiming == false)
+	if (WarframeStateMachine->CurveTime == 0.0f && WarframeStateMachine->IsAiming == false)
 	{
-		return CastToUnderlyingType(EWarframeAimState::Idle);
+		return WarframeStateMachine->AimLayer->IdleState;
 	}
 	else
 	{
-		return this->GetID();
+		return this;
 	}
 }
 
-void FWarframeAimState_Aiming::OnEnter(int32 StateFromID)
+void FWarframeAimState_Aiming::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+	AWarframeCharacter* Character = WarframeStateMachine->GetCharacter();
 	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
 
-	this->FOVZoomTo = Character->GetCurrentWeapon()->GetZoom() * FWarframeConfigSingleton::Instance().FieldOfView;
+	WarframeStateMachine->FOVZoomTo = Character->GetCurrentWeapon()->GetZoom() * FWarframeConfigSingleton::Instance().FieldOfView;
 
 	Character->bUseControllerRotationYaw = true;
 
-	MaxWalkSpeedBefore = CharacterMovement->MaxWalkSpeed;
+	WarframeStateMachine->MaxWalkSpeedBefore = CharacterMovement->MaxWalkSpeed;
 	CharacterMovement->MaxWalkSpeed = 300.0f;
 
 }
 
-void FWarframeAimState_Aiming::OnExit()
+void FWarframeAimState_Aiming::OnExit(UStateMachineComponent* StateMachine)
 {
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+	AWarframeCharacter* Character = WarframeStateMachine->GetCharacter();
 	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
 
 	Character->bUseControllerRotationYaw = false;
 
-	CharacterMovement->MaxWalkSpeed = MaxWalkSpeedBefore;
+	CharacterMovement->MaxWalkSpeed = WarframeStateMachine->MaxWalkSpeedBefore;
 }
 
-int32 FWarframeAimState_Aiming::OnCustomEvent(int32 EventID)
+FStateObject* FWarframeAimState_Aiming::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
+
 	switch (static_cast<EWarframeActionEvent>(EventID))
 	{
 	case EWarframeActionEvent::SwitchWeapon:
-		return CastToUnderlyingType(EWarframeLowerState::Idle);
+		return WarframeStateMachine->AimLayer->IdleState;
 	default:
-		return this->GetID();
+		return this;
 	}
 }
 
@@ -85,27 +91,27 @@ int32 FWarframeAimState_Idle::GetID()const
 	return CastToUnderlyingType(EWarframeAimState::Idle);
 }
 
-int32 FWarframeAimState_Idle::OnUpdate(float DeltaTime)
+FStateObject* FWarframeAimState_Idle::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Character->GetStateMachine());
+	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
 
-	if (StateMachine->IsAiming)
+	if (WarframeStateMachine->IsAiming)
 	{
-		return CastToUnderlyingType(EWarframeAimState::Aiming);
+		return WarframeStateMachine->AimLayer->AimingState;
 	}
 	else
 	{
-		return this->GetID();
+		return this;
 	}
 }
 
-void FWarframeAimState_Idle::OnEnter(int32 StateFromID)
+void FWarframeAimState_Idle::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {}
 
-void FWarframeAimState_Idle::OnExit()
+void FWarframeAimState_Idle::OnExit(UStateMachineComponent* StateMachine)
 {}
 
-int32 FWarframeAimState_Idle::OnCustomEvent(int32 EventID)
+FStateObject* FWarframeAimState_Idle::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
-	return this->GetID();
+	return this;
 }

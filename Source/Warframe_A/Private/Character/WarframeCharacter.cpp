@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Character/WarframeCharacter.h"
-#include "Character/StateMachineComponent.h"
+#include "Character/StateMachine/WarframeCharacterStateMachineComponent.h"
 #include "Character/WarframeCharacterAIController.h"
 #include "Gameplay/PickableObject/PickableObject.h"
 #include "Gameplay/WarframeConfigSingleton.h"
@@ -23,17 +23,25 @@
 #include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
 
 
+FName AWarframeCharacter::StateMachineName("StateMachine");
+
 FObjectPool<FStatusEffectData> AWarframeCharacter::StatusEffectDataPool;
 
 // Sets default values
 AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializer) :
-	Super(ObjectInitializer.SetDefaultSubobjectClass<UStateMachineComponent>("StateMachine"))
+	Super(ObjectInitializer.SetDefaultSubobjectClass<UWarframeCharacterStateMachineComponent>(AWarframeCharacter::StateMachineName))
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	this->AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	// this->AIControllerClass = FWarframeConfigSingleton::Instance().FindResourceClass("BP_WarframeCharacterAIController");
+
+	this->StateMachine = ObjectInitializer.CreateDefaultSubobject<UStateMachineComponent>(this, AWarframeCharacter::StateMachineName);
+	{
+		FStateMachineLayerInitializer LayerInitializer;
+		this->StateMachine->Init(this, LayerInitializer);
+	}
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -47,9 +55,6 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 	/** Character widget component creation. */
 	CharacterWidgetComponent = ObjectInitializer.CreateDefaultSubobject<UCharacterWidgetComponent>(this, FName("CharacterWidget"));
 	CharacterWidgetComponent->SetupAttachment(this->RootComponent);
-
-	/** State machine component creation. */
-	StateMachineComponent = ObjectInitializer.CreateDefaultSubobject<UStateMachineComponent>(this, FName("StateMachine"));
 
 	/** Registers owning actor as source of stimuli for senses */
 	UAIPerceptionSystem* PerceptionSystem = UAIPerceptionSystem::GetCurrent(this->GetWorld());
@@ -67,6 +72,8 @@ void AWarframeCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	this->StateMachine->ReInit();
+
 	CharacterWidgetComponent->SetRelativeLocation(FVector(0.0f, 0.0f, GetCapsuleComponent()->GetScaledCapsuleHalfHeight()));
 	
 	LatestStatusEffectData.SetNum(CastToUnderlyingType(EDamageType::End) - CastToUnderlyingType(EDamageType::Begin) + 1);
@@ -75,6 +82,8 @@ void AWarframeCharacter::BeginPlay()
 void AWarframeCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
+
+	this->StateMachine->DisableAll();
 
 	if (PrimaryWeapon != nullptr)
 	{
@@ -102,6 +111,11 @@ void AWarframeCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 		StatusEffectDataPool.Put(Data);
 	}
 	StatusEffectSet.Empty();
+}
+
+void AWarframeCharacter::Destroyed()
+{
+	Super::Destroyed();
 }
 
 // Called every frame
