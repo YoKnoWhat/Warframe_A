@@ -87,6 +87,12 @@ public:
 		return CurrentEnergy;
 	}
 
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE float GetEnemyRadar()const
+	{
+		return EnemyRadar;
+	}
+
 protected:
 	virtual void Init(ECharacterID InCharacterID)override;
 
@@ -97,6 +103,9 @@ protected:
 	float AbilityEfficiency;
 	float AbilityDuration;
 	float SlideDeceleration = -1.0f;
+
+	/** Display all enemies within its radius with red markers on the mini-map. */
+	float EnemyRadar = 1000.0f;
 
 	/** Allocated in derived class, deleted in base class. */
 	FAbilityObject *Abilities[4];

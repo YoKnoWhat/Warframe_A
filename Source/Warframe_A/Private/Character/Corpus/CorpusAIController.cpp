@@ -38,27 +38,6 @@ void ACorpusAIController::Possess(APawn* InPawn)
 	RunBehaviorTree(FWarframeConfigSingleton::Instance().FindResource<UBehaviorTree>("BT_CorpusBehaviorTree"));
 }
 
-void ACorpusAIController::BeginFire()
-{
-	UCorpusStateMachineComponent* StateMachine = Cast<UCorpusStateMachineComponent>(Corpus->GetStateMachine());
-
-	StateMachine->IsFiring = true;
-}
-
-void ACorpusAIController::StopFire()
-{
-	UCorpusStateMachineComponent* StateMachine = Cast<UCorpusStateMachineComponent>(Corpus->GetStateMachine());
-
-	StateMachine->IsFiring = false;
-}
-
-void ACorpusAIController::Reload()
-{
-	UCorpusStateMachineComponent* StateMachine = Cast<UCorpusStateMachineComponent>(Corpus->GetStateMachine());
-
-	StateMachine->TriggerEvent(CastToUnderlyingType(ECorpusActionEvent::Reload));
-}
-
 void ACorpusAIController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	if (Stimulus.WasSuccessfullySensed())

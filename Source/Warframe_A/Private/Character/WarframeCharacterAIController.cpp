@@ -1,6 +1,7 @@
 
 #include "Character/WarframeCharacterAIController.h"
 #include "Character/AITargetSelectionComponent.h"
+#include "Character/StateMachine/WarframeCharacterAIStateMachineComponent.h"
 #include "Character/WarframeCharacter.h"
 
 #include "Runtime/AIModule/Classes/Navigation/CrowdFollowingComponent.h"
@@ -51,9 +52,6 @@ AWarframeCharacterAIController::AWarframeCharacterAIController(const FObjectInit
 	{
 	}
 	AIPerception->ConfigureSense(*SenseConfig_Team);
-
-	// todo: for now.
-	this->SetGenericTeamId(FGenericTeamId(CastToUnderlyingType(EWarframeTeamID::Enemy1)));
 }
 
 void AWarframeCharacterAIController::Possess(APawn* InPawn)
@@ -71,10 +69,50 @@ void AWarframeCharacterAIController::Tick(float DeltaTime)
 }
 
 void AWarframeCharacterAIController::BeginFire()
-{}
+{
+	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
+
+	StateMachine->IsFiring = true;
+}
 
 void AWarframeCharacterAIController::StopFire()
-{}
+{
+	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
+
+	StateMachine->IsFiring = false;
+}
 
 void AWarframeCharacterAIController::Reload()
-{}
+{
+	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
+
+	StateMachine->TriggerEvent(CastToUnderlyingType(EWarframeCharacterActionEvent::Reload));
+}
+
+void AWarframeCharacterAIController::BeginSprint()
+{
+	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
+
+	StateMachine->IsSprinting = true;
+}
+
+void AWarframeCharacterAIController::StopSprint()
+{
+	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
+
+	StateMachine->IsSprinting = false;
+}
+
+void AWarframeCharacterAIController::TakeCover(UCoverPoint* InCoverPoint)
+{
+	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
+	
+	StateMachine->CoverPoint = InCoverPoint;
+}
+
+void AWarframeCharacterAIController::LeaveCover()
+{
+	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
+
+	StateMachine->CoverPoint = nullptr;
+}

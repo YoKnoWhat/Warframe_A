@@ -20,6 +20,4 @@ void UCorpusStateMachineComponent::ReInit()
 void UCorpusStateMachineComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	TimeSinceLastFired += DeltaTime;
 }

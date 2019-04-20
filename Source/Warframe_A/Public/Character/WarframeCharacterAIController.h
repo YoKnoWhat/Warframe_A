@@ -5,6 +5,8 @@
 #include "WarframeCharacterAIController.generated.h"
 
 
+class UCoverPoint;
+
 UCLASS()
 class WARFRAME_A_API AWarframeCharacterAIController : public AAIController
 {
@@ -25,6 +27,18 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void Reload();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void BeginSprint();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void StopSprint();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void TakeCover(UCoverPoint* InCoverPoint);
+
+	UFUNCTION(BlueprintCallable)
+	virtual void LeaveCover();
 
 protected:
 	UPROPERTY()

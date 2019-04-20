@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Character/StateMachine/WarframeCharacterStateMachineComponent.h"
+#include "Character/StateMachine/WarframeCharacterAIStateMachineComponent.h"
 #include "Character/Corpus/StateMachine/CorpusLowerStates.h"
 #include "Character/Corpus/StateMachine/CorpusUpperStates.h"
 #include "CorpusStateMachineComponent.generated.h"
@@ -22,6 +22,7 @@ enum class ECorpusLowerState : uint8
 	Idle,
 	Jumping,
 	Sprinting,
+	AtCover,
 };
 
 UENUM(BlueprintType)
@@ -43,7 +44,7 @@ enum class ECorpusActionEvent : uint8
 };
 
 UCLASS()
-class WARFRAME_A_API UCorpusStateMachineComponent : public UWarframeCharacterStateMachineComponent
+class WARFRAME_A_API UCorpusStateMachineComponent : public UWarframeCharacterAIStateMachineComponent
 {
 	GENERATED_BODY()
 

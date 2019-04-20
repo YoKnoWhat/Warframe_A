@@ -18,12 +18,6 @@ public:
 
 	virtual void Possess(APawn* InPawn)override;
 
-	virtual void BeginFire()override;
-
-	virtual void StopFire()override;
-
-	virtual void Reload()override;
-
 protected:
 	UFUNCTION()
 	void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
