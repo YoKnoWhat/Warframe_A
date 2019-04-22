@@ -58,6 +58,7 @@ void USpawnPoint::SpawnIfAllKilled()
 				this->SpawnedCharacters.Add(NewCharacter);
 
 				NewCharacter->SetLevel(SpawnInfo.Level);
+				NewCharacter->SetGenericTeamId(FGenericTeamId(CastToUnderlyingType(EWarframeTeamID::Enemy1)));
 
 				/** Set character appearance. */
 				const FCharacterAppearance* CharacterAppearance = GameInstance->GetCharacterAppearance(SpawnInfo.CharacterID);

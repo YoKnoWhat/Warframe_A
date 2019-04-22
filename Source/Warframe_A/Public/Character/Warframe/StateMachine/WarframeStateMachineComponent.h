@@ -97,18 +97,21 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	bool IsAiming;
 
-	// todo: lower layer for now.
+	// Lower layer.
 	float BulletJumpingTimer;
 	float DoubleJumpingTimer;
 	float RollingTimer;
 	float MaxCustomMovementSpeedBefore;
 
-	// todo: upper layer for now.
+	// Upper layer.
 	float FOVZoomTo;
 	float CurveTime;
 	bool Cache_IsAiming;
 	bool HasDoubleJumped;
 	float GlideTimer;
+
+	// Aim layer.
+	float DepthOfFieldFocalDistance;
 
 private:
 	static FWarframeLowerState_AimGliding		LowerAimGlidingState;

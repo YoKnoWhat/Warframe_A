@@ -32,6 +32,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	/** Handles second half of RestartPlayer */
+	virtual void FinishRestartPlayer(AController* NewPlayer, const FRotator& StartRotation)override;
+
 	void ReadInSpawnPointArray();
 
 public:

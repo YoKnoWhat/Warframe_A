@@ -45,6 +45,17 @@ void AWarframeGameMode::BeginPlay()
 	}
 }
 
+void AWarframeGameMode::FinishRestartPlayer(AController* NewPlayer, const FRotator& StartRotation)
+{
+	Super::FinishRestartPlayer(NewPlayer, StartRotation);
+
+	AWarframeCharacter* Character = Cast<AWarframeCharacter>(NewPlayer->GetPawn());
+	if (Character != nullptr)
+	{
+		Character->SetGenericTeamId(FGenericTeamId(CastToUnderlyingType(EWarframeTeamID::Player)));
+	}
+}
+
 void AWarframeGameMode::ReadInSpawnPointArray()
 {
 	FString FilePath = FPaths::ProjectContentDir() + TEXT("DataTable/SpawnPointTable.dt");

@@ -17,19 +17,19 @@ void UWarframeTargetSelectionComponent::UpdateSelectedTarget()
 	RV_TraceParams.bTraceComplex = true;
 	RV_TraceParams.AddIgnoredActor(OwnerCharacter);
 
-	AWarframeCharacter* PrevTarget = Cast<AWarframeCharacter>(this->SelectedTarget.Actor.Get());
+	AWarframeCharacter* PrevTarget = Cast<AWarframeCharacter>(SelectedTarget.Actor.Get());
 
 	if (GetWorld()->LineTraceSingleByChannel(
-		this->SelectedTarget,
+		SelectedTarget,
 		CameraComponent->GetComponentLocation(),
 		CameraComponent->GetComponentLocation() + CameraComponent->GetForwardVector() * 10000.0f,
 		ECC_WorldDynamic,
 		RV_TraceParams) == false)
 	{
-		this->SelectedTarget.ImpactPoint = this->SelectedTarget.TraceEnd;
+		SelectedTarget.ImpactPoint = SelectedTarget.TraceEnd;
 	}
 
-	AWarframeCharacter* NewTarget = Cast<AWarframeCharacter>(this->SelectedTarget.Actor.Get());
+	AWarframeCharacter* NewTarget = Cast<AWarframeCharacter>(SelectedTarget.Actor.Get());
 
 	if (PrevTarget != NewTarget)
 	{

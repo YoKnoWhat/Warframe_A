@@ -22,8 +22,6 @@ void AWarframeController::Possess(APawn* InPawn)
 	Super::Possess(InPawn);
 
 	AWarframeCharacter* Character = Cast<AWarframeCharacter>(InPawn);
-
-	Character->SetGenericTeamId(FGenericTeamId(CastToUnderlyingType(EWarframeTeamID::Player)));
 	
 	/** Dynamic spring arm component creation. */
 	USpringArmComponent* SpringArmComponent = NewObject<USpringArmComponent>(InPawn);

@@ -57,8 +57,6 @@ AWarframeCharacterAIController::AWarframeCharacterAIController(const FObjectInit
 void AWarframeCharacterAIController::Possess(APawn* InPawn)
 {
 	Super::Possess(InPawn);
-
-	Cast<AWarframeCharacter>(InPawn)->SetGenericTeamId(FGenericTeamId(CastToUnderlyingType(EWarframeTeamID::Enemy1)));
 }
 
 void AWarframeCharacterAIController::Tick(float DeltaTime)

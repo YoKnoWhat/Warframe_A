@@ -56,14 +56,6 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 	CharacterWidgetComponent = ObjectInitializer.CreateDefaultSubobject<UCharacterWidgetComponent>(this, FName("CharacterWidget"));
 	CharacterWidgetComponent->SetupAttachment(this->RootComponent);
 
-	/** Registers owning actor as source of stimuli for senses */
-	UAIPerceptionSystem* PerceptionSystem = UAIPerceptionSystem::GetCurrent(this->GetWorld());
-	if (PerceptionSystem)
-	{
-		PerceptionSystem->RegisterSourceForSenseClass(UAISense_Hearing::StaticClass(), *this);
-		PerceptionSystem->RegisterSourceForSenseClass(UAISense_Sight::StaticClass(), *this);
-	}
-
 	this->SetGenericTeamId(FGenericTeamId::NoTeam);
 }
 
@@ -248,6 +240,20 @@ void AWarframeCharacter::SetLevel(uint32 InLevel)
 void AWarframeCharacter::SetGenericTeamId(const FGenericTeamId& NewTeamID)
 {
 	TeamID = NewTeamID;
+
+	AWarframeCharacterAIController* AIController = Cast<AWarframeCharacterAIController>(GetController());
+	if (AIController != nullptr)
+	{
+		AIController->SetGenericTeamId(NewTeamID);
+	}
+
+	/** Registers owning actor as source of stimuli for senses */
+	UAIPerceptionSystem* PerceptionSystem = UAIPerceptionSystem::GetCurrent(this->GetWorld());
+	if (PerceptionSystem)
+	{
+		PerceptionSystem->RegisterSourceForSenseClass(UAISense_Hearing::StaticClass(), *this);
+		PerceptionSystem->RegisterSourceForSenseClass(UAISense_Sight::StaticClass(), *this);
+	}
 }
 
 FGenericTeamId AWarframeCharacter::GetGenericTeamId()const

@@ -1,13 +1,18 @@
 
 #include "Character/Warframe/StateMachine/WarframeAimStates.h"
+#include "Character/TargetSelectionComponent.h"
 #include "Character/Warframe/Warframe.h"
 #include "Character/Warframe/WarframeMovementComponent.h"
 #include "Character/Warframe/StateMachine/WarframeStateMachineComponent.h"
 #include "Gameplay/WarframeConfigSingleton.h"
 #include "Gameplay/WarframeConfigSingleton.h"
+#include "Gameplay/WarframeLevelScriptActor.h"
 #include "Weapon/WeaponBase.h"
 
 #include "Runtime/Engine/Classes/Camera/CameraComponent.h"
+#include "Runtime/Engine/Classes/Engine/PostProcessVolume.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
+#include "Runtime/Engine/Classes/GameFramework/Controller.h"
 
 
 int32 FWarframeAimState_Aiming::GetID()const
@@ -18,7 +23,24 @@ int32 FWarframeAimState_Aiming::GetID()const
 FStateObject* FWarframeAimState_Aiming::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
 	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
-	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(WarframeStateMachine->GetCharacter()->GetCharacterMovement());
+	AWarframeCharacter* Character = WarframeStateMachine->GetCharacter();
+	UWarframeMovementComponent* CharacterMovement = Cast<UWarframeMovementComponent>(Character->GetCharacterMovement());
+
+	// Update depth of field focal distance.
+	APostProcessVolume* PostProcessVolume = Cast<AWarframeLevelScriptActor>(StateMachine->GetWorld()->GetLevelScriptActor())->GetUnboundPostProcessVolume();
+	if (PostProcessVolume != nullptr)
+	{
+		UTargetSelectionComponent* TargetSelectionComponent = Cast<UTargetSelectionComponent>(Character->GetController()->GetComponentByClass(UTargetSelectionComponent::StaticClass()));
+		const FHitResult& SelectedTarget = TargetSelectionComponent->GetSelectedTarget();
+		if (SelectedTarget.Distance == 0.0f)
+		{
+			PostProcessVolume->Settings.DepthOfFieldFocalDistance = 10000.0f;
+		}
+		else
+		{
+			PostProcessVolume->Settings.DepthOfFieldFocalDistance = SelectedTarget.Distance;
+		}
+	}
 
 	if (WarframeStateMachine->IsAiming)
 	{
@@ -29,7 +51,7 @@ FStateObject* FWarframeAimState_Aiming::OnUpdate(UStateMachineComponent* StateMa
 		WarframeStateMachine->CurveTime = FMath::Clamp(WarframeStateMachine->CurveTime - DeltaTime, 0.0f, 0.1f);
 	}
 
-	UCameraComponent* Camera = Cast<UCameraComponent>(WarframeStateMachine->GetCharacter()->GetComponentByClass(UCameraComponent::StaticClass()));
+	UCameraComponent* Camera = Cast<UCameraComponent>(Character->GetComponentByClass(UCameraComponent::StaticClass()));
 	if (Camera != nullptr)
 	{
 		Camera->FieldOfView = FMath::Lerp(FWarframeConfigSingleton::Instance().FieldOfView, WarframeStateMachine->FOVZoomTo, WarframeStateMachine->CurveTime * 10.0f);
@@ -58,6 +80,12 @@ void FWarframeAimState_Aiming::OnEnter(UStateMachineComponent* StateMachine, FSt
 	WarframeStateMachine->MaxWalkSpeedBefore = CharacterMovement->MaxWalkSpeed;
 	CharacterMovement->MaxWalkSpeed = 300.0f;
 
+	APostProcessVolume* PostProcessVolume = Cast<AWarframeLevelScriptActor>(StateMachine->GetWorld()->GetLevelScriptActor())->GetUnboundPostProcessVolume();
+	if (PostProcessVolume != nullptr)
+	{
+		WarframeStateMachine->DepthOfFieldFocalDistance = PostProcessVolume->Settings.DepthOfFieldFocalDistance;
+		PostProcessVolume->Settings.bOverride_DepthOfFieldMethod = true;
+	}
 }
 
 void FWarframeAimState_Aiming::OnExit(UStateMachineComponent* StateMachine)
@@ -69,6 +97,13 @@ void FWarframeAimState_Aiming::OnExit(UStateMachineComponent* StateMachine)
 	Character->bUseControllerRotationYaw = false;
 
 	CharacterMovement->MaxWalkSpeed = WarframeStateMachine->MaxWalkSpeedBefore;
+
+	APostProcessVolume* PostProcessVolume = Cast<AWarframeLevelScriptActor>(StateMachine->GetWorld()->GetLevelScriptActor())->GetUnboundPostProcessVolume();
+	if (PostProcessVolume != nullptr)
+	{
+		PostProcessVolume->Settings.DepthOfFieldFocalDistance = WarframeStateMachine->DepthOfFieldFocalDistance;
+		PostProcessVolume->Settings.bOverride_DepthOfFieldMethod = false;
+	}
 }
 
 FStateObject* FWarframeAimState_Aiming::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
