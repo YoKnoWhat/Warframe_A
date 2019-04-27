@@ -25,8 +25,9 @@ AWeaponBase::AWeaponBase(const FObjectInitializer& ObjectInitializer) :
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	MeshComponent = Cast<UMeshComponent>(ObjectInitializer.CreateDefaultSubobject(this, "Mesh", USkeletalMeshComponent::StaticClass(), USkeletalMeshComponent::StaticClass(), true, false, false));
-	MeshComponent->SetupAttachment(this->RootComponent);
+	SkeletalMeshComponent = Cast<USkeletalMeshComponent>(ObjectInitializer.CreateDefaultSubobject(this, "Mesh", USkeletalMeshComponent::StaticClass(), USkeletalMeshComponent::StaticClass(), true, false, false));
+
+	this->SetRootComponent(SkeletalMeshComponent);
 }
 
 // Called when the game starts or when spawned
@@ -233,7 +234,7 @@ void AWeaponBase::Init(EWeaponID WeaponID)
 	// Set weapon appearance.
 	const FWeaponAppearance *WeaponAppearance = GameInstance->GetWeaponAppearance(WeaponID);
 
-	Cast<USkeletalMeshComponent>(this->MeshComponent)->SetSkeletalMesh(FWarframeConfigSingleton::Instance().FindResource<USkeletalMesh>(WeaponAppearance->Mesh));
+	Cast<USkeletalMeshComponent>(this->SkeletalMeshComponent)->SetSkeletalMesh(FWarframeConfigSingleton::Instance().FindResource<USkeletalMesh>(WeaponAppearance->Mesh));
 	this->FireEmitter = FWarframeConfigSingleton::Instance().FindResource<UParticleSystem>(WeaponAppearance->FireEmitter);
 	WeaponAppearance->ReloadAnim;
 }
@@ -250,10 +251,10 @@ UClass* AWeaponBase::GetRoundClass_Implementation()const
 
 ARoundBase* AWeaponBase::OnRoundFired_Implementation(const FHitResult& CurrentTarget)
 {
-	FVector SocketLocation = MeshComponent->GetSocketLocation("Socket_Muzzle");
+	FVector SocketLocation = SkeletalMeshComponent->GetSocketLocation("Socket_Muzzle");
 
 	// SpawnEmitter.
-	UGameplayStatics::SpawnEmitterAttached(FireEmitter, this->MeshComponent, "Socket_Muzzle", FVector::ZeroVector, FRotator::ZeroRotator);
+	UGameplayStatics::SpawnEmitterAttached(FireEmitter, this->SkeletalMeshComponent, "Socket_Muzzle", FVector::ZeroVector, FRotator::ZeroRotator);
 
 	FTransform SpawnTransform(
 		(CurrentTarget.ImpactPoint - SocketLocation).ToOrientationRotator(),

@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{3AAA5BD6-45DA-DF34-CFB7-74889CA1FF4E}",
+	"EngineAssociation": "{F86CEDF1-49F8-2D4D-46B3-F39FD8843AC6}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -13,6 +13,16 @@
 				"CoreUObject",
 				"UMG"
 			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "Niagara",
+			"Enabled": true
+		},
+		{
+			"Name": "NiagaraExtras",
+			"Enabled": true
 		}
 	]
 }

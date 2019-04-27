@@ -19,9 +19,11 @@ public:
 	
 	void SetOverride(EWeaponID WeaponID, UClass* OverrideClass);
 
+	void ClearOverrides();
+
 protected:
 	AWeaponBase* SpawnWeaponImpl(AActor* Owner, EWeaponID WeaponID, const FTransform& Transform);
 
 protected:
-	TMap<EWeaponID, UClass*> OverrideClasses;
+	TMap<EWeaponID, UClass*> ClassOverrides;
 };

@@ -1,5 +1,8 @@
 {
+    "Characters" : [
+
+    ],
     "Weapons": [
-        { "Name": "Staticor", "BPClass": "" }
+        { "Name": "Staticor", "BPClass": "Blueprint'/Game/Weapons/Secondary/Staticor/BP_Staticor.BP_Staticor_C'" }
     ]
 }

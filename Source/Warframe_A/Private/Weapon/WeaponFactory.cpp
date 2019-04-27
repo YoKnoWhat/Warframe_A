@@ -1,6 +1,8 @@
 
 #include "Weapon/WeaponFactory.h"
 #include "Character/WarframeCharacter.h"
+#include "Gameplay/WarframeGameInstance.h"
+#include "Utility/HelperFunction.h"
 #include "Weapon/Primary/BratonPrime.h"
 #include "Weapon/Secondary/Staticor.h"
 
@@ -21,7 +23,7 @@ AWeaponBase* FWeaponFactory::SpawnWeaponImpl(AActor* Owner, EWeaponID WeaponID, 
 	SpawnParams.Owner = Owner;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
-	UClass** Result = OverrideClasses.Find(WeaponID);
+	UClass** Result = ClassOverrides.Find(WeaponID);
 	if (Result != nullptr)
 	{
 		Weapon = Owner->GetWorld()->SpawnActor<AWeaponBase>(*Result, Transform, SpawnParams);
@@ -51,5 +53,10 @@ AWeaponBase* FWeaponFactory::SpawnWeaponImpl(AActor* Owner, EWeaponID WeaponID, 
 
 void FWeaponFactory::SetOverride(EWeaponID WeaponID, UClass* OverrideClass)
 {
-	OverrideClasses.Add(WeaponID, OverrideClass);
+	ClassOverrides.Add(WeaponID, OverrideClass);
+}
+
+void FWeaponFactory::ClearOverrides()
+{
+	ClassOverrides.Empty();
 }

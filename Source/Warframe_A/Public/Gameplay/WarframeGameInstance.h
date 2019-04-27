@@ -113,6 +113,8 @@ struct FPickableObjectInfo
 	FName			Mesh;
 };
 
+class FJsonObject;
+
 /**
  * 
  */
@@ -158,6 +160,12 @@ protected:
 	void ReadInWeaponAppearanceTable(const char* Begin, const char* End);
 
 	void ReadInPickableObjectTable(const char* Begin, const char* End);
+
+	void InitFactoryClassOverrides();
+
+	void InitCharacterFactoryClassOverrides(TSharedPtr<FJsonObject> &JsonRoot);
+
+	void InitWeaponFactoryClassOverrides(TSharedPtr<FJsonObject> &JsonRoot);
 
 protected:
 	TArray<FCharacterInfo> CharacterInfoArray;

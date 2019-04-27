@@ -44,6 +44,8 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 	}
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+	// todo: root motion debug.
+	GetCapsuleComponent()->bHiddenInGame = false;
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	/** Character movement component settings. */

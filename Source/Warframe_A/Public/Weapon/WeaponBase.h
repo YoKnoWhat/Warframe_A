@@ -282,9 +282,9 @@ public:
 		return Zoom;
 	}
 
-	FORCEINLINE class UMeshComponent* GetMesh()const
+	FORCEINLINE class USkeletalMeshComponent* GetMesh()const
 	{
-		return MeshComponent;
+		return SkeletalMeshComponent;
 	}
 
 protected:
@@ -303,7 +303,7 @@ protected:
 protected:
 	/** Static or skeletal mesh component instance determined by overrider. */
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-	class UMeshComponent* MeshComponent;
+	class USkeletalMeshComponent* SkeletalMeshComponent;
 
 	UPROPERTY()
 	class UParticleSystem* FireEmitter;

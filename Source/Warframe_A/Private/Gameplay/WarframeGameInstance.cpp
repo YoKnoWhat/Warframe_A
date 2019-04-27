@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Gameplay/WarframeGameInstance.h"
+#include "Character/CharacterFactory.h"
 #include "Gameplay/WarframeConfigSingleton.h"
+#include "Weapon/WeaponFactory.h"
 #include "Utility/HelperFunction.h"
 
 #include "Runtime/AIModule/Classes/GenericTeamAgentInterface.h"
@@ -9,6 +11,9 @@
 #include "Runtime/Core/Public/HAL/PlatformFilemanager.h"
 #include "Runtime/Core/Public/GenericPlatform/GenericPlatformFile.h"
 #include "Runtime/Core/Public/HAL/UnrealMemory.h"
+#include "Runtime/Json/Public/Dom/JsonObject.h"
+#include "Runtime/Json/Public/Serialization/JsonReader.h"
+#include "Runtime/Json/Public/Serialization/JsonSerializer.h"
 
 
 ETeamAttitude::Type WarframeAttitudeSolver(FGenericTeamId A, FGenericTeamId B)
@@ -35,6 +40,8 @@ void UWarframeGameInstance::Init()
 	FWarframeConfigSingleton::Instance().LoadConfig();
 
 	this->ReadInDataTables();
+
+	this->InitFactoryClassOverrides();
 
 	FGenericTeamId::SetAttitudeSolver(WarframeAttitudeSolver);
 }
@@ -589,6 +596,97 @@ void UWarframeGameInstance::ReadInPickableObjectTable(const char* Begin, const c
 			}
 			Warframe::ReadIn(tempUint32, Begin);
 			NewPickableObjectInfo.Mesh = MeshArray[tempUint32];
+		}
+	}
+}
+
+void UWarframeGameInstance::InitFactoryClassOverrides()
+{
+	FString JsonString;
+	{
+		const char* Begin;
+		const char* End;
+		if (Warframe::GetFileContent(FPaths::ProjectContentDir() + TEXT("Config/ClassOverrides.json"), Begin, End))
+		{
+			JsonString = FString(Begin);
+			delete Begin;
+		}
+	}
+
+	if (JsonString.IsEmpty())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("FWeaponFactory failed to read config file."));
+		return;
+	}
+
+	TSharedPtr<FJsonObject> JsonRoot;
+	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonString);
+	if (FJsonSerializer::Deserialize(JsonReader, JsonRoot))
+	{
+		this->InitCharacterFactoryClassOverrides(JsonRoot);
+
+		this->InitWeaponFactoryClassOverrides(JsonRoot);
+	}
+}
+
+void UWarframeGameInstance::InitCharacterFactoryClassOverrides(TSharedPtr<FJsonObject> &JsonRoot)
+{
+	FCharacterFactory::Instance().ClearOverrides();
+
+	TMap<FName, ECharacterID> CharacterNameIDMap;
+	for (UnderlyingType<ECharacterID> i = CastToUnderlyingType(ECharacterID::Begin); i <= CastToUnderlyingType(ECharacterID::End); ++i)
+	{
+		CharacterNameIDMap.Add(CharacterInfoArray[i].Name, static_cast<ECharacterID>(i));
+	}
+
+	auto& Characters = JsonRoot->GetArrayField("Characters");
+	for (int32 i = 0; i < Characters.Num(); ++i)
+	{
+		auto& Character = Characters[i]->AsObject();
+
+		FName CharacterName = *Character->GetStringField("Name");
+
+		FString CharacterBPClass = *Character->GetStringField("BPClass");
+
+		ECharacterID* Result = CharacterNameIDMap.Find(CharacterName);
+		if (Result != nullptr)
+		{
+			UClass* ClassOverride = LoadObject<UClass>(nullptr, *CharacterBPClass);
+			if (ClassOverride != nullptr)
+			{
+				FCharacterFactory::Instance().SetOverride(*Result, ClassOverride);
+			}
+		}
+	}
+}
+
+void UWarframeGameInstance::InitWeaponFactoryClassOverrides(TSharedPtr<FJsonObject> &JsonRoot)
+{
+	FWeaponFactory::Instance().ClearOverrides();
+
+	TMap<FName, EWeaponID> WeaponNameIDMap;
+	for (UnderlyingType<EWeaponID> i = CastToUnderlyingType(EWeaponID::Begin); i <= CastToUnderlyingType(EWeaponID::End); ++i)
+	{
+		WeaponNameIDMap.Add(WeaponInfoArray[i].Name, static_cast<EWeaponID>(i));
+	}
+
+	auto& Weapons = JsonRoot->GetArrayField("Weapons");
+	for (int32 i = 0; i < Weapons.Num(); ++i)
+	{
+		auto& Weapon = Weapons[i]->AsObject();
+
+		FName WeaponName = *Weapon->GetStringField("Name");
+
+		FString WeaponBPClass = *Weapon->GetStringField("BPClass");
+
+		EWeaponID* Result = WeaponNameIDMap.Find(WeaponName);
+		if (Result != nullptr)
+		{
+			UClass* ClassOverride = LoadObject<UClass>(nullptr, *WeaponBPClass);
+			if (ClassOverride != nullptr)
+			{
+				FWeaponFactory::Instance().SetOverride(*Result, ClassOverride);
+			}
 		}
 	}
 }

@@ -14,8 +14,16 @@ public:
 
 	void LoadConfig();
 
+	/**
+	 * Return UClass of specified resource if found in Reource.json,
+	 * otherwise nullptr.
+	 */
 	UClass* FindResourceClass(FName Name);
 
+	/**
+	 * Return reference of specified resource if found in Resource.json,
+	 * otherwise nullptr.
+	 */
 	template<class T>
 	T* FindResource(FName Name)
 	{

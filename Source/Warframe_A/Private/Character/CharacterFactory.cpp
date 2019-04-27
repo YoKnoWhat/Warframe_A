@@ -20,7 +20,7 @@ AWarframeCharacter* FCharacterFactory::SpawnCharacterImpl(AActor* Owner, ECharac
 	SpawnParams.Owner = Owner;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
-	UClass** Result = OverrideClasses.Find(CharacterID);
+	UClass** Result = ClassOverrides.Find(CharacterID);
 	if (Result != nullptr)
 	{
 		Character = Owner->GetWorld()->SpawnActor<AWarframeCharacter>(*Result, Transform, SpawnParams);
@@ -52,5 +52,10 @@ AWarframeCharacter* FCharacterFactory::SpawnCharacterImpl(AActor* Owner, ECharac
 
 void FCharacterFactory::SetOverride(ECharacterID CharacterID, UClass* OverrideClass)
 {
-	OverrideClasses.Add(CharacterID, OverrideClass);
+	ClassOverrides.Add(CharacterID, OverrideClass);
+}
+
+void FCharacterFactory::ClearOverrides()
+{
+	ClassOverrides.Empty();
 }

@@ -19,9 +19,11 @@ public:
 
 	void SetOverride(ECharacterID CharacterID, UClass* OverrideClass);
 
+	void ClearOverrides();
+
 protected:
 	AWarframeCharacter* SpawnCharacterImpl(AActor* Owner, ECharacterID CharacterID, const FTransform& Transform);
 
 protected:
-	TMap<ECharacterID, UClass*> OverrideClasses;
+	TMap<ECharacterID, UClass*> ClassOverrides;
 };
