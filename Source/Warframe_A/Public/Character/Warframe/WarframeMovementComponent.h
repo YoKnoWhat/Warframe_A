@@ -24,6 +24,8 @@ class WARFRAME_A_API UWarframeMovementComponent : public UCharacterMovementCompo
 	GENERATED_BODY()
 
 public:
+	UWarframeMovementComponent(const FObjectInitializer& ObjectInitializer);
+
 	virtual bool IsFalling()const override;
 
 	virtual bool IsMovingOnGround()const override;

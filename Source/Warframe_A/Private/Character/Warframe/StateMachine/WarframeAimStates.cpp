@@ -84,7 +84,7 @@ void FWarframeAimState_Aiming::OnEnter(UStateMachineComponent* StateMachine, FSt
 	if (PostProcessVolume != nullptr)
 	{
 		WarframeStateMachine->DepthOfFieldFocalDistance = PostProcessVolume->Settings.DepthOfFieldFocalDistance;
-		PostProcessVolume->Settings.bOverride_DepthOfFieldMethod = true;
+		PostProcessVolume->Settings.DepthOfFieldFstop = 1.0f;
 	}
 }
 
@@ -102,7 +102,7 @@ void FWarframeAimState_Aiming::OnExit(UStateMachineComponent* StateMachine)
 	if (PostProcessVolume != nullptr)
 	{
 		PostProcessVolume->Settings.DepthOfFieldFocalDistance = WarframeStateMachine->DepthOfFieldFocalDistance;
-		PostProcessVolume->Settings.bOverride_DepthOfFieldMethod = false;
+		PostProcessVolume->Settings.DepthOfFieldFstop = 32.0f;
 	}
 }
 

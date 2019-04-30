@@ -3,38 +3,50 @@
 #pragma once
 
 #include "WarframeCommon.h"
-#include "UObject/NoExportTypes.h"
+#include "Runtime/Engine/Classes/GameFramework/Actor.h"
 #include "SpawnPoint.generated.h"
 
 
-struct FCharacterSpawnInfo
+USTRUCT()
+struct FSpawnInfo
 {
-	ECharacterID CharacterID;
-	uint32 Level;
-	uint32 Number;
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere)
+	int32 CharacterID;
+
+	UPROPERTY(EditAnywhere)
+	int32 Level;
+
+	UPROPERTY(EditAnywhere)
+	int32 Number;
 };
 
 UCLASS()
-class WARFRAME_A_API USpawnPoint : public UObject
+class WARFRAME_A_API ASpawnPoint : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	void Init(const FVector &Location, const TArray<FCharacterSpawnInfo> &SpawnInfoArray);
+	ASpawnPoint(const FObjectInitializer& ObjectInitializer);
 
 	void SpawnAnyway();
 
-	void SpawnIfAllKilled();
+	void SpawnIfEmpty();
 
 	void KillAll();
 
+	bool IsEmpty()const;
+
 protected:
+	virtual void BeginPlay()override;
+
 	UFUNCTION()
 	void OnCharacterDied(AActor* Causer, AWarframeCharacter* Character);
 	
 protected:
-	FVector Location;
-	TArray<FCharacterSpawnInfo> SpawnInfoArray;
+	UPROPERTY(EditAnywhere)
+	TArray<FSpawnInfo> SpawnInfoArray;
 
 	UPROPERTY()
 	TSet<AWarframeCharacter*> SpawnedCharacters;

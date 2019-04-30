@@ -1,7 +1,10 @@
 
 #include "Utility/HelperFunction.h"
 #include "Character/WarframeCharacterAIController.h"
+#include "Character/StateMachineComponent.h"
 #include "UI/CharacterHeaderPanel.h"
+#include "UI/PlayerHUD.h"
+#include "UI/Mission/MissionPanel.h"
 
 #include "Editor/UMGEditor/Public/WidgetBlueprint.h"
 #include "Runtime/AIModule/Classes/BehaviorTree/BehaviorTree.h"
@@ -83,6 +86,18 @@ namespace Warframe
 		if (Name == "UCharacterHeaderPanel")
 		{
 			return UCharacterHeaderPanel::StaticClass();
+		}
+		if (Name == "UMissionPanel")
+		{
+			return UMissionPanel::StaticClass();
+		}
+		if (Name == "UPlayerHUD")
+		{
+			return UPlayerHUD::StaticClass();
+		}
+		if (Name == "UStateMachineComponent")
+		{
+			return UStateMachineComponent::StaticClass();
 		}
 
 		// ResourceRefs

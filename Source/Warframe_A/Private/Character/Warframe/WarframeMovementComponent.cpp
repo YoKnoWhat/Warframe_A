@@ -5,6 +5,14 @@
 #include "Character/Warframe/Warframe.h"
 
 
+UWarframeMovementComponent::UWarframeMovementComponent(const FObjectInitializer& ObjectInitializer) :
+	Super(ObjectInitializer)
+{
+	this->MaxAcceleration = 1024.0f;
+	this->MaxWalkSpeed = 500.0f;
+	this->AirControl = 0.30f;
+}
+
 bool UWarframeMovementComponent::IsFalling()const
 {
 	return Super::IsFalling()
@@ -110,11 +118,28 @@ void UWarframeMovementComponent::OnEnterDoubleJumping()
 {
 	Velocity.Z = 0.0f;
 
-	if (Acceleration.Size2D() > 100.0f)
+	/** Calculate new XY velocity only when there are player inputs, otherwise we will perform double jump in place. */
+	if (Acceleration.Size2D() > 1.0f)
 	{
-		Velocity = Acceleration; // Acceleration.Z will always be zero.
-		Velocity.Normalize();
-		Velocity *= this->MaxWalkSpeed * Acceleration.Size2D() / this->MaxAcceleration;
+		/** In case of divide-by-zero in Normalize(). */
+		if (Velocity.Size2D() > 1.0f)
+		{
+			/** Character velocity has the same direction as acceleration. */
+			if (FVector::DotProduct(Velocity, Acceleration) > 0.90f)
+			{
+				/** Apply DoubleJump's delta velocity. */
+				FVector DeltaVelocity = Acceleration;
+				DeltaVelocity.Normalize();
+				DeltaVelocity *= 300.0f;
+				Velocity += DeltaVelocity;
+			}
+			else
+			{
+				Velocity = Acceleration;
+				Velocity.Normalize();
+				Velocity *= 300.0f;
+			}
+		}
 	}
 }
 

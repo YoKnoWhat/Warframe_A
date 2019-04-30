@@ -6,7 +6,7 @@
 #include "Gameplay/PickableObject/PickableObject.h"
 #include "Gameplay/WarframeConfigSingleton.h"
 #include "Gameplay/WarframeGameInstance.h"
-#include "Gameplay/WarframeGameMode.h"
+#include "Gameplay/GameMode/WarframeGameMode.h"
 #include "UI/CharacterWidget.h"
 #include "UI/CharacterWidgetComponent.h"
 #include "Weapon/RoundBase.h"

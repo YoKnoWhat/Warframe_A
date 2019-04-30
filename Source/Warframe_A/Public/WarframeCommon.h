@@ -467,7 +467,6 @@ class FAbilityObject;
 class FStateObject;
 class UCharacterWidgetComponent;
 class UCharacterWidget;
-class USpawnPoint;
 class UStateMachineComponent;
 
 template<class T>

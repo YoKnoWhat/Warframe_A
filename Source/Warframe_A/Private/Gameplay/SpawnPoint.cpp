@@ -3,9 +3,9 @@
 #include "Gameplay/SpawnPoint.h"
 #include "Character/CharacterFactory.h"
 #include "Character/WarframeCharacter.h"
+#include "Gameplay/GameMode/WarframeGameMode.h"
 #include "Gameplay/WarframeConfigSingleton.h"
 #include "Gameplay/WarframeGameInstance.h"
-#include "Gameplay/WarframeGameMode.h"
 #include "Weapon/WeaponBase.h"
 #include "Weapon/WeaponFactory.h"
 
@@ -17,20 +17,33 @@
 
 DECLARE_DELEGATE_OneParam(FCharacterOnDestroyedDelegate, AActor*)
 
-void USpawnPoint::Init(const FVector &Location_, const TArray<FCharacterSpawnInfo> &SpawnInfoArray_)
+ASpawnPoint::ASpawnPoint(const FObjectInitializer& ObjectInitializer) :
+	Super(ObjectInitializer)
 {
-	this->Location = Location_;
-	this->SpawnInfoArray = SpawnInfoArray_;
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = false;
 }
 
-void USpawnPoint::SpawnAnyway()
+void ASpawnPoint::BeginPlay()
+{
+	Super::BeginPlay();
+
+	/** In case that default game mode is none. */
+	AWarframeGameMode* GameMode = Cast<AWarframeGameMode>(GetWorld()->GetAuthGameMode());
+	if (GameMode != nullptr)
+	{
+		GameMode->RegisterSpawnPoint(this);
+	}
+}
+
+void ASpawnPoint::SpawnAnyway()
 {
 	this->KillAll();
 
-	this->SpawnIfAllKilled();
+	this->SpawnIfEmpty();
 }
 
-void USpawnPoint::SpawnIfAllKilled()
+void ASpawnPoint::SpawnIfEmpty()
 {
 	if (this->SpawnedCharacters.Num() != 0)
 	{
@@ -48,11 +61,13 @@ void USpawnPoint::SpawnIfAllKilled()
 		SpawnParams.Owner = GameMode;
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
-		for (uint32 SpawnIndex = 0; SpawnIndex < SpawnInfo.Number; ++SpawnIndex)
-		{
-			FTransform CharacterTransform(FRotator::ZeroRotator, Location);
+		ECharacterID CharacterID = static_cast<ECharacterID>(SpawnInfo.CharacterID);
 
-			AWarframeCharacter *NewCharacter = FCharacterFactory::Instance().SpawnCharacter<AWarframeCharacter>(GameMode, SpawnInfo.CharacterID, CharacterTransform);
+		for (int32 SpawnIndex = 0; SpawnIndex < SpawnInfo.Number; ++SpawnIndex)
+		{
+			FTransform CharacterTransform(FRotator::ZeroRotator, this->GetActorLocation());
+
+			AWarframeCharacter *NewCharacter = FCharacterFactory::Instance().SpawnCharacter<AWarframeCharacter>(GameMode, CharacterID, CharacterTransform);
 			if (NewCharacter != nullptr)
 			{
 				this->SpawnedCharacters.Add(NewCharacter);
@@ -61,7 +76,7 @@ void USpawnPoint::SpawnIfAllKilled()
 				NewCharacter->SetGenericTeamId(FGenericTeamId(CastToUnderlyingType(EWarframeTeamID::Enemy1)));
 
 				/** Set character appearance. */
-				const FCharacterAppearance* CharacterAppearance = GameInstance->GetCharacterAppearance(SpawnInfo.CharacterID);
+				const FCharacterAppearance* CharacterAppearance = GameInstance->GetCharacterAppearance(CharacterID);
 
 				USkeletalMeshComponent *SkeletalMeshComponent = Cast<USkeletalMeshComponent>(NewCharacter->GetComponentByClass(USkeletalMeshComponent::StaticClass()));
 				SkeletalMeshComponent->SetSkeletalMesh(FWarframeConfigSingleton::Instance().FindResource<USkeletalMesh>(*CharacterAppearance->Mesh.ToString()));
@@ -74,7 +89,7 @@ void USpawnPoint::SpawnIfAllKilled()
 				CapsuleComponent->SetCapsuleRadius(CharacterAppearance->Radius);
 
 				/** Set character weapons. */
-				const FEnemyInfo* EnemyInfo = GameInstance->GetEnemyInfo(SpawnInfo.CharacterID);
+				const FEnemyInfo* EnemyInfo = GameInstance->GetEnemyInfo(CharacterID);
 				EnemyInfo->Faction;
 
 				AWeaponBase* Weapon1 = FWeaponFactory::Instance().SpawnWeapon<AWeaponBase>(NewCharacter, EnemyInfo->Weapon1, FTransform());
@@ -94,7 +109,7 @@ void USpawnPoint::SpawnIfAllKilled()
 				NewCharacter->SwitchToRangedWeapon();
 
 				/** Bind event to ACharacter::OnDestroyed(). */
-				NewCharacter->OnDied.AddUObject(this, &USpawnPoint::OnCharacterDied);
+				NewCharacter->OnDied.AddUObject(this, &ASpawnPoint::OnCharacterDied);
 				NewCharacter->OnDied.AddUObject(GameMode, &AWarframeGameMode::OnCharacterDied);
 
 				GameMode->OnCharacterSpawned(NewCharacter);				
@@ -103,7 +118,7 @@ void USpawnPoint::SpawnIfAllKilled()
 	}
 }
 
-void USpawnPoint::KillAll()
+void ASpawnPoint::KillAll()
 {
 	for (AWarframeCharacter *Character : SpawnedCharacters)
 	{
@@ -111,7 +126,12 @@ void USpawnPoint::KillAll()
 	}
 }
 
-void USpawnPoint::OnCharacterDied(AActor* Causer, AWarframeCharacter* Character)
+bool ASpawnPoint::IsEmpty()const
+{
+	return SpawnedCharacters.Num() == 0;
+}
+
+void ASpawnPoint::OnCharacterDied(AActor* Causer, AWarframeCharacter* Character)
 {
 	SpawnedCharacters.Remove(Cast<AWarframeCharacter>(Character));
 }

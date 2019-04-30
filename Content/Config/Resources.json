@@ -1,12 +1,16 @@
 {
     "ClassRefs": [
+        {"Type": "AWarframeCharacterAIController", "Ref": "BP_WarframeCharacterAIController=Blueprint'/Game/Characters/AI/BP_WarframeCharacterAIController.BP_WarframeCharacterAIController_C'"},
+
         {"Type": "UAnimInstance", "Ref": "ABP_Warframe=AnimBlueprint'/Game/Characters/Tenno/ABP_Mannequin.ABP_Mannequin_C'"},
         {"Type": "UAnimInstance", "Ref": "ABP_Corpus=AnimBlueprint'/Game/Characters/Corpus/ABP_Corpus.ABP_Corpus_C'"},
-        
-        {"Type": "AWarframeCharacterAIController", "Ref": "BP_WarframeCharacterAIController=Blueprint'/Game/Characters/AI/BP_WarframeCharacterAIController.BP_WarframeCharacterAIController_C'"},
 
         {"Type": "UCharacterHeaderPanel", "Ref": "UI_CharacterHeaderPanel=WidgetBlueprint'/Game/UI/UI_CharacterHeaderPanel.UI_CharacterHeaderPanel_C'"},
 
+        {"Type": "UMissionPanel", "Ref": "UI_MissionPanelExterminate=WidgetBlueprint'/Game/UI/MissionPanels/UI_MissionPanelExterminate.UI_MissionPanelExterminate_C'"},
+
+        {"Type": "UPlayerHUD", "Ref": "UI_PlayerHUD=WidgetBlueprint'/Game/UI/UI_PlayerHUD.UI_PlayerHUD_C'"},
+        
         {"Type": "UStateMachineComponent", "Ref": "BP_TennoStateMachineComponent=Blueprint'/Game/Characters/Tenno/States/BP_TennoStateMachineComponent.BP_TennoStateMachineComponent_C'"}
     ],
     "ResourceRefs": [

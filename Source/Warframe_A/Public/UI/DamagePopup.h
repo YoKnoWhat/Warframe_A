@@ -49,7 +49,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 		float MinRandomDist = 100.0f;
 	UPROPERTY(EditAnywhere)
-		float MaxRandomDist = 1000.0f;
+		float MaxRandomDist = 1500.0f;
 	UPROPERTY(EditAnywhere)
-		float MaxRandomY = 300.0f;
+		float MaxRandomY = 500.0f;
 };
