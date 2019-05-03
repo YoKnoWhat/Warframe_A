@@ -21,6 +21,7 @@ UENUM(BlueprintType)
 enum class EWarframeLowerState : uint8
 {
 	Crouching,
+	Dead,
 	Falling,
 	Idle,
 	Jumping,
@@ -90,11 +91,12 @@ public:
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)override;
 
+	virtual void Kill()override;
+
 public:
 	FWarframeStateMachineLayer_Lower* LowerLayer;
 	FWarframeStateMachineLayer_Aim* AimLayer;
 
-	UPROPERTY(BlueprintReadWrite)
 	bool IsAiming;
 
 	// Lower layer.

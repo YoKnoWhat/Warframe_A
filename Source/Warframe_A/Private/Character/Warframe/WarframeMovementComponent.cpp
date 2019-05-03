@@ -106,7 +106,7 @@ void UWarframeMovementComponent::PhysCustomSliding(float DeltaTime, int32 Iterat
 
 void UWarframeMovementComponent::OnEnterAirGliding()
 {
-	this->Velocity *= 0.5f;
+	this->Velocity.Z = FMath::Clamp(this->Velocity.Z, -150.0f, 0.0f);
 }
 
 void UWarframeMovementComponent::PhysCustomAirGliding(float DeltaTime, int32 Iterations)

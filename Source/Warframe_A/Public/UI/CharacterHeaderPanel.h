@@ -103,10 +103,6 @@ protected:
 	// Delta to subtract from CurrentOpactiy when FadeOut() is called.
 	float OpacityStep;
 
-	// Current opacity of health and shield drop image.
-	float HealthDropOpacity;
-	float ShieldDropOpacity;
-
 	float HealthPercentCache;
 	float ShieldPercentCache;
 

@@ -23,7 +23,11 @@ public:
 
 	void Init(class AWarframe* InPlayer);
 
-	void OnCharacterDamaged(FVector HitLocation, EDamageType StatusEffect, float Damage, bool IsDamageOnShield, int32 CriticalTier);
+	void OnDied();
+
+	void OnApplyDamageToEnemy(FVector HitLocation, EDamageType StatusEffect, float Damage, bool IsDamageOnShield, int32 CriticalTier);
+
+	void OnPlayerDamaged(bool IsDamageOnShield);
 
 	void AddMission(EMissionType MissionType);
 
@@ -38,6 +42,8 @@ protected:
 
 	virtual void NativeTick(const FGeometry& MyGeometry, float DeltaTime)override;
 
+	virtual void NativeDestruct()override;
+
 	void InitDamageTextPool();
 
 	void UpdateHUDOffset();
@@ -47,6 +53,10 @@ protected:
 	void UpdateDamageTexts(float DeltaTime);
 
 	void UpdateMissionPanel();
+
+	void HealthSplashFadeOut();
+
+	void ShieldSplashFadeOut();
 
 protected:
 	FNumberFormattingOptions IntegerFormatOptions;
@@ -74,6 +84,10 @@ protected:
 		UVerticalBox* MissionPanel;
 	UPROPERTY(Meta = (BindWidget))
 		class UStatusDisplay* StatusDisplay;
+	UPROPERTY(Meta = (BindWidget))
+		UImage* HealthSplash;
+	UPROPERTY(Meta = (BindWidget))
+		UImage* ShieldSplash;
 
 	/** Player info panel begin. */
 	UPROPERTY(Meta = (BindWidget))
@@ -116,4 +130,8 @@ protected:
 	UPROPERTY(Meta = (BindWidget))
 		UTextBlock* Energy;
 	/** Ability info panel end. */
+
+	// Timer handle.
+	FTimerHandle HealthSplashTimer;
+	FTimerHandle ShieldSplashTimer;
 };

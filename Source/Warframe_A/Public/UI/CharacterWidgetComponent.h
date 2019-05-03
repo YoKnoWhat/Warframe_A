@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS(ClassGroup = "UserInterface", meta = (BlueprintSpawnableComponent))
+UCLASS()
 class WARFRAME_A_API UCharacterWidgetComponent : public UWidgetComponent
 {
 	GENERATED_BODY()

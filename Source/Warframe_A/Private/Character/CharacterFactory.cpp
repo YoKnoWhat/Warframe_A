@@ -2,7 +2,12 @@
 #include "Character/CharacterFactory.h"
 #include "Character/Corpus/Corpus.h"
 #include "Character/Warframe/Warframe.h"
+#include "Gameplay/WarframeConfigSingleton.h"
+#include "Gameplay/WarframeGameInstance.h"
 
+#include "Runtime/Engine/Classes/Animation/AnimInstance.h"
+#include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
+#include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 
 
@@ -44,6 +49,19 @@ AWarframeCharacter* FCharacterFactory::SpawnCharacterImpl(AActor* Owner, ECharac
 		{
 			Character = Owner->GetWorld()->SpawnActor<AWarframeCharacter>(AWarframeCharacter::StaticClass(), Transform, SpawnParams);
 		}
+
+		/** Set character appearance. */
+		const FCharacterAppearance* CharacterAppearance = Cast<UWarframeGameInstance>(Owner->GetGameInstance())->GetCharacterAppearance(CharacterID);
+
+		USkeletalMeshComponent *SkeletalMeshComponent = Cast<USkeletalMeshComponent>(Character->GetComponentByClass(USkeletalMeshComponent::StaticClass()));
+		SkeletalMeshComponent->SetSkeletalMesh(FWarframeConfigSingleton::Instance().FindResource<USkeletalMesh>(*CharacterAppearance->Mesh.ToString()));
+		SkeletalMeshComponent->SetRelativeLocation(CharacterAppearance->RelativeLocation);
+		SkeletalMeshComponent->SetRelativeRotation(CharacterAppearance->RelativeRotation);
+		SkeletalMeshComponent->SetAnimInstanceClass(FWarframeConfigSingleton::Instance().FindResourceClass(*CharacterAppearance->AnimClass.ToString()));
+
+		UCapsuleComponent* CapsuleComponent = Character->GetCapsuleComponent();
+		CapsuleComponent->SetCapsuleHalfHeight(CharacterAppearance->HalfHeight);
+		CapsuleComponent->SetCapsuleRadius(CharacterAppearance->Radius);
 	}
 
 	Character->Init(CharacterID);

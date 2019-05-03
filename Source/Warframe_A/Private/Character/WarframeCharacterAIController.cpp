@@ -70,14 +70,14 @@ void AWarframeCharacterAIController::BeginFire()
 {
 	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
 
-	StateMachine->IsFiring = true;
+	StateMachine->bIsFiring = true;
 }
 
 void AWarframeCharacterAIController::StopFire()
 {
 	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
 
-	StateMachine->IsFiring = false;
+	StateMachine->bIsFiring = false;
 }
 
 void AWarframeCharacterAIController::Reload()
@@ -91,14 +91,14 @@ void AWarframeCharacterAIController::BeginSprint()
 {
 	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
 
-	StateMachine->IsSprinting = true;
+	StateMachine->bIsSprinting = true;
 }
 
 void AWarframeCharacterAIController::StopSprint()
 {
 	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
 
-	StateMachine->IsSprinting = false;
+	StateMachine->bIsSprinting = false;
 }
 
 void AWarframeCharacterAIController::TakeCover(UCoverPoint* InCoverPoint)
@@ -106,6 +106,13 @@ void AWarframeCharacterAIController::TakeCover(UCoverPoint* InCoverPoint)
 	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
 	
 	StateMachine->CoverPoint = InCoverPoint;
+}
+
+void AWarframeCharacterAIController::SetDesiredCoverFiringPosture(bool IsFiringStandingDesired)
+{
+	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
+
+	StateMachine->bIsFiringStandingDesired = IsFiringStandingDesired;
 }
 
 void AWarframeCharacterAIController::LeaveCover()

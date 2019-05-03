@@ -46,7 +46,12 @@ void AWarframeGameMode::OnCharacterDamaged(AActor* DamageCauser, AWarframeCharac
 {
 	if (DamageCauser == Player)
 	{
-		HUD->OnCharacterDamaged(HitLocation, StatusEffect, Damage, IsDamageOnShield, CriticalTier);
+		HUD->OnApplyDamageToEnemy(HitLocation, StatusEffect, Damage, IsDamageOnShield, CriticalTier);
+	}
+
+	if (DamagedCharacter == Player)
+	{
+		HUD->OnPlayerDamaged(IsDamageOnShield);
 	}
 }
 

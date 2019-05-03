@@ -3,6 +3,12 @@
 #include "Runtime/CoreUObject/Public/UObject/ObjectMacros.h"
 
 
+/** Custom Trace Channels. */
+#define ECC_Weapon	ECC_GameTraceChannel1
+
+/** Custom Object Channels. */
+#define ECC_Round	ECC_GameTraceChannel2
+
 UENUM(BlueprintType)
 enum class EHealthType : uint8
 {

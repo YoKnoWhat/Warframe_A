@@ -2,6 +2,7 @@
 #include "Character/StateMachine/WarframeCharacterAILowerStates.h"
 #include "Character/WarframeCharacter.h"
 #include "Character/StateMachine/WarframeCharacterAIStateMachineComponent.h"
+#include "Gameplay/CoverGenerator/CoverPoint.h"
 
 #include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
 
@@ -23,13 +24,20 @@ FStateObject* FWarframeCharacterAILowerState_Idle::OnUpdate(UStateMachineCompone
 	}
 	else if (WarframeCharacterAIStateMachine->CoverPoint != nullptr)
 	{
-		return WarframeCharacterAIStateMachine->LowerLayer->AtCoverState;
+		if (WarframeCharacterAIStateMachine->CoverPoint->bLeftCoverStanding || WarframeCharacterAIStateMachine->CoverPoint->bRightCoverStanding)
+		{
+			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverStandingState;
+		}
+		else
+		{
+			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverCrouchingState;
+		}
 	}
-	else if (WarframeCharacterAIStateMachine->IsCrouching)
+	else if (WarframeCharacterAIStateMachine->bIsCrouching)
 	{
 		return WarframeCharacterAIStateMachine->LowerLayer->CrouchingState;
 	}
-	else if (WarframeCharacterAIStateMachine->IsSprinting && Character->GetVelocity().Size2D() > 0.0f)
+	else if (WarframeCharacterAIStateMachine->bIsSprinting && Character->GetVelocity().Size2D() > 0.0f)
 	{
 		return WarframeCharacterAIStateMachine->LowerLayer->SprintingState;
 	}
@@ -62,12 +70,12 @@ FStateObject* FWarframeCharacterAILowerState_Idle::OnCustomEvent(UStateMachineCo
 
 
 
-int32 FWarframeCharacterAILowerState_AtCover::GetID()const
+int32 FWarframeCharacterAILowerState_AtCoverStanding::GetID()const
 {
-	return CastToUnderlyingType(EWarframeCharacterAILowerState::AtCover);
+	return CastToUnderlyingType(EWarframeCharacterAILowerState::AtCoverStanding);
 }
 
-FStateObject* FWarframeCharacterAILowerState_AtCover::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
+FStateObject* FWarframeCharacterAILowerState_AtCoverStanding::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
 	UWarframeCharacterAIStateMachineComponent* WarframeCharacterAIStateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(StateMachine);
 
@@ -75,19 +83,167 @@ FStateObject* FWarframeCharacterAILowerState_AtCover::OnUpdate(UStateMachineComp
 	{
 		return WarframeCharacterAIStateMachine->LowerLayer->IdleState;
 	}
+	else if (WarframeCharacterAIStateMachine->UpperLayer->CurrentState->GetID() == CastToUnderlyingType(EWarframeCharacterAIUpperState::Firing))
+	{
+		if (WarframeCharacterAIStateMachine->bIsFiringStandingDesired)
+		{
+			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverFiringStandingState;
+		}
+		else
+		{
+			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverFiringCrouchingState;
+		}
+	}
 	else
 	{
 		return this;
 	}
 }
 
-void FWarframeCharacterAILowerState_AtCover::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
+void FWarframeCharacterAILowerState_AtCoverStanding::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {}
 
-void FWarframeCharacterAILowerState_AtCover::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeCharacterAILowerState_AtCoverStanding::OnExit(UStateMachineComponent* StateMachine)
 {}
 
-FStateObject* FWarframeCharacterAILowerState_AtCover::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
+FStateObject* FWarframeCharacterAILowerState_AtCoverStanding::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
+{
+	return this;
+}
+
+
+
+int32 FWarframeCharacterAILowerState_AtCoverCrouching::GetID()const
+{
+	return CastToUnderlyingType(EWarframeCharacterAILowerState::AtCoverCrouching);
+}
+
+FStateObject* FWarframeCharacterAILowerState_AtCoverCrouching::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
+{
+	UWarframeCharacterAIStateMachineComponent* WarframeCharacterAIStateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(StateMachine);
+
+	if (WarframeCharacterAIStateMachine->CoverPoint == nullptr)
+	{
+		return WarframeCharacterAIStateMachine->LowerLayer->IdleState;
+	}
+	else if (WarframeCharacterAIStateMachine->UpperLayer->CurrentState->GetID() == CastToUnderlyingType(EWarframeCharacterAIUpperState::Firing))
+	{
+		if (WarframeCharacterAIStateMachine->bIsFiringStandingDesired)
+		{
+			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverFiringStandingState;
+		}
+		else
+		{
+			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverFiringCrouchingState;
+		}
+	}
+	else
+	{
+		return this;
+	}
+}
+
+void FWarframeCharacterAILowerState_AtCoverCrouching::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
+{
+	StateMachine->GetCharacter()->Crouch();
+}
+
+void FWarframeCharacterAILowerState_AtCoverCrouching::OnExit(UStateMachineComponent* StateMachine)
+{
+	StateMachine->GetCharacter()->UnCrouch();
+}
+
+FStateObject* FWarframeCharacterAILowerState_AtCoverCrouching::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
+{
+	return this;
+}
+
+
+
+int32 FWarframeCharacterAILowerState_AtCoverFiringStanding::GetID()const
+{
+	return CastToUnderlyingType(EWarframeCharacterAILowerState::AtCoverFiringStanding);
+}
+
+FStateObject* FWarframeCharacterAILowerState_AtCoverFiringStanding::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
+{
+	UWarframeCharacterAIStateMachineComponent* WarframeCharacterAIStateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(StateMachine);
+
+	if (WarframeCharacterAIStateMachine->CoverPoint == nullptr)
+	{
+		return WarframeCharacterAIStateMachine->LowerLayer->IdleState;
+	}
+	else if (WarframeCharacterAIStateMachine->UpperLayer->CurrentState->GetID() != CastToUnderlyingType(EWarframeCharacterAIUpperState::Firing))
+	{
+		if (WarframeCharacterAIStateMachine->CoverPoint->bLeftCoverStanding || WarframeCharacterAIStateMachine->CoverPoint->bRightCoverStanding)
+		{
+			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverStandingState;
+		}
+		else
+		{
+			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverCrouchingState;
+		}
+	}
+	else
+	{
+		return this;
+	}
+}
+
+void FWarframeCharacterAILowerState_AtCoverFiringStanding::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
+{}
+
+void FWarframeCharacterAILowerState_AtCoverFiringStanding::OnExit(UStateMachineComponent* StateMachine)
+{}
+
+FStateObject* FWarframeCharacterAILowerState_AtCoverFiringStanding::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
+{
+	return this;
+}
+
+
+
+int32 FWarframeCharacterAILowerState_AtCoverFiringCrouching::GetID()const
+{
+	return CastToUnderlyingType(EWarframeCharacterAILowerState::AtCoverFiringCrouching);
+}
+
+FStateObject* FWarframeCharacterAILowerState_AtCoverFiringCrouching::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
+{
+	UWarframeCharacterAIStateMachineComponent* WarframeCharacterAIStateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(StateMachine);
+
+	if (WarframeCharacterAIStateMachine->CoverPoint == nullptr)
+	{
+		return WarframeCharacterAIStateMachine->LowerLayer->IdleState;
+	}
+	else if (WarframeCharacterAIStateMachine->UpperLayer->CurrentState->GetID() != CastToUnderlyingType(EWarframeCharacterAIUpperState::Firing))
+	{
+		if (WarframeCharacterAIStateMachine->CoverPoint->bLeftCoverStanding || WarframeCharacterAIStateMachine->CoverPoint->bRightCoverStanding)
+		{
+			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverStandingState;
+		}
+		else
+		{
+			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverCrouchingState;
+		}
+	}
+	else
+	{
+		return this;
+	}
+}
+
+void FWarframeCharacterAILowerState_AtCoverFiringCrouching::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
+{
+	StateMachine->GetCharacter()->Crouch();
+}
+
+void FWarframeCharacterAILowerState_AtCoverFiringCrouching::OnExit(UStateMachineComponent* StateMachine)
+{
+	StateMachine->GetCharacter()->UnCrouch();
+}
+
+FStateObject* FWarframeCharacterAILowerState_AtCoverFiringCrouching::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
 {
 	return this;
 }

@@ -75,19 +75,6 @@ void ASpawnPoint::SpawnIfEmpty()
 				NewCharacter->SetLevel(SpawnInfo.Level);
 				NewCharacter->SetGenericTeamId(FGenericTeamId(CastToUnderlyingType(EWarframeTeamID::Enemy1)));
 
-				/** Set character appearance. */
-				const FCharacterAppearance* CharacterAppearance = GameInstance->GetCharacterAppearance(CharacterID);
-
-				USkeletalMeshComponent *SkeletalMeshComponent = Cast<USkeletalMeshComponent>(NewCharacter->GetComponentByClass(USkeletalMeshComponent::StaticClass()));
-				SkeletalMeshComponent->SetSkeletalMesh(FWarframeConfigSingleton::Instance().FindResource<USkeletalMesh>(*CharacterAppearance->Mesh.ToString()));
-				SkeletalMeshComponent->SetRelativeLocation(CharacterAppearance->RelativeLocation);
-				SkeletalMeshComponent->SetRelativeRotation(CharacterAppearance->RelativeRotation);
-				SkeletalMeshComponent->SetAnimInstanceClass(FWarframeConfigSingleton::Instance().FindResourceClass(*CharacterAppearance->AnimClass.ToString()));
-
-				UCapsuleComponent* CapsuleComponent = NewCharacter->GetCapsuleComponent();
-				CapsuleComponent->SetCapsuleHalfHeight(CharacterAppearance->HalfHeight);
-				CapsuleComponent->SetCapsuleRadius(CharacterAppearance->Radius);
-
 				/** Set character weapons. */
 				const FEnemyInfo* EnemyInfo = GameInstance->GetEnemyInfo(CharacterID);
 				EnemyInfo->Faction;

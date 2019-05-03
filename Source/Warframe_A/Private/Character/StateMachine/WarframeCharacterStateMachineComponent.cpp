@@ -6,6 +6,7 @@ FName UWarframeCharacterStateMachineComponent::LowerLayerName("Lower");
 FName UWarframeCharacterStateMachineComponent::UpperLayerName("Upper");
 
 FWarframeCharacterLowerState_Crouching	UWarframeCharacterStateMachineComponent::LowerCrouchingState;
+FWarframeCharacterLowerState_Dead		UWarframeCharacterStateMachineComponent::LowerDeadState;
 FWarframeCharacterLowerState_Falling	UWarframeCharacterStateMachineComponent::LowerFallingState;
 FWarframeCharacterLowerState_Idle		UWarframeCharacterStateMachineComponent::LowerIdleState;
 FWarframeCharacterLowerState_Jumping	UWarframeCharacterStateMachineComponent::LowerJumpingState;
@@ -31,6 +32,7 @@ void UWarframeCharacterStateMachineComponent::Init(AWarframeCharacter* InCharact
 
 	LowerLayer = static_cast<FWarframeCharacterStateMachineLayer_Lower*>(LayerInitializer.GetLayer(CastToUnderlyingType(EWarframeCharacterStateLayer::Lower)));
 	LowerLayer->CrouchingState = &LowerCrouchingState;
+	LowerLayer->DeadState = &LowerDeadState;
 	LowerLayer->FallingState = &LowerFallingState;
 	LowerLayer->IdleState = &LowerIdleState;
 	LowerLayer->JumpingState = &LowerJumpingState;
@@ -62,4 +64,12 @@ void UWarframeCharacterStateMachineComponent::TickComponent(float DeltaTime, enu
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	TimeSinceLastFired += DeltaTime;
+}
+
+void UWarframeCharacterStateMachineComponent::Kill()
+{
+	this->SetState(CastToUnderlyingType(EWarframeCharacterStateLayer::Lower), LowerLayer->DeadState);
+	this->SetState(CastToUnderlyingType(EWarframeCharacterStateLayer::Upper), UpperLayer->IdleState);
+
+	this->DisableAll();
 }

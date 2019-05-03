@@ -38,6 +38,9 @@ public:
 	virtual void TakeCover(UCoverPoint* InCoverPoint);
 
 	UFUNCTION(BlueprintCallable)
+	virtual void SetDesiredCoverFiringPosture(bool IsFiringStandingDesired);
+
+	UFUNCTION(BlueprintCallable)
 	virtual void LeaveCover();
 
 protected:

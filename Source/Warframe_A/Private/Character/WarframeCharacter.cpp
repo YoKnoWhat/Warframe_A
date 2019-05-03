@@ -44,12 +44,13 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 	}
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
-	// todo: root motion debug.
-	GetCapsuleComponent()->bHiddenInGame = false;
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Weapon, ECollisionResponse::ECR_Ignore);
+
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	/** Character movement component settings. */
 	UCharacterMovementComponent* CharacterMovement = GetCharacterMovement();
+	CharacterMovement->NavAgentProps.bCanCrouch = true;
 	CharacterMovement->JumpZVelocity = 600.0f;
 	CharacterMovement->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
 	CharacterMovement->bOrientRotationToMovement = true;
@@ -425,6 +426,8 @@ void AWarframeCharacter::Kill(AActor* Causer)
 	this->DropItem();
 
 	OnDied.Broadcast(Causer, this);
+
+	Cast<UWarframeCharacterStateMachineComponent>(this->StateMachine)->Kill();
 
 	this->Destroy();
 }

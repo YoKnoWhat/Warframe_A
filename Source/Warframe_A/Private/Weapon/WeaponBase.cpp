@@ -230,13 +230,6 @@ void AWeaponBase::Init(EWeaponID WeaponID)
 	this->CurrentFireMode = 0;
 
 	TimeSinceLastFire = GetFireInterval() + 1.0f;
-
-	// Set weapon appearance.
-	const FWeaponAppearance *WeaponAppearance = GameInstance->GetWeaponAppearance(WeaponID);
-
-	Cast<USkeletalMeshComponent>(this->SkeletalMeshComponent)->SetSkeletalMesh(FWarframeConfigSingleton::Instance().FindResource<USkeletalMesh>(WeaponAppearance->Mesh));
-	this->FireEmitter = FWarframeConfigSingleton::Instance().FindResource<UParticleSystem>(WeaponAppearance->FireEmitter);
-	WeaponAppearance->ReloadAnim;
 }
 
 void AWeaponBase::SetLevel(uint32 InLevel)
@@ -368,7 +361,7 @@ void AWeaponBase::FireRound(float DamageScalar)
 
 void AWeaponBase::BeginReload()
 {
-	if (AmmoLeft > 0)
+	if (MagazineLeft != MagazineCapacity && AmmoLeft > 0)
 	{
 		bIsReloading = true;
 

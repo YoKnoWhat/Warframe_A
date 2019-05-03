@@ -10,6 +10,7 @@
 #include "Weapon/WeaponBase.h"
 
 #include "Runtime/Engine/Classes/Camera/CameraComponent.h"
+#include "Runtime/Engine/Public/TimerManager.h"
 
 
 UPlayerHUD::UPlayerHUD(const FObjectInitializer& ObjectInitializer) :
@@ -29,7 +30,11 @@ void UPlayerHUD::Init(class AWarframe* InPlayer)
 	Player = InPlayer;
 }
 
-void UPlayerHUD::OnCharacterDamaged(FVector HitLocation, EDamageType StatusEffect, float Damage, bool IsDamageOnShield, int32 CriticalTier)
+void UPlayerHUD::OnDied()
+{
+}
+
+void UPlayerHUD::OnApplyDamageToEnemy(FVector HitLocation, EDamageType StatusEffect, float Damage, bool IsDamageOnShield, int32 CriticalTier)
 {
 	if (DamageTextHead == (DamageTextTail + 1) % DamageTextCapacity)
 	{
@@ -39,6 +44,37 @@ void UPlayerHUD::OnCharacterDamaged(FVector HitLocation, EDamageType StatusEffec
 
 	DamageTextPool[DamageTextTail]->Show(HitLocation, StatusEffect, Damage, IsDamageOnShield, CriticalTier);
 	DamageTextTail = (DamageTextTail + 1) % DamageTextCapacity;
+}
+
+void UPlayerHUD::OnPlayerDamaged(bool IsDamageOnShield)
+{
+	// Update health & shield splash effect.
+	if (IsDamageOnShield)
+	{
+		ShieldSplash->SetRenderOpacity(1.0f);
+
+		if (ShieldSplashTimer.IsValid() == false)
+		{
+			ShieldSplash->SetVisibility(ESlateVisibility::HitTestInvisible);
+		}
+
+		FTimerDelegate Delegate;
+		Delegate.BindUObject(this, &UPlayerHUD::ShieldSplashFadeOut);
+		this->GetGameInstance()->GetTimerManager().SetTimer(ShieldSplashTimer, Delegate, 1.0f / 60.0f, true);
+	}
+	else
+	{
+		HealthSplash->SetRenderOpacity(1.0f);
+
+		if (HealthSplashTimer.IsValid() == false)
+		{
+			HealthSplash->SetVisibility(ESlateVisibility::HitTestInvisible);
+		}
+
+		FTimerDelegate Delegate;
+		Delegate.BindUObject(this, &UPlayerHUD::HealthSplashFadeOut);
+		this->GetGameInstance()->GetTimerManager().SetTimer(HealthSplashTimer, Delegate, 1.0f / 60.0f, true);
+	}
 }
 
 void UPlayerHUD::AddMission(EMissionType MissionType)
@@ -120,6 +156,25 @@ void UPlayerHUD::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 	StatusDisplay->RefreshStatuses(Player);
 }
 
+void UPlayerHUD::NativeDestruct()
+{
+	Super::NativeDestruct();
+
+	// Game instance might be nullptr when shutting down.
+	UGameInstance* GameInstance = this->GetGameInstance();
+	if (GameInstance != nullptr)
+	{
+		if (HealthSplashTimer.IsValid())
+		{
+			GameInstance->GetTimerManager().ClearTimer(HealthSplashTimer);
+		}
+		if (ShieldSplashTimer.IsValid())
+		{
+			GameInstance->GetTimerManager().ClearTimer(ShieldSplashTimer);
+		}
+	}
+}
+
 void UPlayerHUD::InitDamageTextPool()
 {
 	for (int32 i = 0; i < DamageTextCapacity; ++i)
@@ -146,7 +201,7 @@ void UPlayerHUD::UpdateHUDOffset()
 	FRotator ViewRotator = Player->GetViewRotation();
 	PlayerVelocity = ViewRotator.UnrotateVector(PlayerVelocity);
 
-	this->SetRenderTranslation(FVector2D(PlayerVelocity.Y * (-1.0f / 30.0f), PlayerVelocity.Z * (1.0f / 20.0f)));
+	MainCanvasPanel->SetRenderTranslation(FVector2D(PlayerVelocity.Y * (-1.0f / 30.0f), PlayerVelocity.Z * (1.0f / 20.0f)));
 }
 
 void UPlayerHUD::UpdateMiscWidgets()
@@ -219,5 +274,33 @@ void UPlayerHUD::UpdateMissionPanel()
 		{
 			SpecMissionPanel->Update(Player);
 		}
+	}
+}
+
+void UPlayerHUD::HealthSplashFadeOut()
+{
+	float NewOpacity = HealthSplash->GetRenderOpacity() - 1.0f / 15.0f;
+	if (NewOpacity < 0.000001f)
+	{
+		this->GetGameInstance()->GetTimerManager().ClearTimer(HealthSplashTimer);
+		HealthSplash->SetVisibility(ESlateVisibility::Hidden);
+	}
+	else
+	{
+		HealthSplash->SetRenderOpacity(NewOpacity);
+	}
+}
+
+void UPlayerHUD::ShieldSplashFadeOut()
+{
+	float NewOpacity = ShieldSplash->GetRenderOpacity() - 1.0f / 15.0f;
+	if (NewOpacity < 0.000001f)
+	{
+		this->GetGameInstance()->GetTimerManager().ClearTimer(ShieldSplashTimer);
+		ShieldSplash->SetVisibility(ESlateVisibility::Hidden);
+	}
+	else
+	{
+		ShieldSplash->SetRenderOpacity(NewOpacity);
 	}
 }

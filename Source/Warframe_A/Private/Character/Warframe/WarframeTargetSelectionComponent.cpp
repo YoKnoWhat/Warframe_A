@@ -13,17 +13,23 @@ void UWarframeTargetSelectionComponent::UpdateSelectedTarget()
 
 	UCameraComponent *CameraComponent = Cast<UCameraComponent>(OwnerCharacter->GetComponentByClass(UCameraComponent::StaticClass()));
 
+	FCollisionObjectQueryParams ObjectQueryParams;
+	ObjectQueryParams.AddObjectTypesToQuery(ECollisionChannel::ECC_WorldStatic);
+	ObjectQueryParams.AddObjectTypesToQuery(ECollisionChannel::ECC_WorldDynamic);
+	ObjectQueryParams.AddObjectTypesToQuery(ECollisionChannel::ECC_Pawn);
+	ObjectQueryParams.AddObjectTypesToQuery(ECollisionChannel::ECC_Destructible);
+
 	FCollisionQueryParams RV_TraceParams;
 	RV_TraceParams.bTraceComplex = true;
 	RV_TraceParams.AddIgnoredActor(OwnerCharacter);
 
 	AWarframeCharacter* PrevTarget = Cast<AWarframeCharacter>(SelectedTarget.Actor.Get());
 
-	if (GetWorld()->LineTraceSingleByChannel(
+	if (GetWorld()->LineTraceSingleByObjectType(
 		SelectedTarget,
 		CameraComponent->GetComponentLocation(),
 		CameraComponent->GetComponentLocation() + CameraComponent->GetForwardVector() * 10000.0f,
-		ECC_WorldDynamic,
+		ObjectQueryParams,
 		RV_TraceParams) == false)
 	{
 		SelectedTarget.ImpactPoint = SelectedTarget.TraceEnd;

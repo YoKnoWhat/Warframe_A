@@ -2,8 +2,11 @@
 #include "Character/StateMachine/WarframeCharacterAIStateMachineComponent.h"
 
 
-FWarframeCharacterAILowerState_AtCover	UWarframeCharacterAIStateMachineComponent::LowerAtCoverState;
-FWarframeCharacterAILowerState_Idle		UWarframeCharacterAIStateMachineComponent::LowerIdleState;
+FWarframeCharacterAILowerState_Idle						UWarframeCharacterAIStateMachineComponent::LowerIdleState;
+FWarframeCharacterAILowerState_AtCoverStanding			UWarframeCharacterAIStateMachineComponent::LowerAtCoverStandingState;
+FWarframeCharacterAILowerState_AtCoverCrouching			UWarframeCharacterAIStateMachineComponent::LowerAtCoverCrouchingState;
+FWarframeCharacterAILowerState_AtCoverFiringStanding	UWarframeCharacterAIStateMachineComponent::LowerAtCoverFiringStandingState;
+FWarframeCharacterAILowerState_AtCoverFiringCrouching	UWarframeCharacterAIStateMachineComponent::LowerAtCoverFiringCrouchingState;
 
 UWarframeCharacterAIStateMachineComponent::UWarframeCharacterAIStateMachineComponent() :
 	Super()
@@ -17,7 +20,10 @@ void UWarframeCharacterAIStateMachineComponent::Init(AWarframeCharacter* InChara
 
 	LowerLayer = static_cast<FWarframeCharacterAIStateMachineLayer_Lower*>(LayerInitializer.GetLayer(CastToUnderlyingType(EWarframeCharacterAIStateLayer::Lower)));
 	LowerLayer->IdleState = &LowerIdleState;
-	LowerLayer->AtCoverState = &LowerAtCoverState;
+	LowerLayer->AtCoverStandingState = &LowerAtCoverStandingState;
+	LowerLayer->AtCoverCrouchingState = &LowerAtCoverCrouchingState;
+	LowerLayer->AtCoverFiringStandingState = &LowerAtCoverFiringStandingState;
+	LowerLayer->AtCoverFiringCrouchingState = &LowerAtCoverFiringCrouchingState;
 }
 
 void UWarframeCharacterAIStateMachineComponent::ReInit()

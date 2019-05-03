@@ -90,7 +90,9 @@ void FRadialJavelin::DoCast()
 	{
 		uint32 JavelinUsed = 0;
 
-		FCollisionObjectQueryParams ObjectQueryParams(ECollisionChannel::ECC_WorldStatic);
+		FCollisionObjectQueryParams ObjectQueryParams;
+		ObjectQueryParams.AddObjectTypesToQuery(ECollisionChannel::ECC_WorldStatic);
+		ObjectQueryParams.AddObjectTypesToQuery(ECollisionChannel::ECC_WorldDynamic);
 
 		FCollisionQueryParams QueryParams;
 		QueryParams.bTraceComplex = false;

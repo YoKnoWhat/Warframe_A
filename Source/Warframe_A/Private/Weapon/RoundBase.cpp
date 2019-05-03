@@ -22,6 +22,8 @@ ARoundBase::ARoundBase(const FObjectInitializer& ObjectInitializer) :
 
 	/** Shape component creation. */
 	ShapeComponent = Cast<UShapeComponent>(ObjectInitializer.CreateDefaultSubobject(this, "Shape", UShapeComponent::StaticClass(), UCapsuleComponent::StaticClass(), true, false, false));
+	ShapeComponent->SetCollisionObjectType(ECollisionChannel::ECC_Round);
+	ShapeComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Weapon, ECollisionResponse::ECR_Ignore);
 	ShapeComponent->SetupAttachment(this->RootComponent);
 	ShapeComponent->SetRelativeRotation(FRotator(-90.0f, 0.0f, 0.0f));
 	ShapeComponent->SetRelativeScale3D(FVector(0.2f, 0.2f, 0.2f));

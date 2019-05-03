@@ -129,11 +129,11 @@ FStateObject* FWarframeLowerState_Crouching::OnUpdate(UStateMachineComponent* St
 {
 	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
 
-	if (WarframeStateMachine->IsSprinting)
+	if (WarframeStateMachine->bIsSprinting)
 	{
 		return WarframeStateMachine->LowerLayer->SprintingState;
 	}
-	else if (WarframeStateMachine->IsCrouching)
+	else if (WarframeStateMachine->bIsCrouching)
 	{
 		return this;
 	}
@@ -293,7 +293,7 @@ FStateObject* FWarframeLowerState_Idle::OnUpdate(UStateMachineComponent* StateMa
 	{
 		return WarframeStateMachine->LowerLayer->FallingState;
 	}
-	else if (WarframeStateMachine->IsCrouching)
+	else if (WarframeStateMachine->bIsCrouching)
 	{
 		if (WarframeStateMachine->GetCharacter()->GetVelocity().Size2D() > 200.0f)
 		{
@@ -304,7 +304,7 @@ FStateObject* FWarframeLowerState_Idle::OnUpdate(UStateMachineComponent* StateMa
 			return WarframeStateMachine->LowerLayer->CrouchingState;
 		}
 	}
-	else if (WarframeStateMachine->IsSprinting && WarframeStateMachine->GetCharacter()->GetVelocity().Size2D() > 0.0f)
+	else if (WarframeStateMachine->bIsSprinting && WarframeStateMachine->GetCharacter()->GetVelocity().Size2D() > 0.0f)
 	{
 		if (WarframeStateMachine->IsAiming == false)
 		{
@@ -452,7 +452,7 @@ FStateObject* FWarframeLowerState_Sliding::OnUpdate(UStateMachineComponent* Stat
 	{
 		return WarframeStateMachine->LowerLayer->CrouchingState;
 	}
-	else if (WarframeStateMachine->IsCrouching)
+	else if (WarframeStateMachine->bIsCrouching)
 	{
 		return this;
 	}
@@ -523,11 +523,11 @@ FStateObject* FWarframeLowerState_Sprinting::OnUpdate(UStateMachineComponent* St
 	{
 		return WarframeStateMachine->LowerLayer->FallingState;
 	}
-	else if (WarframeStateMachine->IsCrouching)
+	else if (WarframeStateMachine->bIsCrouching)
 	{
 		return WarframeStateMachine->LowerLayer->SlidingState;
 	}
-	else if (WarframeStateMachine->IsAiming || WarframeStateMachine->IsSprinting == false || WarframeStateMachine->GetCharacter()->GetVelocity().Size2D() == 0.0f)
+	else if (WarframeStateMachine->IsAiming || WarframeStateMachine->bIsSprinting == false || WarframeStateMachine->GetCharacter()->GetVelocity().Size2D() == 0.0f)
 	{
 		return WarframeStateMachine->LowerLayer->IdleState;
 	}

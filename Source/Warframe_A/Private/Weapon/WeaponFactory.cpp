@@ -2,11 +2,15 @@
 #include "Weapon/WeaponFactory.h"
 #include "Character/WarframeCharacter.h"
 #include "Gameplay/WarframeGameInstance.h"
+#include "Gameplay/WarframeConfigSingleton.h"
 #include "Utility/HelperFunction.h"
 #include "Weapon/Primary/BratonPrime.h"
 #include "Weapon/Secondary/Staticor.h"
 
+#include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
+#include "Runtime/Engine/Classes/Engine/SkeletalMesh.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
+#include "Runtime/Engine/Classes/Particles/ParticleSystem.h"
 
 
 FWeaponFactory& FWeaponFactory::Instance()
@@ -44,6 +48,13 @@ AWeaponBase* FWeaponFactory::SpawnWeaponImpl(AActor* Owner, EWeaponID WeaponID, 
 			Weapon = Owner->GetWorld()->SpawnActor<AWeaponBase>(AWeaponBase::StaticClass(), Transform, SpawnParams);
 			break;
 		}
+
+		// Set weapon appearance.
+		const FWeaponAppearance *WeaponAppearance = Cast<UWarframeGameInstance>(Owner->GetGameInstance())->GetWeaponAppearance(WeaponID);
+
+		Weapon->GetMesh()->SetSkeletalMesh(FWarframeConfigSingleton::Instance().FindResource<USkeletalMesh>(WeaponAppearance->Mesh));
+		Weapon->SetFireEmitter(FWarframeConfigSingleton::Instance().FindResource<UParticleSystem>(WeaponAppearance->FireEmitter));
+		WeaponAppearance->ReloadAnim;
 	}
 
 	Weapon->Init(WeaponID);

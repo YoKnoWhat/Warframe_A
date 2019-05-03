@@ -15,11 +15,11 @@ FStateObject* FWarframeCharacterLowerState_Crouching::OnUpdate(UStateMachineComp
 {
 	UWarframeCharacterStateMachineComponent* WarframeCharacterStateMachine = Cast<UWarframeCharacterStateMachineComponent>(StateMachine);
 
-	if (WarframeCharacterStateMachine->IsSprinting)
+	if (WarframeCharacterStateMachine->bIsSprinting)
 	{
 		return WarframeCharacterStateMachine->LowerLayer->SprintingState;
 	}
-	else if (WarframeCharacterStateMachine->IsCrouching)
+	else if (WarframeCharacterStateMachine->bIsCrouching)
 	{
 		return this;
 	}
@@ -50,6 +50,29 @@ FStateObject* FWarframeCharacterLowerState_Crouching::OnCustomEvent(UStateMachin
 	default:
 		return this;
 	}
+}
+
+
+
+int32 FWarframeCharacterLowerState_Dead::GetID()const
+{
+	return CastToUnderlyingType(EWarframeCharacterLowerState::Dead);
+}
+
+FStateObject* FWarframeCharacterLowerState_Dead::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
+{
+	return this;
+}
+
+void FWarframeCharacterLowerState_Dead::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
+{}
+
+void FWarframeCharacterLowerState_Dead::OnExit(UStateMachineComponent* StateMachine)
+{}
+
+FStateObject* FWarframeCharacterLowerState_Dead::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
+{
+	return this;
 }
 
 
@@ -97,16 +120,16 @@ FStateObject* FWarframeCharacterLowerState_Idle::OnUpdate(UStateMachineComponent
 	UWarframeCharacterStateMachineComponent* WarframeCharacterStateMachine = Cast<UWarframeCharacterStateMachineComponent>(StateMachine);
 	AWarframeCharacter* Character = WarframeCharacterStateMachine->GetCharacter();
 	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(Character->GetCharacterMovement());
-
+	
 	if (CharacterMovement->IsFalling())
 	{
 		return WarframeCharacterStateMachine->LowerLayer->FallingState;
 	}
-	else if (WarframeCharacterStateMachine->IsCrouching)
+	else if (WarframeCharacterStateMachine->bIsCrouching)
 	{
 		return WarframeCharacterStateMachine->LowerLayer->CrouchingState;
 	}
-	else if (WarframeCharacterStateMachine->IsSprinting && Character->GetVelocity().Size2D() > 0.0f)
+	else if (WarframeCharacterStateMachine->bIsSprinting && Character->GetVelocity().Size2D() > 0.0f)
 	{
 		return WarframeCharacterStateMachine->LowerLayer->SprintingState;
 	}
@@ -191,11 +214,11 @@ FStateObject* FWarframeCharacterLowerState_Sprinting::OnUpdate(UStateMachineComp
 	{
 		return WarframeCharacterStateMachine->LowerLayer->FallingState;
 	}
-	else if (WarframeCharacterStateMachine->IsCrouching)
+	else if (WarframeCharacterStateMachine->bIsCrouching)
 	{
 		return WarframeCharacterStateMachine->LowerLayer->CrouchingState;
 	}
-	else if (WarframeCharacterStateMachine->IsSprinting == false || Character->GetVelocity().Size2D() == 0.0f)
+	else if (WarframeCharacterStateMachine->bIsSprinting == false || Character->GetVelocity().Size2D() == 0.0f)
 	{
 		return WarframeCharacterStateMachine->LowerLayer->IdleState;
 	}

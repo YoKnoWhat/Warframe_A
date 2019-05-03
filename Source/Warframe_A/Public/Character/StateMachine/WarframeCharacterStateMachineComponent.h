@@ -19,11 +19,11 @@ UENUM(BlueprintType)
 enum class EWarframeCharacterLowerState : uint8
 {
 	Crouching,
+	Dead,
 	Falling,
 	Idle,
 	Jumping,
 	Sprinting,
-
 };
 
 UENUM(BlueprintType)
@@ -47,6 +47,7 @@ enum class EWarframeCharacterActionEvent : uint8
 struct FWarframeCharacterStateMachineLayer_Lower : public FStateMachineLayer
 {
 	FStateObject* CrouchingState;
+	FStateObject* DeadState;
 	FStateObject* FallingState;
 	FStateObject* IdleState;
 	FStateObject* JumpingState;
@@ -76,6 +77,13 @@ public:
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)override;
 
+	/**
+	 * Set lower layer to dead state.
+	 * Set other layers to idle state.
+	 * Disable all layers.
+	 */
+	virtual void Kill();
+
 public:
 	static FName LowerLayerName;
 	static FName UpperLayerName;
@@ -83,14 +91,9 @@ public:
 	FWarframeCharacterStateMachineLayer_Lower* LowerLayer;
 	FWarframeCharacterStateMachineLayer_Upper* UpperLayer;
 
-	UPROPERTY(BlueprintReadWrite)
-	bool IsSprinting;
-
-	UPROPERTY(BlueprintReadWrite)
-	bool IsCrouching;
-
-	UPROPERTY(BlueprintReadWrite)
-	bool IsFiring;
+	bool bIsSprinting;
+	bool bIsCrouching;
+	bool bIsFiring;
 
 	// todo: lower layer for now.
 	float JumpingTimer;
@@ -101,11 +104,12 @@ public:
 	float TimeSinceLastFired;
 
 private:
-	static FWarframeCharacterLowerState_Crouching		LowerCrouchingState;
-	static FWarframeCharacterLowerState_Falling			LowerFallingState;
-	static FWarframeCharacterLowerState_Idle			LowerIdleState;
-	static FWarframeCharacterLowerState_Jumping			LowerJumpingState;
-	static FWarframeCharacterLowerState_Sprinting		LowerSprintingState;
+	static FWarframeCharacterLowerState_Crouching	LowerCrouchingState;
+	static FWarframeCharacterLowerState_Dead		LowerDeadState;
+	static FWarframeCharacterLowerState_Falling		LowerFallingState;
+	static FWarframeCharacterLowerState_Idle		LowerIdleState;
+	static FWarframeCharacterLowerState_Jumping		LowerJumpingState;
+	static FWarframeCharacterLowerState_Sprinting	LowerSprintingState;
 
 	static FWarframeCharacterUpperState_Firing			UpperFiringState;
 	static FWarframeCharacterUpperState_Idle			UpperIdleState;

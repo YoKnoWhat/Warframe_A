@@ -22,7 +22,7 @@ void UMinimap::Update(AWarframe* Character)
 {
 	FVector CharacterLocation = Character->GetActorLocation();
 
-	PlayerMarker->SetRenderAngle(Character->GetActorRotation().Yaw);
+	PlayerMarker->SetRenderAngle(Character->GetActorRotation().Yaw - Character->GetControlRotation().Yaw);
 
 	FVector2D CharacterToLevelOriginOffsetInUISpace = FVector2D(LevelOrigin.Y - CharacterLocation.Y, CharacterLocation.X - LevelOrigin.X);
 	BackgroundPanel->SetRenderTranslation(CharacterToLevelOriginOffsetInUISpace * UnitScalar);
@@ -30,9 +30,9 @@ void UMinimap::Update(AWarframe* Character)
 	BackgroundPanel->SetRenderTransformPivot(FVector2D(0.5f, 0.5f) - CharacterToLevelOriginOffsetInUISpace * UnitScalar / BackgroundImage->Brush.ImageSize);
 
 	TArray<ECollisionChannel> ObjectTypes;
-	ObjectTypes.Add(ECollisionChannel::ECC_WorldStatic);
 	ObjectTypes.Add(ECollisionChannel::ECC_WorldDynamic);
 	ObjectTypes.Add(ECollisionChannel::ECC_Pawn);
+	ObjectTypes.Add(ECollisionChannel::ECC_Destructible);
 
 	TArray<AActor*> ActorsToIgnore;
 	ActorsToIgnore.Add(Character);

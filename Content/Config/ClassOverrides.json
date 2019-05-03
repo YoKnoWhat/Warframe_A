@@ -1,6 +1,6 @@
 {
     "Characters" : [
-
+        { "Name": "Crewman", "BPClass": "Blueprint'/Game/Characters/Corpus/BP_Corpus.BP_Corpus_C'" }
     ],
     "Weapons": [
         { "Name": "Staticor", "BPClass": "Blueprint'/Game/Weapons/Secondary/Staticor/BP_Staticor.BP_Staticor_C'" }

@@ -42,7 +42,9 @@ void AStaticorRound::NotifyActorBeginOverlap(AActor* OtherActor)
 			ExplosionRadius = 200.0f;
 		}
 
-		TArray<ECollisionChannel> ObjectTypeArray = { ECollisionChannel::ECC_Pawn };
+		TArray<ECollisionChannel> ObjectTypeArray;
+		ObjectTypeArray.Add(ECollisionChannel::ECC_Pawn);
+		ObjectTypeArray.Add(ECollisionChannel::ECC_Destructible);
 		TArray<AActor*> ActorsToIgnore = { this->Instigator };
 		TArray<AActor*> OverlapActors;
 

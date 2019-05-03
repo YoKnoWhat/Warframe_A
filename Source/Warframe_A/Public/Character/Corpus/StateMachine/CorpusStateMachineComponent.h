@@ -18,11 +18,15 @@ UENUM(BlueprintType)
 enum class ECorpusLowerState : uint8
 {
 	Crouching,
+	Dead,
 	Falling,
 	Idle,
 	Jumping,
 	Sprinting,
-	AtCover,
+	AtCoverStanding,
+	AtCoverCrouching,
+	AtCoverFiringStanding,
+	AtCoverFiringCrouching,
 };
 
 UENUM(BlueprintType)

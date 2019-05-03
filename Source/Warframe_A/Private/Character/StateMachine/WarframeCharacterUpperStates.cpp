@@ -14,7 +14,7 @@ FStateObject* FWarframeCharacterUpperState_Firing::OnUpdate(UStateMachineCompone
 {
 	UWarframeCharacterStateMachineComponent* WarframeCharacterStateMachine = Cast<UWarframeCharacterStateMachineComponent>(StateMachine);
 
-	if (WarframeCharacterStateMachine->IsFiring)
+	if (WarframeCharacterStateMachine->bIsFiring)
 	{
 		return this;
 	}
@@ -68,7 +68,7 @@ FStateObject* FWarframeCharacterUpperState_Idle::OnUpdate(UStateMachineComponent
 	{
 		return WarframeCharacterStateMachine->UpperLayer->IronsightState;
 	}
-	else if (WarframeCharacterStateMachine->IsFiring && WarframeCharacterStateMachine->GetCharacter()->GetCurrentWeapon()->GetRemainingMagazine() != 0)
+	else if (WarframeCharacterStateMachine->bIsFiring && WarframeCharacterStateMachine->GetCharacter()->GetCurrentWeapon()->GetRemainingMagazine() != 0)
 	{
 		return WarframeCharacterStateMachine->UpperLayer->FiringState;
 	}
@@ -110,7 +110,7 @@ FStateObject* FWarframeCharacterUpperState_Ironsight::OnUpdate(UStateMachineComp
 {
 	UWarframeCharacterStateMachineComponent* WarframeCharacterStateMachine = Cast<UWarframeCharacterStateMachineComponent>(StateMachine);
 
-	if (WarframeCharacterStateMachine->IsFiring && WarframeCharacterStateMachine->GetCharacter()->GetCurrentWeapon()->GetRemainingMagazine() != 0)
+	if (WarframeCharacterStateMachine->bIsFiring && WarframeCharacterStateMachine->GetCharacter()->GetCurrentWeapon()->GetRemainingMagazine() != 0)
 	{
 		return WarframeCharacterStateMachine->UpperLayer->FiringState;
 	}

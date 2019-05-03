@@ -422,29 +422,29 @@ void UCharacterHeaderPanel::FadeOut()
 
 void UCharacterHeaderPanel::HealthDropFadeOut()
 {
-	HealthDropOpacity -= 1.0f / 15.0f;
-	if (HealthDropOpacity < 0.000001f)
+	float NewOpactiy = HealthDrop->GetRenderOpacity() - 1.0f / 15.0f;
+	if (NewOpactiy < 0.000001f)
 	{
 		this->GetGameInstance()->GetTimerManager().ClearTimer(HealthDropTimer);
-		this->HealthDrop->SetVisibility(ESlateVisibility::Hidden);
+		HealthDrop->SetVisibility(ESlateVisibility::Hidden);
 	}
 	else
 	{
-		this->HealthDrop->SetRenderOpacity(HealthDropOpacity);
+		this->HealthDrop->SetRenderOpacity(NewOpactiy);
 	}
 }
 
 void UCharacterHeaderPanel::ShieldDropFadeOut()
 {
-	ShieldDropOpacity -= 1.0f / 15.0f;
-	if (ShieldDropOpacity < 0.000001f)
+	float NewOpacity = ShieldDrop->GetRenderOpacity() - 1.0f / 15.0f;
+	if (NewOpacity < 0.000001f)
 	{
 		this->GetGameInstance()->GetTimerManager().ClearTimer(ShieldDropTimer);
-		this->ShieldDrop->SetVisibility(ESlateVisibility::Hidden);
+		ShieldDrop->SetVisibility(ESlateVisibility::Hidden);
 	}
 	else
 	{
-		this->ShieldDrop->SetRenderOpacity(ShieldDropOpacity);
+		this->ShieldDrop->SetRenderOpacity(NewOpacity);
 	}
 }
 
@@ -458,7 +458,6 @@ void UCharacterHeaderPanel::UpdateHeaderBar()
 		UCanvasPanelSlot* PanelSlot = Cast<UCanvasPanelSlot>(this->HealthDrop->Slot);
 		PanelSlot->SetPosition(FVector2D((NewHealthPercentCache - 0.5f) * 114.0f, 0.0f));
 
-		HealthDropOpacity = 1.0f;
 		this->HealthDrop->SetRenderOpacity(1.0f);
 		this->HealthDrop->SetRenderScale(FVector2D((HealthPercentCache - NewHealthPercentCache) * 100.0f, 1.0f));
 
@@ -479,7 +478,6 @@ void UCharacterHeaderPanel::UpdateHeaderBar()
 		UCanvasPanelSlot* PanelSlot = Cast<UCanvasPanelSlot>(this->ShieldDrop->Slot);
 		PanelSlot->SetPosition(FVector2D((NewShieldPercentCache - 0.5f) * 114.0f, 0.0f));
 
-		ShieldDropOpacity = 1.0f;
 		this->ShieldDrop->SetRenderOpacity(1.0f);
 		this->ShieldDrop->SetRenderScale(FVector2D((ShieldPercentCache - NewShieldPercentCache) * 100.0f, 1.0f));
 

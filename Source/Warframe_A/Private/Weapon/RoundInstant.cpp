@@ -15,19 +15,14 @@ void ARoundInstant::Tick(float DeltaTime)
 
 	FHitResult HitResult;
 
-	FCollisionObjectQueryParams ObjectQueryParams;
-	ObjectQueryParams.AddObjectTypesToQuery(ECollisionChannel::ECC_WorldStatic);
-	ObjectQueryParams.AddObjectTypesToQuery(ECC_Pawn);
-
 	FCollisionQueryParams QueryParams;
 	QueryParams.bTraceComplex = false;
-	this->GetActorForwardVector();
 
-	if (this->GetWorld()->LineTraceSingleByObjectType(
+	if (this->GetWorld()->LineTraceSingleByChannel(
 		HitResult,
 		this->GetActorLocation(),
 		this->GetActorLocation() + this->GetActorForwardVector() * 10000.0f,
-		ObjectQueryParams,
+		ECollisionChannel::ECC_Weapon,
 		QueryParams) == true)
 	{
 		if (Cast<AWarframeCharacter>(HitResult.Actor.Get()) != nullptr)

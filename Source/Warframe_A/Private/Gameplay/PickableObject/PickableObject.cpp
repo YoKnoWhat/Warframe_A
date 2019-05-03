@@ -18,6 +18,7 @@ APickableObject::APickableObject(const FObjectInitializer &ObjectInitializer) :
 
 	SphereCollision = ObjectInitializer.CreateDefaultSubobject<USphereComponent>(this, "SphereCollision");
 	SetRootComponent(SphereCollision);
+	SphereCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Weapon, ECollisionResponse::ECR_Ignore);
 	SphereCollision->SetGenerateOverlapEvents(true);
 	SphereCollision->InitSphereRadius(50.0f);
 

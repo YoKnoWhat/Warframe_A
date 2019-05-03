@@ -72,3 +72,11 @@ void UWarframeStateMachineComponent::TickComponent(float DeltaTime, enum ELevelT
 		GlideTimer = FMath::Min(GlideTimer + DeltaTime, 3.0f);
 	}
 }
+
+void UWarframeStateMachineComponent::Kill()
+{
+	this->SetState(CastToUnderlyingType(EWarframeStateLayer::Aim), AimLayer->IdleState);
+	// todo: off hand.
+
+	Super::Kill();
+}

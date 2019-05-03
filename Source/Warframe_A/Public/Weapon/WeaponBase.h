@@ -287,6 +287,11 @@ public:
 		return SkeletalMeshComponent;
 	}
 
+	FORCEINLINE void SetFireEmitter(class UParticleSystem* InFireEmitter)
+	{
+		FireEmitter = InFireEmitter;
+	}
+
 protected:
 	/** Override this method to init the extra properties of derived weapon. */
 	virtual void Init(EWeaponID WeaponID/*Polarities, Mods*/);

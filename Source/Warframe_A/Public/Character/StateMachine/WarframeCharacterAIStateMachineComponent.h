@@ -18,12 +18,16 @@ UENUM(BlueprintType)
 enum class EWarframeCharacterAILowerState : uint8
 {
 	Crouching,
+	Dead,
 	Falling,
 	Idle,
 	Jumping,
 	Sprinting,
-	AtCover,
 
+	AtCoverStanding,
+	AtCoverCrouching,
+	AtCoverFiringStanding,
+	AtCoverFiringCrouching,
 };
 
 UENUM(BlueprintType)
@@ -46,7 +50,10 @@ enum class EWarframeCharacterAIActionEvent : uint8
 
 struct FWarframeCharacterAIStateMachineLayer_Lower : public FWarframeCharacterStateMachineLayer_Lower
 {
-	FStateObject* AtCoverState;
+	FStateObject* AtCoverStandingState;
+	FStateObject* AtCoverCrouchingState;
+	FStateObject* AtCoverFiringStandingState;
+	FStateObject* AtCoverFiringCrouchingState;
 };
 
 UCLASS()
@@ -69,7 +76,13 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	class UCoverPoint* CoverPoint;
 
+	/** Determines which state to transit to, FiringCrouched or FiringStanding? */
+	bool bIsFiringStandingDesired;
+
 private:
-	static FWarframeCharacterAILowerState_Idle		LowerIdleState;
-	static FWarframeCharacterAILowerState_AtCover	LowerAtCoverState;
+	static FWarframeCharacterAILowerState_Idle						LowerIdleState;
+	static FWarframeCharacterAILowerState_AtCoverStanding			LowerAtCoverStandingState;
+	static FWarframeCharacterAILowerState_AtCoverCrouching			LowerAtCoverCrouchingState;
+	static FWarframeCharacterAILowerState_AtCoverFiringStanding		LowerAtCoverFiringStandingState;
+	static FWarframeCharacterAILowerState_AtCoverFiringCrouching	LowerAtCoverFiringCrouchingState;
 };

@@ -106,29 +106,29 @@ void AWarframeController::OnJumpPressed()
 
 void AWarframeController::OnCrouchPressed()
 {
-	Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine())->IsCrouching = true;
+	Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine())->bIsCrouching = true;
 }
 
 void AWarframeController::OnCrouchReleased()
 {
-	Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine())->IsCrouching = false;
+	Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine())->bIsCrouching = false;
 }
 
 void AWarframeController::OnToggleCrouchPressed()
 {
 	UWarframeStateMachineComponent* StateMachine = Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
 
-	StateMachine->IsCrouching = !StateMachine->IsCrouching;
+	StateMachine->bIsCrouching = !StateMachine->bIsCrouching;
 }
 
 void AWarframeController::OnPrimaryFirePressed()
 {
-	Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine())->IsFiring = true;
+	Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine())->bIsFiring = true;
 }
 
 void AWarframeController::OnPrimaryFireReleased()
 {
-	Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine())->IsFiring = false;
+	Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine())->bIsFiring = false;
 }
 
 void AWarframeController::OnAimPressed()
@@ -155,7 +155,7 @@ void AWarframeController::OnSprintPressed()
 {
 	FTimerDelegate Delegate;
 	Delegate.BindLambda([this](){
-		Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(this->GetPawn())->GetStateMachine())->IsSprinting = true;
+		Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(this->GetPawn())->GetStateMachine())->bIsSprinting = true;
 		this->RollTimerHandle.Invalidate();
 	});
 
@@ -172,7 +172,7 @@ void AWarframeController::OnSprintReleased()
 	}
 	else
 	{
-		Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine())->IsSprinting = false;
+		Cast<UWarframeStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine())->bIsSprinting = false;
 	}
 }
 
