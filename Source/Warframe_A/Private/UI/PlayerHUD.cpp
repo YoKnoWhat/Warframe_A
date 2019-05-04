@@ -3,10 +3,11 @@
 #include "Character/Warframe/Warframe.h"
 #include "Gameplay/GameMode/WarframeGameMode.h"
 #include "Gameplay/WarframeConfigSingleton.h"
+#include "UI/Crosshair.h"
 #include "UI/DamagePopup.h"
 #include "UI/Minimap.h"
-#include "UI/StatusDisplay.h"
 #include "UI/Mission/MissionPanelExterminate.h"
+#include "UI/StatusDisplay.h"
 #include "Weapon/WeaponBase.h"
 
 #include "Runtime/Engine/Classes/Camera/CameraComponent.h"
@@ -44,6 +45,8 @@ void UPlayerHUD::OnApplyDamageToEnemy(FVector HitLocation, EDamageType StatusEff
 
 	DamageTextPool[DamageTextTail]->Show(HitLocation, StatusEffect, Damage, IsDamageOnShield, CriticalTier);
 	DamageTextTail = (DamageTextTail + 1) % DamageTextCapacity;
+
+	Crosshair->OnApplyDamageToEnemy(false);
 }
 
 void UPlayerHUD::OnPlayerDamaged(bool IsDamageOnShield)
@@ -154,6 +157,8 @@ void UPlayerHUD::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 	Minimap->Update(Player);
 
 	StatusDisplay->RefreshStatuses(Player);
+
+	Crosshair->Update(Player);
 }
 
 void UPlayerHUD::NativeDestruct()

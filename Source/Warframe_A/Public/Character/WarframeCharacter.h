@@ -12,6 +12,14 @@
 #include "WarframeCharacter.generated.h"
 
 
+//struct FDamageInfo
+//{
+//	AWarframeCharacter* DamageCauser;
+//	FVector HitLocation;
+//	EDamageType Status;
+//
+//};
+
 struct FStatusEffectData
 {
 	EDamageType Type;
@@ -94,8 +102,6 @@ public:
 	// Unselected by player.
 	void OnUnselected();
 
-	const FHitResult &GetSelectedTarget()const;
-
 	void SetOrbDropChances(float HealthOrbChance, float EnergyOrbChance);
 
 	void SetCommonDropItems(const TArray<EPickableObjectID>& IDs, const TArray<float>& Chances);
@@ -103,6 +109,8 @@ public:
 	void Kill(AActor* Causer);
 
 	void GainHealth(float Value);
+
+	virtual float GetBodyMultiplier(FName BoneName)const;
 
 	UFUNCTION(BlueprintCallable)
 	void ApplyDamageBP(AActor *DamageCauser, EDamageType Status, EDamageType DamageType, float Damage);

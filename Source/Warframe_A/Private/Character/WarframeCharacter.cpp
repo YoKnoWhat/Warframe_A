@@ -46,7 +46,8 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Weapon, ECollisionResponse::ECR_Ignore);
 
-	GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetMesh()->SetGenerateOverlapEvents(true);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 
 	/** Character movement component settings. */
 	UCharacterMovementComponent* CharacterMovement = GetCharacterMovement();
@@ -275,11 +276,6 @@ void AWarframeCharacter::OnUnselected()
 	Cast<UCharacterWidget>(this->CharacterWidgetComponent->GetUserWidgetObject())->OnUnselected();
 }
 
-const FHitResult &AWarframeCharacter::GetSelectedTarget()const
-{
-	return SelectedTarget;
-}
-
 void AWarframeCharacter::SetOrbDropChances(float HealthOrbChance, float EnergyOrbChance)
 {
 	this->OrbDropList.Add({ EPickableObjectID::HealthOrb, HealthOrbChance });
@@ -439,6 +435,18 @@ void AWarframeCharacter::GainHealth(float Value)
 	if (CurrentHealth > MaxHealth)
 	{
 		CurrentHealth = MaxHealth;
+	}
+}
+
+float AWarframeCharacter::GetBodyMultiplier(FName BoneName)const
+{
+	if (BoneName == "head")
+	{
+		return 2.0f;
+	}
+	else
+	{
+		return 1.0f;
 	}
 }
 

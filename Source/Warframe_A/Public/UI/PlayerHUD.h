@@ -85,6 +85,8 @@ protected:
 	UPROPERTY(Meta = (BindWidget))
 		class UStatusDisplay* StatusDisplay;
 	UPROPERTY(Meta = (BindWidget))
+		class UCrosshair* Crosshair;
+	UPROPERTY(Meta = (BindWidget))
 		UImage* HealthSplash;
 	UPROPERTY(Meta = (BindWidget))
 		UImage* ShieldSplash;
