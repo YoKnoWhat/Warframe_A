@@ -5,13 +5,15 @@
     [
         "WeaponMesh",
         "FireEmitter",
-        "ReloadAnim"
+        "ReloadAnim",
+        "OnHitEmitter"
     ],
     "ColumnType":
     [
         "WeaponID",
         "WeaponMesh",
         "FireEmitter",
-        "ReloadAnim"
+        "ReloadAnim",
+        "OnHitEmitter"
     ]
 }

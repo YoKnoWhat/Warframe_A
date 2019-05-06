@@ -13,7 +13,7 @@ public:
 
 	virtual void OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)override;
 
-	virtual void OnExit(UStateMachineComponent* StateMachine)override;
+	virtual void OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)override;
 
 	virtual FStateObject* OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)override;
 };
@@ -27,7 +27,7 @@ public:
 
 	virtual void OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)override;
 
-	virtual void OnExit(UStateMachineComponent* StateMachine)override;
+	virtual void OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)override;
 
 	virtual FStateObject* OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)override;
 };
@@ -41,7 +41,7 @@ public:
 
 	virtual void OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)override;
 
-	virtual void OnExit(UStateMachineComponent* StateMachine)override;
+	virtual void OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)override;
 
 	virtual FStateObject* OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)override;
 };
@@ -56,7 +56,7 @@ public:
 
 	virtual void OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)override;
 
-	virtual void OnExit(UStateMachineComponent* StateMachine)override;
+	virtual void OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)override;
 
 	virtual FStateObject* OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)override;
 };
@@ -70,7 +70,7 @@ public:
 
 	virtual void OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)override;
 
-	virtual void OnExit(UStateMachineComponent* StateMachine)override;
+	virtual void OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)override;
 
 	virtual FStateObject* OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)override;
 };
@@ -84,7 +84,7 @@ public:
 
 	virtual void OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)override;
 
-	virtual void OnExit(UStateMachineComponent* StateMachine)override;
+	virtual void OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)override;
 
 	virtual FStateObject* OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)override;
 };
@@ -98,7 +98,7 @@ public:
 
 	virtual void OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)override;
 
-	virtual void OnExit(UStateMachineComponent* StateMachine)override;
+	virtual void OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)override;
 
 	virtual FStateObject* OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)override;
 };
@@ -112,7 +112,7 @@ public:
 
 	virtual void OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)override;
 
-	virtual void OnExit(UStateMachineComponent* StateMachine)override;
+	virtual void OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)override;
 
 	virtual FStateObject* OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)override;
 };
@@ -126,7 +126,7 @@ public:
 
 	virtual void OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)override;
 
-	virtual void OnExit(UStateMachineComponent* StateMachine)override;
+	virtual void OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)override;
 
 	virtual FStateObject* OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)override;
 };
@@ -140,7 +140,7 @@ public:
 
 	virtual void OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)override;
 
-	virtual void OnExit(UStateMachineComponent* StateMachine)override;
+	virtual void OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)override;
 
 	virtual FStateObject* OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)override;
 };

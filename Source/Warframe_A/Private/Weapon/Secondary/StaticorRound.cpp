@@ -6,9 +6,11 @@
 #include "Weapon/Secondary/Staticor.h"
 
 #include "Runtime/Engine/Classes/Components/ShapeComponent.h"
+#include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "Runtime/Engine/Classes/GameFramework/ProjectileMovementComponent.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Particles/ParticleSystem.h"
+#include "Runtime/Engine/Classes/PhysicsEngine/PhysicsAsset.h"
 
 
 AStaticorRound::AStaticorRound(const FObjectInitializer& ObjectInitializer) :
@@ -25,10 +27,8 @@ void AStaticorRound::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AStaticorRound::NotifyActorBeginOverlap(AActor* OtherActor)
+void AStaticorRound::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	Super::NotifyActorBeginOverlap(OtherActor);
-
 	if (OtherActor != this->Instigator)
 	{
 		float ExplosionRadius;
@@ -42,6 +42,14 @@ void AStaticorRound::NotifyActorBeginOverlap(AActor* OtherActor)
 			ExplosionRadius = 200.0f;
 		}
 
+		AWarframeCharacter* OtherCharacter = Cast<AWarframeCharacter>(OtherActor);
+		if (OtherCharacter != nullptr)
+		{
+			USkeletalBodySetup* SkeletalBodySetup = OtherCharacter->GetMesh()->GetPhysicsAsset()->SkeletalBodySetups[OtherBodyIndex];
+
+			this->OnHit(OtherCharacter, SweepResult.ImpactPoint, SkeletalBodySetup->BoneName);
+		}
+
 		TArray<ECollisionChannel> ObjectTypeArray;
 		ObjectTypeArray.Add(ECollisionChannel::ECC_Pawn);
 		ObjectTypeArray.Add(ECollisionChannel::ECC_Destructible);
@@ -52,7 +60,7 @@ void AStaticorRound::NotifyActorBeginOverlap(AActor* OtherActor)
 
 		for (AActor* Actor : OverlapActors)
 		{
-			this->OnHit(Actor, Actor->GetActorLocation());
+			this->OnHit(Actor, Actor->GetActorLocation(), "None");
 		}
 
 		UParticleSystem* ParticleSystem = FWarframeConfigSingleton::Instance().FindResource<UParticleSystem>("PS_StaticorExplosion");

@@ -42,11 +42,11 @@ void AWarframeGameMode::RegisterSpawnPoint(class ASpawnPoint* SpawnPoint)
 	SpawnPointArray.Add(SpawnPoint);
 }
 
-void AWarframeGameMode::OnCharacterDamaged(AActor* DamageCauser, AWarframeCharacter* DamagedCharacter, FVector HitLocation, EDamageType StatusEffect, float Damage, bool IsDamageOnShield, int32 CriticalTier)
+void AWarframeGameMode::OnCharacterDamaged(const FDamageInfo& DamageInfo, AWarframeCharacter* DamagedCharacter, float ActualDamage, bool IsDamageOnShield)
 {
-	if (DamageCauser == Player)
+	if (DamageInfo.Causer == Player)
 	{
-		HUD->OnApplyDamageToEnemy(HitLocation, StatusEffect, Damage, IsDamageOnShield, CriticalTier);
+		HUD->OnApplyDamageToEnemy(DamageInfo, ActualDamage, IsDamageOnShield);
 	}
 
 	if (DamagedCharacter == Player)

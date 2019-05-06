@@ -7,6 +7,7 @@
 #include "UI/Mission/MissionPanel.h"
 
 #include "Editor/UMGEditor/Public/WidgetBlueprint.h"
+#include "Niagara/Classes/NiagaraSystem.h"
 #include "Runtime/AIModule/Classes/BehaviorTree/BehaviorTree.h"
 #include "Runtime/AIModule/Classes/BehaviorTree/BlackboardData.h"
 #include "Runtime/Core/Public/Misc/Paths.h"
@@ -112,6 +113,10 @@ namespace Warframe
 		if (Name == "UMaterial")
 		{
 			return UMaterial::StaticClass();
+		}
+		if (Name == "UNiagaraSystem")
+		{
+			return UNiagaraSystem::StaticClass();
 		}
 		if (Name == "UParticleSystem")
 		{

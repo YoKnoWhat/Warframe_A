@@ -35,7 +35,7 @@ void UPlayerHUD::OnDied()
 {
 }
 
-void UPlayerHUD::OnApplyDamageToEnemy(FVector HitLocation, EDamageType StatusEffect, float Damage, bool IsDamageOnShield, int32 CriticalTier)
+void UPlayerHUD::OnApplyDamageToEnemy(const FDamageInfo& DamageInfo, float ActualDamage, bool IsDamageOnShield)
 {
 	if (DamageTextHead == (DamageTextTail + 1) % DamageTextCapacity)
 	{
@@ -43,10 +43,21 @@ void UPlayerHUD::OnApplyDamageToEnemy(FVector HitLocation, EDamageType StatusEff
 		DamageTextHead = (DamageTextHead + 1) % DamageTextCapacity;
 	}
 
-	DamageTextPool[DamageTextTail]->Show(HitLocation, StatusEffect, Damage, IsDamageOnShield, CriticalTier);
+	DamageTextPool[DamageTextTail]->Show(DamageInfo.HitLocation, DamageInfo.Status, ActualDamage, IsDamageOnShield, DamageInfo.CriticalTier);
 	DamageTextTail = (DamageTextTail + 1) % DamageTextCapacity;
 
-	Crosshair->OnApplyDamageToEnemy(false);
+	// Show HitMark on crosshair only when player not applying damage to enemy by status effect.
+	if (DamageInfo.BaseDamage != 0.0f)
+	{
+		if (DamageInfo.BodyMultiplier > 1.0f)
+		{
+			Crosshair->OnApplyDamageToEnemy(true);
+		}
+		else
+		{
+			Crosshair->OnApplyDamageToEnemy(false);
+		}
+	}
 }
 
 void UPlayerHUD::OnPlayerDamaged(bool IsDamageOnShield)

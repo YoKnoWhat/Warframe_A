@@ -25,7 +25,7 @@ public:
 
 	void OnDied();
 
-	void OnApplyDamageToEnemy(FVector HitLocation, EDamageType StatusEffect, float Damage, bool IsDamageOnShield, int32 CriticalTier);
+	void OnApplyDamageToEnemy(const struct FDamageInfo& DamageInfo, float ActualDamage, bool IsDamageOnShield);
 
 	void OnPlayerDamaged(bool IsDamageOnShield);
 

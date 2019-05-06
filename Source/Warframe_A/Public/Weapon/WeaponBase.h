@@ -292,6 +292,16 @@ public:
 		FireEmitter = InFireEmitter;
 	}
 
+	FORCEINLINE void SetOnHitEmitter(class UNiagaraSystem* InOnHitEmitter)
+	{
+		OnHitEmitter = InOnHitEmitter;
+	}
+
+	FORCEINLINE class UNiagaraSystem* GetOnHitEmitter()
+	{
+		return OnHitEmitter;
+	}
+
 protected:
 	/** Override this method to init the extra properties of derived weapon. */
 	virtual void Init(EWeaponID WeaponID/*Polarities, Mods*/);
@@ -312,6 +322,9 @@ protected:
 
 	UPROPERTY()
 	class UParticleSystem* FireEmitter;
+
+	UPROPERTY()
+	class UNiagaraSystem* OnHitEmitter;
 
 	FName Name;
 	uint32 Level;

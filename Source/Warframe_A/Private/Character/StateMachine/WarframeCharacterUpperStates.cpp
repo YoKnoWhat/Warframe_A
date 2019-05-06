@@ -14,7 +14,7 @@ FStateObject* FWarframeCharacterUpperState_Firing::OnUpdate(UStateMachineCompone
 {
 	UWarframeCharacterStateMachineComponent* WarframeCharacterStateMachine = Cast<UWarframeCharacterStateMachineComponent>(StateMachine);
 
-	if (WarframeCharacterStateMachine->bIsFiring)
+	if (WarframeCharacterStateMachine->bIsFiring && WarframeCharacterStateMachine->GetCharacter()->GetCurrentWeapon()->GetRemainingMagazine() != 0)
 	{
 		return this;
 	}
@@ -29,7 +29,7 @@ void FWarframeCharacterUpperState_Firing::OnEnter(UStateMachineComponent* StateM
 	StateMachine->GetCharacter()->GetCurrentWeapon()->BeginFire();
 }
 
-void FWarframeCharacterUpperState_Firing::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeCharacterUpperState_Firing::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {
 	UWarframeCharacterStateMachineComponent* WarframeCharacterStateMachine = Cast<UWarframeCharacterStateMachineComponent>(StateMachine);
 
@@ -81,7 +81,7 @@ FStateObject* FWarframeCharacterUpperState_Idle::OnUpdate(UStateMachineComponent
 void FWarframeCharacterUpperState_Idle::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {}
 
-void FWarframeCharacterUpperState_Idle::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeCharacterUpperState_Idle::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {}
 
 FStateObject* FWarframeCharacterUpperState_Idle::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
@@ -127,7 +127,7 @@ FStateObject* FWarframeCharacterUpperState_Ironsight::OnUpdate(UStateMachineComp
 void FWarframeCharacterUpperState_Ironsight::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {}
 
-void FWarframeCharacterUpperState_Ironsight::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeCharacterUpperState_Ironsight::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {}
 
 FStateObject* FWarframeCharacterUpperState_Ironsight::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
@@ -171,7 +171,7 @@ void FWarframeCharacterUpperState_Reloading::OnEnter(UStateMachineComponent* Sta
 	StateMachine->GetCharacter()->GetCurrentWeapon()->BeginReload();
 }
 
-void FWarframeCharacterUpperState_Reloading::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeCharacterUpperState_Reloading::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {
 	StateMachine->GetCharacter()->GetCurrentWeapon()->StopReload();
 }
@@ -219,7 +219,7 @@ void FWarframeCharacterUpperState_WeaponSwitching::OnEnter(UStateMachineComponen
 	WarframeCharacterStateMachine->WeaponSwitchTimer = 0.0f;
 }
 
-void FWarframeCharacterUpperState_WeaponSwitching::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeCharacterUpperState_WeaponSwitching::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {
 	StateMachine->GetCharacter()->SwitchRangedWeapon();
 }

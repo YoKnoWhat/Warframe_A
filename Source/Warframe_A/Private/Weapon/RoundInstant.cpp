@@ -25,12 +25,7 @@ void ARoundInstant::Tick(float DeltaTime)
 		ECollisionChannel::ECC_Weapon,
 		QueryParams) == true)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("[[[%s]]]"), *HitResult.BoneName.ToString());
-
-		if (Cast<AWarframeCharacter>(HitResult.Actor.Get()) != nullptr)
-		{
-			this->OnHit(HitResult.Actor.Get(), HitResult.ImpactPoint);
-		}
+		this->OnHit(HitResult.Actor.Get(), HitResult.ImpactPoint, HitResult.BoneName);
 	}
 
 	this->Destroy();

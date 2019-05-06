@@ -34,7 +34,7 @@ void FWarframeCharacterLowerState_Crouching::OnEnter(UStateMachineComponent* Sta
 	StateMachine->GetCharacter()->Crouch();
 }
 
-void FWarframeCharacterLowerState_Crouching::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeCharacterLowerState_Crouching::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {
 	StateMachine->GetCharacter()->UnCrouch();
 }
@@ -67,7 +67,7 @@ FStateObject* FWarframeCharacterLowerState_Dead::OnUpdate(UStateMachineComponent
 void FWarframeCharacterLowerState_Dead::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {}
 
-void FWarframeCharacterLowerState_Dead::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeCharacterLowerState_Dead::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {}
 
 FStateObject* FWarframeCharacterLowerState_Dead::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
@@ -100,7 +100,7 @@ FStateObject* FWarframeCharacterLowerState_Falling::OnUpdate(UStateMachineCompon
 void FWarframeCharacterLowerState_Falling::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {}
 
-void FWarframeCharacterLowerState_Falling::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeCharacterLowerState_Falling::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {}
 
 FStateObject* FWarframeCharacterLowerState_Falling::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
@@ -142,7 +142,7 @@ FStateObject* FWarframeCharacterLowerState_Idle::OnUpdate(UStateMachineComponent
 void FWarframeCharacterLowerState_Idle::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {}
 
-void FWarframeCharacterLowerState_Idle::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeCharacterLowerState_Idle::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {}
 
 FStateObject* FWarframeCharacterLowerState_Idle::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
@@ -189,7 +189,7 @@ void FWarframeCharacterLowerState_Jumping::OnEnter(UStateMachineComponent* State
 	WarframeCharacterStateMachine->GetCharacter()->Jump();
 }
 
-void FWarframeCharacterLowerState_Jumping::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeCharacterLowerState_Jumping::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {}
 
 FStateObject* FWarframeCharacterLowerState_Jumping::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)
@@ -237,7 +237,7 @@ void FWarframeCharacterLowerState_Sprinting::OnEnter(UStateMachineComponent* Sta
 	CharacterMovement->MaxWalkSpeed = 800.0f;
 }
 
-void FWarframeCharacterLowerState_Sprinting::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeCharacterLowerState_Sprinting::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {
 	UWarframeCharacterStateMachineComponent* WarframeCharacterStateMachine = Cast<UWarframeCharacterStateMachineComponent>(StateMachine);
 	UCharacterMovementComponent* CharacterMovement = Cast<UCharacterMovementComponent>(WarframeCharacterStateMachine->GetCharacter()->GetCharacterMovement());

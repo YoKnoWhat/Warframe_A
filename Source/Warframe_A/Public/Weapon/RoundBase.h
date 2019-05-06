@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "RoundBase.generated.h"
 
+/**
+ * Override Tick() or OnBeginOverlap to implement different round logic.
+ */
 UCLASS()
 class WARFRAME_A_API ARoundBase : public AActor
 {
@@ -27,12 +30,14 @@ public:
 
 	virtual void Init(AWeaponBase* Weapon);
 
+	UFUNCTION()
+	virtual void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 	/**
-	 * Call this method to apply damage to target.
+	 * Call this method to apply damage to target(with attitude check).
 	 * The round will not be destroyed.
 	 */
-	UFUNCTION(BlueprintCallable)
-	void OnHit(AActor *Target, FVector HitLocation);
+	void OnHit(AActor *Target, FVector HitLocation, FName BoneName);
 
 	// Property getters.
 	FORCEINLINE class UShapeComponent* GetShape()const
@@ -114,6 +119,9 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	UMovementComponent* MovementComponent;
+
+	UPROPERTY()
+	class UNiagaraSystem* OnHitEmitter;
 
 	// Basic attributes inherited from shooter.
 	float CriticalChance; // [0-100]

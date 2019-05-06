@@ -102,9 +102,10 @@ struct FWeaponInfo
 
 struct FWeaponAppearance
 {
-	FName		Mesh;
-	FName		FireEmitter;
-	FName		ReloadAnim;
+	FName	Mesh;
+	FName	FireEmitter;
+	FName	ReloadAnim;
+	FName	OnHitEmitter;
 };
 
 struct FPickableObjectInfo

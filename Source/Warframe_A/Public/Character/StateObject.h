@@ -14,7 +14,7 @@ public:
 
 	virtual void OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom) = 0;
 
-	virtual void OnExit(UStateMachineComponent* StateMachine) = 0;
+	virtual void OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo) = 0;
 
 	virtual FStateObject* OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID) = 0;
 };

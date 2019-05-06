@@ -31,7 +31,7 @@ public:
 
 	void RegisterSpawnPoint(class ASpawnPoint* SpawnPoint);
 
-	void OnCharacterDamaged(AActor* DamageCauser, AWarframeCharacter* DamagedCharacter, FVector HitLocation, EDamageType StatusEffect, float Damage, bool IsDamageOnShield, int32 CriticalTier);
+	void OnCharacterDamaged(const struct FDamageInfo& DamageInfo, AWarframeCharacter* DamagedCharacter, float ActualDamage, bool IsDamageOnShield);
 
 	// $DamageCauser could be nullptr!
 	UFUNCTION(BlueprintImplementableEvent)

@@ -88,7 +88,7 @@ void FWarframeAimState_Aiming::OnEnter(UStateMachineComponent* StateMachine, FSt
 	}
 }
 
-void FWarframeAimState_Aiming::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeAimState_Aiming::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {
 	UWarframeStateMachineComponent* WarframeStateMachine = Cast<UWarframeStateMachineComponent>(StateMachine);
 	AWarframeCharacter* Character = WarframeStateMachine->GetCharacter();
@@ -143,7 +143,7 @@ FStateObject* FWarframeAimState_Idle::OnUpdate(UStateMachineComponent* StateMach
 void FWarframeAimState_Idle::OnEnter(UStateMachineComponent* StateMachine, FStateObject* StateFrom)
 {}
 
-void FWarframeAimState_Idle::OnExit(UStateMachineComponent* StateMachine)
+void FWarframeAimState_Idle::OnExit(UStateMachineComponent* StateMachine, FStateObject* StateTo)
 {}
 
 FStateObject* FWarframeAimState_Idle::OnCustomEvent(UStateMachineComponent* StateMachine, int32 EventID)

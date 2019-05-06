@@ -7,6 +7,7 @@
 #include "Weapon/Primary/BratonPrime.h"
 #include "Weapon/Secondary/Staticor.h"
 
+#include "Niagara/Classes/NiagaraSystem.h"
 #include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "Runtime/Engine/Classes/Engine/SkeletalMesh.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
@@ -54,6 +55,7 @@ AWeaponBase* FWeaponFactory::SpawnWeaponImpl(AActor* Owner, EWeaponID WeaponID, 
 
 		Weapon->GetMesh()->SetSkeletalMesh(FWarframeConfigSingleton::Instance().FindResource<USkeletalMesh>(WeaponAppearance->Mesh));
 		Weapon->SetFireEmitter(FWarframeConfigSingleton::Instance().FindResource<UParticleSystem>(WeaponAppearance->FireEmitter));
+		Weapon->SetOnHitEmitter(FWarframeConfigSingleton::Instance().FindResource<UNiagaraSystem>(WeaponAppearance->OnHitEmitter));
 		WeaponAppearance->ReloadAnim;
 	}
 

@@ -43,11 +43,34 @@ AWarframeCharacter::AWarframeCharacter(const FObjectInitializer &ObjectInitializ
 		this->StateMachine->Init(this, LayerInitializer);
 	}
 
-	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
-	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Weapon, ECollisionResponse::ECR_Ignore);
+	// Change capsule component default settings.
+	{
+		GetCapsuleComponent()->SetGenerateOverlapEvents(true);
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 
-	GetMesh()->SetGenerateOverlapEvents(true);
-	GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+		FCollisionResponseContainer CollisionResponseContainer;
+		CollisionResponseContainer.SetAllChannels(ECollisionResponse::ECR_Block);
+		CollisionResponseContainer.SetResponse(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
+		CollisionResponseContainer.SetResponse(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+		CollisionResponseContainer.SetResponse(ECollisionChannel::ECC_Weapon, ECollisionResponse::ECR_Ignore);
+		CollisionResponseContainer.SetResponse(ECollisionChannel::ECC_Round, ECollisionResponse::ECR_Ignore);
+		GetCapsuleComponent()->SetCollisionResponseToChannels(CollisionResponseContainer);
+	}
+
+	// Change mesh component default settings.
+	{
+		GetMesh()->SetGenerateOverlapEvents(true);
+		GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+
+		FCollisionResponseContainer CollisionResponseContainer;
+		CollisionResponseContainer.SetAllChannels(ECollisionResponse::ECR_Ignore);
+		CollisionResponseContainer.SetResponse(ECollisionChannel::ECC_Weapon, ECollisionResponse::ECR_Block);
+		CollisionResponseContainer.SetResponse(ECollisionChannel::ECC_Round, ECollisionResponse::ECR_Overlap);
+		GetMesh()->SetCollisionResponseToChannels(CollisionResponseContainer);
+
+		GetMesh()->bMultiBodyOverlap = true;
+	}
+	
 
 	/** Character movement component settings. */
 	UCharacterMovementComponent* CharacterMovement = GetCharacterMovement();
@@ -450,32 +473,19 @@ float AWarframeCharacter::GetBodyMultiplier(FName BoneName)const
 	}
 }
 
-void AWarframeCharacter::ApplyDamageBP(AActor* DamageCauser, EDamageType Status, EDamageType DamageType, float Damage)
-{
-	this->ApplyStatusEffect(DamageCauser, this->GetActorLocation(), Status, Damage, 1.0f);
-
-	this->ApplyDamage(DamageCauser, this->GetActorLocation(), DamageType, Damage);
-}
-
-void AWarframeCharacter::ApplyDamage(AActor* DamageCauser, const FVector& HitLocation, EDamageType DamageType, float Damage)
+void AWarframeCharacter::ApplyDamageBP(AWarframeCharacter* DamageCauser, EDamageType Status, EDamageType DamageType, float Damage)
 {
 	TArray<FDamagePair> DamageArray;
-
 	DamageArray.Add({ DamageType, Damage });
+	FDamageInfo DamageInfo(DamageCauser, this->GetActorLocation(), Status, Damage, 1.0f, DamageArray, 1.0f, 0, 1.0f);
 
-	this->ApplyDamage(DamageCauser, HitLocation, EDamageType::None, DamageArray, 1.0f, 0);
+	this->ApplyDamage(DamageInfo);
+
+	this->ApplyStatusEffect(DamageInfo);
 }
 
-void AWarframeCharacter::ApplyDamage(AActor* DamageCauser, const FVector& HitLocation, EDamageType Status, TArray<FDamagePair> &DamageArray, float DamageScalar, uint32 CriticalTier)
+void AWarframeCharacter::ApplyDamage(const FDamageInfo& DamageInfo)
 {
-	if (FGenericTeamId::GetAttitude(DamageCauser, this) == ETeamAttitude::Friendly)
-	{
-		if (Cast<AWarframeCharacter>(DamageCauser)->GetStatusTime(EDamageType::Radiation) == 0.0f)
-		{
-			return;
-		}
-	}
-
 	AWarframeGameMode *GameMode = Cast<AWarframeGameMode>(this->GetWorld()->GetAuthGameMode());
 
 	float Damage = 0.0f;
@@ -489,9 +499,9 @@ void AWarframeCharacter::ApplyDamage(AActor* DamageCauser, const FVector& HitLoc
 	// Try apply damage to shield.
 	bool HasRawDamage = false;
 
-	if (!(DamageArray.Num() == 1 && DamageArray[0].Type == EDamageType::Raw) && CurrentShield > 0.0f)
+	if (!(DamageInfo.DamageArray.Num() == 1 && DamageInfo.DamageArray[0].Type == EDamageType::Raw) && CurrentShield > 0.0f)
 	{
-		for (auto &Pair : DamageArray)
+		for (auto &Pair : DamageInfo.DamageArray)
 		{
 			if (Pair.Type == EDamageType::Raw)
 			{
@@ -502,11 +512,11 @@ void AWarframeCharacter::ApplyDamage(AActor* DamageCauser, const FVector& HitLoc
 				Damage += Pair.Value * this->GetShieldDamageModifier(Pair.Type);
 			}
 		}
-		Damage *= DamageScalar;
+		Damage *= DamageInfo.DamageScalar;
 
 		CurrentShield -= Damage;
 
-		GameMode->OnCharacterDamaged(DamageCauser, this, HitLocation, Status, Damage, true, static_cast<int32>(CriticalTier));
+		GameMode->OnCharacterDamaged(DamageInfo, this, Damage, true);
 
 		if (CurrentShield < 0.0f)
 		{
@@ -522,36 +532,36 @@ void AWarframeCharacter::ApplyDamage(AActor* DamageCauser, const FVector& HitLoc
 	// Apply damage to health.
 	Damage = 0.0f;
 
-	for (auto &Pair : DamageArray)
+	for (auto &Pair : DamageInfo.DamageArray)
 	{
 		Damage += Pair.Value * this->GetHealthDamageModifier(Pair.Type);
 	}
-	Damage *= DamageScalar;
+	Damage *= DamageInfo.DamageScalar;
 	Damage *= RemainedDamagePercentage;
 
 	CurrentHealth -= Damage;
 
-	GameMode->OnCharacterDamaged(DamageCauser, this, HitLocation, Status, Damage, false, static_cast<int32>(CriticalTier));
+	GameMode->OnCharacterDamaged(DamageInfo, this, Damage, false);
 
 	if (CurrentHealth < 0.0f)
 	{
-		this->Kill(DamageCauser);
+		this->Kill(DamageInfo.Causer);
 	}
 }
 
-void AWarframeCharacter::ApplyStatusEffect(AActor* DamageCauser, const FVector& HitLocation, EDamageType Status, float BaseDamage, float DamageMultiplier)
+void AWarframeCharacter::ApplyStatusEffect(const FDamageInfo& DamageInfo)
 {
 	FStatusEffectData *Data;
 
-	switch (Status)
+	switch (DamageInfo.Status)
 	{
 	case EDamageType::Slash:
 		Data = StatusEffectDataPool.Get();
 
 		Data->Type = EDamageType::Slash;
-		Data->DamageCauser = DamageCauser;
-		Data->HitLocationOffset = HitLocation - this->GetActorLocation();
-		Data->Damage = BaseDamage * DamageMultiplier * 0.35f;
+		Data->DamageCauser = DamageInfo.Causer;
+		Data->HitLocationOffset = DamageInfo.HitLocation - this->GetActorLocation();
+		Data->Damage = DamageInfo.BaseDamage * DamageInfo.StatusDamageMultiplier * 0.35f;
 		Data->TickCount = 6;
 		Data->TickTime = InternalTime + 1.0f;
 
@@ -611,9 +621,9 @@ void AWarframeCharacter::ApplyStatusEffect(AActor* DamageCauser, const FVector& 
 			Data = StatusEffectDataPool.Get();
 
 			Data->Type = EDamageType::Heat;
-			Data->DamageCauser = DamageCauser;
-			Data->HitLocationOffset = HitLocation - this->GetActorLocation();
-			Data->Damage = BaseDamage * DamageMultiplier * 0.5f;
+			Data->DamageCauser = DamageInfo.Causer;
+			Data->HitLocationOffset = DamageInfo.HitLocation - this->GetActorLocation();
+			Data->Damage = DamageInfo.BaseDamage * DamageInfo.StatusDamageMultiplier * 0.5f;
 			Data->TickCount = 6;
 			Data->TickTime = InternalTime + 1.0f;
 
@@ -664,9 +674,9 @@ void AWarframeCharacter::ApplyStatusEffect(AActor* DamageCauser, const FVector& 
 		Data = StatusEffectDataPool.Get();
 
 		Data->Type = EDamageType::Toxin;
-		Data->DamageCauser = DamageCauser;
-		Data->HitLocationOffset = HitLocation - this->GetActorLocation();
-		Data->Damage = BaseDamage * DamageMultiplier * 0.5f;
+		Data->DamageCauser = DamageInfo.Causer;
+		Data->HitLocationOffset = DamageInfo.HitLocation - this->GetActorLocation();
+		Data->Damage = DamageInfo.BaseDamage * DamageInfo.StatusDamageMultiplier * 0.5f;
 		Data->TickCount = 8;
 		Data->TickTime = InternalTime + 1.0f;
 
@@ -713,15 +723,18 @@ void AWarframeCharacter::ApplyStatusEffect(AActor* DamageCauser, const FVector& 
 		}
 		break;
 	case EDamageType::Gas:
-		this->ApplyDamage(DamageCauser, HitLocation, EDamageType::Toxin, BaseDamage * DamageMultiplier * 0.5);
-
+	{
+		TArray<FDamagePair> DamageArray;
+		DamageArray.Add({ EDamageType::Toxin, DamageInfo.BaseDamage * DamageInfo.StatusDamageMultiplier * 0.5f });
+		this->ApplyDamage(FDamageInfo(DamageInfo.Causer, DamageInfo.HitLocation, EDamageType::None, 0.0f, 0.0f, DamageArray, 1.0f, 0, 1.0f));
+	}
 		// Basically toxin status code.
 		Data = StatusEffectDataPool.Get();
 
 		Data->Type = EDamageType::Toxin;
-		Data->DamageCauser = DamageCauser;
-		Data->HitLocationOffset = HitLocation - this->GetActorLocation();
-		Data->Damage = BaseDamage * DamageMultiplier * DamageMultiplier * 0.25f;
+		Data->DamageCauser = DamageInfo.Causer;
+		Data->HitLocationOffset = DamageInfo.HitLocation - this->GetActorLocation();
+		Data->Damage = DamageInfo.BaseDamage * DamageInfo.StatusDamageMultiplier * DamageInfo.StatusDamageMultiplier * 0.25f;
 		Data->TickCount = 8;
 		Data->TickTime = InternalTime + 1.0f;
 
@@ -857,7 +870,9 @@ float AWarframeCharacter::PropertyLevelScaling(float BaseValue, float BaseLevel,
 
 void AWarframeCharacter::SlashStatusTick(const FStatusEffectData* Data)
 {
-	this->ApplyDamage(Data->DamageCauser, this->GetActorLocation() + Data->HitLocationOffset, EDamageType::Raw, Data->Damage);
+	TArray<FDamagePair> DamageArray;
+	DamageArray.Add({ EDamageType::Raw, Data->Damage });
+	this->ApplyDamage(FDamageInfo(Data->DamageCauser, this->GetActorLocation() + Data->HitLocationOffset, EDamageType::None, 0.0f, 0.0f, DamageArray, 1.0f, 0, 1.0f));
 }
 
 void AWarframeCharacter::ImpactStatusTick(const FStatusEffectData* Data)
@@ -870,7 +885,9 @@ void AWarframeCharacter::PunctureStatusTick(const FStatusEffectData* Data)
 
 void AWarframeCharacter::HeatStatusTick(const FStatusEffectData* Data)
 {
-	this->ApplyDamage(Data->DamageCauser, this->GetActorLocation() + Data->HitLocationOffset, EDamageType::Heat, Data->Damage);
+	TArray<FDamagePair> DamageArray;
+	DamageArray.Add({ EDamageType::Heat, Data->Damage });
+	this->ApplyDamage(FDamageInfo(Data->DamageCauser, this->GetActorLocation() + Data->HitLocationOffset, EDamageType::None, 0.0f, 0.0f, DamageArray, 1.0f, 0, 1.0f));
 }
 
 void AWarframeCharacter::ColdStatusTick(const FStatusEffectData* Data)
@@ -881,7 +898,9 @@ void AWarframeCharacter::ElectricityStatusTick(const FStatusEffectData* Data)
 
 void AWarframeCharacter::ToxinStatusTick(const FStatusEffectData* Data)
 {
-	this->ApplyDamage(Data->DamageCauser, this->GetActorLocation() + Data->HitLocationOffset, EDamageType::Raw, Data->Damage * GetHealthDamageModifier(EDamageType::Toxin));
+	TArray<FDamagePair> DamageArray;
+	DamageArray.Add({ EDamageType::Raw, Data->Damage * GetHealthDamageModifier(EDamageType::Toxin) });
+	this->ApplyDamage(FDamageInfo(Data->DamageCauser, this->GetActorLocation() + Data->HitLocationOffset, EDamageType::None, 0.0f, 0.0f, DamageArray, 1.0f, 0, 1.0f));
 }
 
 void AWarframeCharacter::BlastStatusTick(const FStatusEffectData* Data)

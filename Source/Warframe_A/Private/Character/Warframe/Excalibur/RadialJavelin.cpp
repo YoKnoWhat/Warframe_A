@@ -98,19 +98,19 @@ void FRadialJavelin::DoCast()
 		QueryParams.bTraceComplex = false;
 
 		FCollisionResponseParams ReponseParams;
+		
+		TArray<FDamagePair> DamageArray = {
+			{ EDamageType::Slash, this->Damage * 0.333333f },
+			{ EDamageType::Impact, this->Damage * 0.333333f },
+			{ EDamageType::Puncture, this->Damage * 0.333333f }
+		};
+		FDamageInfo DamageInfo(Warframe, FVector::ZeroVector, EDamageType::Impact, 0.0f, 0.0f, DamageArray, 1.0f, 0, 1.0f);
 
 		for (AActor* Actor : OverlapActors)
 		{
 			AWarframeCharacter* Character = ::Cast<AWarframeCharacter>(Actor);
 
 			FHitResult HitResult;
-			// Warframe->GetWorld()->LineTraceSingleByChannel(
-			// 	HitResult,
-			// 	Warframe->GetActorLocation(),
-			// 	Character->GetActorLocation(),
-			// 	ECollisionChannel::ECC_WorldStatic,
-			// 	QueryParams
-			// );
 			if (Warframe->GetWorld()->LineTraceSingleByObjectType(
 				HitResult,
 				Warframe->GetActorLocation(),
@@ -118,13 +118,9 @@ void FRadialJavelin::DoCast()
 				ObjectQueryParams,
 				QueryParams) == false)
 			{
-				TArray<FDamagePair> DamageArray = {
-					{ EDamageType::Slash, this->Damage * 0.333333f },
-					{ EDamageType::Impact, this->Damage * 0.333333f },
-					{ EDamageType::Puncture, this->Damage * 0.333333f }
-				};
+				DamageInfo.HitLocation = Character->GetActorLocation();
 
-				Character->ApplyDamage(Warframe, Character->GetActorLocation(), EDamageType::Impact, DamageArray, 1.0f, 0);
+				Character->ApplyDamage(DamageInfo);
 
 				++JavelinUsed;
 			}

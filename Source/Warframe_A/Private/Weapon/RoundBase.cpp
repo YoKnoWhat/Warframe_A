@@ -5,6 +5,7 @@
 #include "Gameplay/WarframeConfigSingleton.h"
 #include "Weapon/WeaponBase.h"
 
+#include "Niagara/Public/NiagaraFunctionLibrary.h"
 #include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "Runtime/Engine/Classes/Engine/StaticMesh.h"
@@ -61,6 +62,8 @@ ARoundBase::ARoundBase(const FObjectInitializer& ObjectInitializer) :
 void ARoundBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ShapeComponent->OnComponentBeginOverlap.AddDynamic(this, &ARoundBase::OnBeginOverlap);
 }
 
 // Called every frame
@@ -133,20 +136,45 @@ void ARoundBase::Init(AWeaponBase* Weapon)
 	// Miscellaneous attributes.
 	this->LastLocation = this->GetActorLocation();
 	this->FliedDistance = 0.0f;
+
+	this->OnHitEmitter = Weapon->GetOnHitEmitter();
 }
 
-void ARoundBase::OnHit(AActor *Target, FVector HitLocation)
+void ARoundBase::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{}
+
+void ARoundBase::OnHit(AActor *Target, FVector HitLocation, FName BoneName)
 {
 	AWarframeCharacter* WarframeCharacter = Cast<AWarframeCharacter>(Target);
 
 	if (WarframeCharacter != nullptr)
 	{
+		if (FGenericTeamId::GetAttitude(this, WarframeCharacter) == ETeamAttitude::Friendly)
+		{
+			if (Cast<AWarframeCharacter>(this)->GetStatusTime(EDamageType::Radiation) == 0.0f)
+			{
+				return;
+			}
+		}
+
+		FDamageInfo DamageInfo(
+			Cast<AWarframeCharacter>(Instigator),
+			HitLocation,
+			StatusEffect,
+			BaseDamage,
+			StatusDamageMultiplier,
+			DamageArray,
+			this->DamageScalar,
+			this->CriticalTier,
+			WarframeCharacter->GetBodyMultiplier(BoneName)
+		);
+
 		// Apply falloff scalar.
 		if (FalloffEnd > 0.0f)
 		{
 			float FalloffScalar = (FalloffEnd - FliedDistance) / (FalloffEnd - FalloffStart);
 
-			this->DamageScalar *= FMath::Clamp(FalloffScalar, this->FalloffDamage, 1.0f);
+			DamageInfo.DamageScalar *= FMath::Clamp(FalloffScalar, this->FalloffDamage, 1.0f);
 		}
 
 		//// todo: Apply punch through scalar.
@@ -161,21 +189,24 @@ void ARoundBase::OnHit(AActor *Target, FVector HitLocation)
 		//}
 
 		// Critical hit roll.
-		uint32 TempCriticalTier = this->CriticalTier;
-
 		if (FMath::FRandRange(0.0f, 1.0f) < this->CriticalChance)
 		{
-			++TempCriticalTier;
+			++DamageInfo.CriticalTier;
 		}
 
-		DamageScalar *= (1.0 + TempCriticalTier * (CriticalMultiplier - 1.0f));
+		DamageInfo.DamageScalar *= (1.0 + DamageInfo.CriticalTier * (CriticalMultiplier - 1.0f));
 
-		WarframeCharacter->ApplyDamage(Instigator, HitLocation, StatusEffect, DamageArray, DamageScalar, TempCriticalTier);
+		// Body multiplier.
+		DamageInfo.DamageScalar *= DamageInfo.BodyMultiplier;
 
-		WarframeCharacter->ApplyStatusEffect(Instigator, HitLocation, StatusEffect, BaseDamage, StatusDamageMultiplier);
+		WarframeCharacter->ApplyDamage(DamageInfo);
+
+		WarframeCharacter->ApplyStatusEffect(DamageInfo);
 	}
 	else
 	{
 		// todo: PunchThrough
 	}
+
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, OnHitEmitter, HitLocation);
 }

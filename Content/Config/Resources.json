@@ -20,6 +20,8 @@
 
         {"Type": "UMaterial", "Ref": "M_HeaderBarFill=Material'/Game/UI/Materials/M_HealthBarFill.M_HealthBarFill'"},
 
+        {"Type": "UNiagaraSystem", "Ref": "FXS_RoundInstantOnHit=NiagaraSystem'/Game/Weapons/FXS_RoundInstantOnHit.FXS_RoundInstantOnHit'"},
+
         {"Type": "UParticleSystem", "Ref": "PS_AmmoBeam=ParticleSystem'/Game/Environment/PS_AmmoBeam.PS_AmmoBeam'"},
         {"Type": "UParticleSystem", "Ref": "PS_ChickenMaster_MuzzleFlash=ParticleSystem'/Game/Weapons/Primary/P_ChickenMaster_MuzzleFlash_02.P_ChickenMaster_MuzzleFlash_02'"},
         {"Type": "UParticleSystem", "Ref": "PS_StaticorExplosion=ParticleSystem'/Game/Weapons/Secondary/Staticor/P_StaticorExplosion.P_StaticorExplosion'"},

@@ -109,12 +109,13 @@ bool UStateMachineComponent::SetState(int32 LayerIndex, FStateObject* NewState)
 		return false;
 	}
 
-	if (NewState != (*Layer)->CurrentState)
+	FStateObject*& OldState = (*Layer)->CurrentState;
+	if (NewState != OldState)
 	{
-		(*Layer)->CurrentState->OnExit(this);
-		NewState->OnEnter(this, NewState);
+		OldState->OnExit(this, NewState);
+		NewState->OnEnter(this, OldState);
 
-		(*Layer)->CurrentState = NewState;
+		OldState = NewState;
 
 		return true;
 	}

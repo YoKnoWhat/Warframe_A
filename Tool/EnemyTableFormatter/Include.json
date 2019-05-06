@@ -360,6 +360,14 @@
             ]
         },
         {
+            "Name": "OnHitEmitter",
+            "Type": "uint32",
+            "Definition":
+            [
+                "FXS_RoundInstantOnHit"
+            ]
+        },
+        {
             "Name": "PickableObjectMesh",
             "Type": "uint32",
             "Definition":

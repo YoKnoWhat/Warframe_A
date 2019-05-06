@@ -457,8 +457,8 @@ void UWarframeGameInstance::ReadInWeaponAppearanceTable(const char* Begin, const
 
 		for (uint32 i = 0; i < FireEmitterCount; ++i)
 		{
-			FName NewMesh = Warframe::GetWord(Begin, '\0', WordLength);
-			FireEmitterArray[i] = NewMesh;
+			FName NewFireEmitter = Warframe::GetWord(Begin, '\0', WordLength);
+			FireEmitterArray[i] = NewFireEmitter;
 			Begin += WordLength + 1;
 		}
 	}
@@ -483,6 +483,26 @@ void UWarframeGameInstance::ReadInWeaponAppearanceTable(const char* Begin, const
 		}
 	}
 
+	TArray<FName> OnHitEmitterArray;
+
+	// Read in on hit emitter list.
+	{
+		uint32 OnHitEmitterCount;
+		OnHitEmitterCount = *reinterpret_cast<const uint32*>(Begin);
+		Begin += sizeof(OnHitEmitterCount);
+
+		OnHitEmitterArray.SetNum(OnHitEmitterCount);
+
+		uint32 WordLength;
+
+		for (uint32 i = 0; i < OnHitEmitterCount; ++i)
+		{
+			FName NewOnHitEmitter = Warframe::GetWord(Begin, '\0', WordLength);
+			OnHitEmitterArray[i] = NewOnHitEmitter;
+			Begin += WordLength + 1;
+		}
+	}
+
 	// Read in weapon appearances.
 	{
 		EWeaponID WeaponID;
@@ -501,6 +521,8 @@ void UWarframeGameInstance::ReadInWeaponAppearanceTable(const char* Begin, const
 			NewAppearance.FireEmitter = FireEmitterArray[tempUint32];
 			Warframe::ReadIn(tempUint32, Begin);
 			NewAppearance.ReloadAnim = ReloadAnimArray[tempUint32];
+			Warframe::ReadIn(tempUint32, Begin);
+			NewAppearance.OnHitEmitter = OnHitEmitterArray[tempUint32];
 		}
 	}
 }

@@ -12,18 +12,60 @@
 #include "WarframeCharacter.generated.h"
 
 
-//struct FDamageInfo
-//{
-//	AWarframeCharacter* DamageCauser;
-//	FVector HitLocation;
-//	EDamageType Status;
-//
-//};
+struct FDamageInfo
+{
+	/** Damage causer. */
+	class AWarframeCharacter* Causer;
+
+	/** Damage location. */
+	FVector HitLocation;
+
+	/** Status effect the damage causes. */
+	EDamageType Status;
+
+	/**
+	 * Base damage of status effect.
+	 * Can also used to determine whether the damage is from status effect or not.
+	 */
+	float BaseDamage;
+
+	/**
+	 * Damage multiplier applied when calculating status effect damage.
+	 */
+	float StatusDamageMultiplier;
+
+	/** Damage pair array. */
+	TArray<FDamagePair> DamageArray;
+
+	/**
+	 * Damage scalar applied to status effect damage, or all damage pairs in damage array.
+	 * Has taken CriticalTier & BodyMultiplier into consideration.
+	 */
+	float DamageScalar;
+
+	/** Critical tier. */
+	uint32 CriticalTier;
+
+	/** Body multiplier. */
+	float BodyMultiplier;
+
+	FDamageInfo(class AWarframeCharacter* InCauser, const FVector& InHitLocation, EDamageType InStatus, float InBaseDamage, float InStatusDamageMultiplier, const TArray<FDamagePair>& InDamageArray, float InDamageScalar, uint32 InCriticalTier, float InBodyMultiplier) :
+		Causer(InCauser),
+		HitLocation(InHitLocation),
+		Status(InStatus),
+		BaseDamage(InBaseDamage),
+		StatusDamageMultiplier(InStatusDamageMultiplier),
+		DamageArray(InDamageArray),
+		DamageScalar(InDamageScalar),
+		CriticalTier(InCriticalTier),
+		BodyMultiplier(InBodyMultiplier)
+	{}
+};
 
 struct FStatusEffectData
 {
 	EDamageType Type;
-	AActor *DamageCauser;
+	AWarframeCharacter *DamageCauser;
 	FVector HitLocationOffset;
 
 	// Damage per tick.
@@ -113,21 +155,14 @@ public:
 	virtual float GetBodyMultiplier(FName BoneName)const;
 
 	UFUNCTION(BlueprintCallable)
-	void ApplyDamageBP(AActor *DamageCauser, EDamageType Status, EDamageType DamageType, float Damage);
-
-	void ApplyDamage(AActor* DamageCauser, const FVector& HitLocation, EDamageType DamageType, float Damage);
+	void ApplyDamageBP(AWarframeCharacter *DamageCauser, EDamageType Status, EDamageType DamageType, float Damage);
 
 	/**
-	 * Apply damage to the character.
-	 * @param Status	Used to notify game mode what status effect is applied to the character when it get damaged.
+	 * Apply damage to the character with no attitude check.
 	 */
-	void ApplyDamage(AActor* DamageCauser, const FVector& HitLocation, EDamageType Status, TArray<FDamagePair> &DamageArray, float DamageScalar, uint32 CriticalTier);
+	void ApplyDamage(const FDamageInfo& DamageInfo);
 
-	/**
-	 * Apply specific status effect to the character.
-	 * @param DamageMultiplier	The damage multiplier used by status that dealing damage when ticking.
-	 */
-	void ApplyStatusEffect(AActor* DamageCauser, const FVector& HitLocation, EDamageType Status, float BaseDamage, float DamageMultiplier);
+	void ApplyStatusEffect(const FDamageInfo& DamageInfo);
 
 	UFUNCTION(BlueprintCallable)
 	float GetStatusTime(EDamageType Type)const;
