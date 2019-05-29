@@ -305,6 +305,14 @@ enum class EWeaponID : uint16
 	FluxRifle,
 	Glaxion,
 	Gorgon,
+	Grakata,
+	Grinlok,
+	Harpak,
+	Hek,
+	Hema,
+	Hind,
+	Ignis,
+	IgnisWraith,
 
 	// Secondary weapons.
 	Acrid,

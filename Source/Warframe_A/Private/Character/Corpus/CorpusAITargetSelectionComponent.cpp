@@ -4,12 +4,24 @@
 #include "Character/WarframeCharacter.h"
 
 #include "Runtime/AIModule/Classes/BehaviorTree/BlackboardComponent.h"
+#include "Runtime/Engine/Classes/Components/CapsuleComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 
 
 void UCorpusAITargetSelectionComponent::UpdateSelectedTarget()
 {
 	ACorpusAIController* Controller = Cast<ACorpusAIController>(GetOwner());
+	AWarframeCharacter* Target = Cast<AWarframeCharacter>(Controller->GetBlackboardComponent()->GetValueAsObject("Target"));
+
+	if (Target != nullptr)
+	{
+		FVector FakeHitLocation = Target->GetActorLocation();
+		FVector FakeHitNormal = Target->GetActorLocation() - Controller->GetPawn()->GetActorLocation();
+
+		SelectedTarget = FHitResult(Target, Target->GetCapsuleComponent(), FakeHitLocation, FakeHitNormal.GetUnsafeNormal());
+	}
+
+	/*ACorpusAIController* Controller = Cast<ACorpusAIController>(GetOwner());
 
 	AWarframeCharacter* Target = Cast<AWarframeCharacter>(Controller->GetBlackboardComponent()->GetValueAsObject("Target"));
 	if (Target != nullptr)
@@ -32,8 +44,8 @@ void UCorpusAITargetSelectionComponent::UpdateSelectedTarget()
 		{
 			if (SelectedTarget.Actor.Get() != Target)
 			{
-				SelectedTarget = FHitResult();
+				SelectedTarget = FHitResult(FVector(), FVector());
 			}
 		}
-	}
+	}*/
 }

@@ -1,6 +1,9 @@
 
 #include "Gameplay/CoverGenerator/CoverPoint.h"
 #include "Character/WarframeCharacter.h"
+#include "Gameplay/CoverGenerator/CoverGenerator.h"
+
+#include "Runtime/Engine/Classes/Engine/World.h"
 
 
 UCoverPoint::UCoverPoint()
@@ -18,6 +21,24 @@ UCoverPoint::UCoverPoint(const FVector & InLocation, const FVector & InDirection
 UCoverPoint::UCoverPoint(const UCoverPoint& InCopy)
 	: Location(InCopy.Location), _DirectionToWall(InCopy.DirectionToWall())
 {}
+
+bool UCoverPoint::IsLocationShootable(const FVector& Location)
+{
+	FCollisionObjectQueryParams ObjectQueryParams;
+	ObjectQueryParams.AddObjectTypesToQuery(ECollisionChannel::ECC_WorldStatic);
+	ObjectQueryParams.AddObjectTypesToQuery(ECollisionChannel::ECC_WorldDynamic);
+
+	FCollisionQueryParams QueryParams;
+	QueryParams.bTraceComplex = false;
+
+	ACoverGenerator* CoverGenerator = ACoverGenerator::GetCoverGenerator(nullptr);
+
+	const FVector LocalRight = FVector::CrossProduct(FVector::UpVector, this->_DirectionToWall);
+	const FVector SourceLocation = this->Location + LocalRight * CoverGenerator->GetOffsetWhenLeaningSides() + this->_DirectionToWall * CoverGenerator->GetOffsetFrontAim();
+
+	TArray<FHitResult> OutHits;
+	return !CoverGenerator->GetWorld()->LineTraceMultiByObjectType(OutHits, SourceLocation, Location, ObjectQueryParams, QueryParams);
+}
 
 AWarframeCharacter* UCoverPoint::GetOccupant()const
 {

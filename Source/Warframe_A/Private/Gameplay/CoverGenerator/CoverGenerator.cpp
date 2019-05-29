@@ -6,6 +6,8 @@
 #include "DrawDebugHelpers.h"
 
 
+ACoverGenerator* ACoverGenerator::CoverGeneratorInst;
+
 // Sets default values
 ACoverGenerator::ACoverGenerator(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -28,6 +30,15 @@ ACoverGenerator::ACoverGenerator(const FObjectInitializer& ObjectInitializer) : 
 void ACoverGenerator::BeginPlay()
 {
 	Super::BeginPlay();
+
+#ifdef WITH_EDITOR
+	if (CoverGeneratorInst != nullptr)
+	{
+		UE_LOG(LogTemp, Log, TEXT("More than one CoverGenerator in game!"));
+	}
+#endif
+
+	CoverGeneratorInst = this;
 
 	if (bRegenerateAtBeginPlay && ACoverGenerator::GetCoverGenerator(GetWorld()) == this)
 	{
@@ -144,6 +155,8 @@ void ACoverGenerator::Tick( float DeltaTime )
 
 void ACoverGenerator::BeginDestroy()
 {
+	CoverGeneratorInst = nullptr;
+
 	// Unbind navigation delegate	
 	if (UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetCurrent(GetWorld()))
 		NavSystem->OnNavigationGenerationFinishedDelegate.RemoveDynamic(this, &ACoverGenerator::OnNavigationGenerationFinished);
@@ -186,6 +199,8 @@ ARecastNavMesh* ACoverGenerator::GetNavMeshData(UWorld* World)
 
 ACoverGenerator* ACoverGenerator::GetCoverGenerator(UObject* WorldContextObject)
 {
+	return CoverGeneratorInst;
+
 	if (WorldContextObject && WorldContextObject->GetWorld())
 	{
 		TActorIterator<ACoverGenerator> Itr(WorldContextObject->GetWorld());
@@ -229,7 +244,6 @@ bool ACoverGenerator::IsProvidingCover(UWorld* World, const FVector SegmentPoint
 	}
 
 	// Multi trace to ensure cover is safe using the normal to impact from previous trace as direction 
-	// todo: use shape trace instead.
 	FVector TraceDirection = TraceVec; // -HitResult.ImpactNormal;
 	TraceDirection.Normalize();
 	TraceDirection = TraceLength*TraceDirection; 

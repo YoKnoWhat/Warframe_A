@@ -21,6 +21,9 @@ public:
 
 	UCoverPoint(const FVector& InLocation, const FVector& InDirectionToWall);
 
+	UFUNCTION(BlueprintCallable)
+	bool IsLocationShootable(const FVector& Location);
+
 	AWarframeCharacter* GetOccupant()const;
 
 	UFUNCTION(BlueprintCallable)

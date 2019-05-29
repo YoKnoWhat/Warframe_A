@@ -55,7 +55,8 @@ AWeaponBase* FWeaponFactory::SpawnWeaponImpl(AActor* Owner, EWeaponID WeaponID, 
 
 		Weapon->GetMesh()->SetSkeletalMesh(FWarframeConfigSingleton::Instance().FindResource<USkeletalMesh>(WeaponAppearance->Mesh));
 		Weapon->SetFireEmitter(FWarframeConfigSingleton::Instance().FindResource<UParticleSystem>(WeaponAppearance->FireEmitter));
-		Weapon->SetOnHitEmitter(FWarframeConfigSingleton::Instance().FindResource<UNiagaraSystem>(WeaponAppearance->OnHitEmitter));
+		// todo: for now.
+		// Weapon->SetOnHitEmitter(FWarframeConfigSingleton::Instance().FindResource<UNiagaraSystem>(WeaponAppearance->OnHitEmitter));
 		WeaponAppearance->ReloadAnim;
 	}
 

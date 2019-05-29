@@ -20,7 +20,7 @@ struct FWeaponFireMode
 	float FireInterval;
 	ENoiseType NoiseType;
 	float PunchThrough;
-	float ReloadTime;
+	float ReloadTime; // todo: not in fire mode !
 	float StatusChance;
 	EWeaponTriggerType TriggerType;
 	class FTriggerModifier* TriggerModifier;

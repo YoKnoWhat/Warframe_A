@@ -76,6 +76,11 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	class UCoverPoint* CoverPoint;
 
+	int32 OldAtCoverDirection;
+
+	UPROPERTY(BlueprintReadOnly)
+	int32 NewAtCoverDirection;
+
 	/** Determines which state to transit to, FiringCrouched or FiringStanding? */
 	bool bIsFiringStandingDesired;
 

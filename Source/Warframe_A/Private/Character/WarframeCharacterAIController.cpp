@@ -3,6 +3,7 @@
 #include "Character/AITargetSelectionComponent.h"
 #include "Character/StateMachine/WarframeCharacterAIStateMachineComponent.h"
 #include "Character/WarframeCharacter.h"
+#include "Gameplay/CoverGenerator/CoverPoint.h"
 
 #include "Runtime/AIModule/Classes/Navigation/CrowdFollowingComponent.h"
 #include "Runtime/AIModule/Classes/Perception/AIPerceptionComponent.h"
@@ -106,6 +107,13 @@ void AWarframeCharacterAIController::TakeCover(UCoverPoint* InCoverPoint)
 	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
 	
 	StateMachine->CoverPoint = InCoverPoint;
+}
+
+void AWarframeCharacterAIController::ChangeAtCoverDirection(int32 Direction)
+{
+	UWarframeCharacterAIStateMachineComponent* StateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(Cast<AWarframeCharacter>(GetPawn())->GetStateMachine());
+
+	StateMachine->NewAtCoverDirection = Direction;
 }
 
 void AWarframeCharacterAIController::SetDesiredCoverFiringPosture(bool IsFiringStandingDesired)

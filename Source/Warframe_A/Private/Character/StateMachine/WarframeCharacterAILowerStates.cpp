@@ -1,10 +1,12 @@
 
 #include "Character/StateMachine/WarframeCharacterAILowerStates.h"
-#include "Character/WarframeCharacter.h"
 #include "Character/StateMachine/WarframeCharacterAIStateMachineComponent.h"
+#include "Character/TargetSelectionComponent.h"
+#include "Character/WarframeCharacter.h"
 #include "Gameplay/CoverGenerator/CoverPoint.h"
 
 #include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
+#include "Runtime/Engine/Classes/GameFramework/Controller.h"
 
 
 int32 FWarframeCharacterAILowerState_Idle::GetID()const
@@ -24,6 +26,7 @@ FStateObject* FWarframeCharacterAILowerState_Idle::OnUpdate(UStateMachineCompone
 	}
 	else if (WarframeCharacterAIStateMachine->CoverPoint != nullptr)
 	{
+		// todo: when we have front aim animation, consider the front cover branch.g
 		if (WarframeCharacterAIStateMachine->CoverPoint->bLeftCoverStanding || WarframeCharacterAIStateMachine->CoverPoint->bRightCoverStanding)
 		{
 			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverStandingState;
@@ -77,26 +80,57 @@ int32 FWarframeCharacterAILowerState_AtCoverStanding::GetID()const
 
 FStateObject* FWarframeCharacterAILowerState_AtCoverStanding::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	UWarframeCharacterAIStateMachineComponent* WarframeCharacterAIStateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(StateMachine);
+	UWarframeCharacterAIStateMachineComponent* WCASM = Cast<UWarframeCharacterAIStateMachineComponent>(StateMachine);
 
-	if (WarframeCharacterAIStateMachine->CoverPoint == nullptr)
+	if (WCASM->CoverPoint == nullptr)
 	{
-		return WarframeCharacterAIStateMachine->LowerLayer->IdleState;
-	}
-	else if (WarframeCharacterAIStateMachine->UpperLayer->CurrentState->GetID() == CastToUnderlyingType(EWarframeCharacterAIUpperState::Firing))
-	{
-		if (WarframeCharacterAIStateMachine->bIsFiringStandingDesired)
-		{
-			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverFiringStandingState;
-		}
-		else
-		{
-			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverFiringCrouchingState;
-		}
+		return WCASM->LowerLayer->IdleState;
 	}
 	else
 	{
-		return this;
+		if (WCASM->OldAtCoverDirection != WCASM->NewAtCoverDirection)
+		{
+			if (WCASM->NewAtCoverDirection == +1)
+			{
+				if (WCASM->CoverPoint->bRightCoverStanding)
+				{
+					WCASM->GetCharacter()->SetActorRotation(WCASM->CoverPoint->RotatorXToWall + FRotator(0.0f, +90.0f, 0.0f));
+				}
+				else if (WCASM->CoverPoint->bRightCoverCrouched)
+				{
+					return WCASM->LowerLayer->AtCoverCrouchingState;
+				}
+			}
+			else if (WCASM->NewAtCoverDirection == -1)
+			{
+				if (WCASM->CoverPoint->bLeftCoverStanding)
+				{
+					WCASM->GetCharacter()->SetActorRotation(WCASM->CoverPoint->RotatorXToWall + FRotator(0.0f, -90.0f, 0.0f));
+				}
+				else if (WCASM->CoverPoint->bLeftCoverCrouched)
+				{
+					return WCASM->LowerLayer->AtCoverCrouchingState;
+				}
+			}
+			WCASM->OldAtCoverDirection = WCASM->NewAtCoverDirection;
+		}
+
+		// State transition.
+		if (WCASM->UpperLayer->CurrentState->GetID() == CastToUnderlyingType(EWarframeCharacterAIUpperState::Firing))
+		{
+			if (WCASM->bIsFiringStandingDesired)
+			{
+				return WCASM->LowerLayer->AtCoverFiringStandingState;
+			}
+			else
+			{
+				return WCASM->LowerLayer->AtCoverFiringCrouchingState;
+			}
+		}
+		else
+		{
+			return this;
+		}
 	}
 }
 
@@ -120,26 +154,57 @@ int32 FWarframeCharacterAILowerState_AtCoverCrouching::GetID()const
 
 FStateObject* FWarframeCharacterAILowerState_AtCoverCrouching::OnUpdate(UStateMachineComponent* StateMachine, float DeltaTime)
 {
-	UWarframeCharacterAIStateMachineComponent* WarframeCharacterAIStateMachine = Cast<UWarframeCharacterAIStateMachineComponent>(StateMachine);
+	UWarframeCharacterAIStateMachineComponent* WCASM = Cast<UWarframeCharacterAIStateMachineComponent>(StateMachine);
 
-	if (WarframeCharacterAIStateMachine->CoverPoint == nullptr)
+	if (WCASM->CoverPoint == nullptr)
 	{
-		return WarframeCharacterAIStateMachine->LowerLayer->IdleState;
-	}
-	else if (WarframeCharacterAIStateMachine->UpperLayer->CurrentState->GetID() == CastToUnderlyingType(EWarframeCharacterAIUpperState::Firing))
-	{
-		if (WarframeCharacterAIStateMachine->bIsFiringStandingDesired)
-		{
-			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverFiringStandingState;
-		}
-		else
-		{
-			return WarframeCharacterAIStateMachine->LowerLayer->AtCoverFiringCrouchingState;
-		}
+		return WCASM->LowerLayer->IdleState;
 	}
 	else
 	{
-		return this;
+		if (WCASM->OldAtCoverDirection != WCASM->NewAtCoverDirection)
+		{
+			if (WCASM->NewAtCoverDirection == +1)
+			{
+				if (WCASM->CoverPoint->bRightCoverCrouched)
+				{
+					WCASM->GetCharacter()->SetActorRotation(WCASM->CoverPoint->RotatorXToWall + FRotator(0.0f, +90.0f, 0.0f));
+				}
+				else if (WCASM->CoverPoint->bRightCoverStanding)
+				{
+					return WCASM->LowerLayer->AtCoverStandingState;
+				}
+			}
+			else if (WCASM->NewAtCoverDirection == -1)
+			{
+				if (WCASM->CoverPoint->bLeftCoverCrouched)
+				{
+					WCASM->GetCharacter()->SetActorRotation(WCASM->CoverPoint->RotatorXToWall + FRotator(0.0f, -90.0f, 0.0f));
+				}
+				else if (WCASM->CoverPoint->bLeftCoverStanding)
+				{
+					return WCASM->LowerLayer->AtCoverStandingState;
+				}
+			}
+			WCASM->OldAtCoverDirection = WCASM->NewAtCoverDirection;
+		}
+
+		// State transition.
+		if (WCASM->UpperLayer->CurrentState->GetID() == CastToUnderlyingType(EWarframeCharacterAIUpperState::Firing))
+		{
+			if (WCASM->bIsFiringStandingDesired)
+			{
+				return WCASM->LowerLayer->AtCoverFiringStandingState;
+			}
+			else
+			{
+				return WCASM->LowerLayer->AtCoverFiringCrouchingState;
+			}
+		}
+		else
+		{
+			return this;
+		}
 	}
 }
 

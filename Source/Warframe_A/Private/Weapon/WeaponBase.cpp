@@ -255,10 +255,13 @@ ARoundBase* AWeaponBase::OnRoundFired_Implementation(const FHitResult& CurrentTa
 		FVector(1.0f, 1.0f, 1.0f)
 	);
 
+	// todo: for now.
+	// UKismetSystemLibrary::DrawDebugSphere(this, CurrentTarget.ImpactPoint, 50.0f, 12, FLinearColor::White, 0.16f);
+
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.Owner = this;
 	SpawnParams.Instigator = Cast<AWarframeCharacter>(this->GetOwner());
-	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 	ARoundBase* NewRound = Cast<ARoundBase>(this->GetWorld()->SpawnActor(GetRoundClass(), &SpawnTransform, SpawnParams));
 
